@@ -17,14 +17,15 @@ const Login = ({ handleToggle }) => {
               <Form.Label>Password</Form.Label>
               <Form.Control type="password" placeholder="Password" />
             </Form.Group>
+            <Button>Login</Button>
           </Form>
-          <Button className="mt-3" onClick={handleToggle}>
-            Non hai un account? Registrati
-          </Button>
+          <p className="mt-3" onClick={handleToggle}>
+            Non hai un account? <u>Registrati</u>
+          </p>
         </div>
       </Col>
       <Col lg={6}>
-        <div className="first-color" style={{ height: "100vh" }}></div>
+        <div style={{ height: "100vh" }}></div>
       </Col>
     </Row>
   );

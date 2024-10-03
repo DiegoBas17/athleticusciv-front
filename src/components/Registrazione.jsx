@@ -4,7 +4,7 @@ const Registrazione = ({ handleToggle }) => {
   return (
     <Row>
       <Col lg={6}>
-        <div className="first-color" style={{ height: "100vh" }}></div>
+        <div style={{ height: "100vh" }}></div>
       </Col>
       <Col lg={6} className="position-relative bg-white">
         <div className="position-absolute top-50 start-50 translate-middle">
@@ -29,10 +29,11 @@ const Registrazione = ({ handleToggle }) => {
               <Form.Label>Password</Form.Label>
               <Form.Control type="password" placeholder="Password" />
             </Form.Group>
+            <Button>Registrati</Button>
           </Form>
-          <Button className="mt-3" onClick={handleToggle}>
-            Hai già un account? Accedi
-          </Button>
+          <p className="mt-3" onClick={handleToggle}>
+            Hai già un account? <u>Accedi</u>
+          </p>
         </div>
       </Col>
     </Row>

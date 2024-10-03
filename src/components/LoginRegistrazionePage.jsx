@@ -8,12 +8,8 @@ const LoginRegistrazionePage = () => {
     setIsLoginActive(!isLoginActive);
   };
   return (
-    <div className="first-color">
-      <div
-        className={`form-container ${
-          isLoginActive ? "slide-in-left" : "slide-in-right"
-        }`}
-      >
+    <div className={isLoginActive ? "first-color" : "second-color"}>
+      <div className={isLoginActive ? "slide-in-left" : "slide-in-right"}>
         {isLoginActive ? (
           <Login handleToggle={handleToggle} />
         ) : (
