@@ -1,6 +1,47 @@
+import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 
 const Registrazione = ({ handleToggle }) => {
+  const [atleta, setAtleti] = useState({
+    nome: "",
+    cognome: "",
+    email: "",
+    numeroDiCellulare: "",
+    password: "",
+  });
+
+  const fetchLogin = () => {
+    fetch("http://localhost:3001/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(atleta),
+    })
+      .then((response) => {
+        console.log("Response received:", response);
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Errore nella registrazione");
+        }
+      })
+      .then((result) => {
+        console.log("Fatture fetched:", result);
+        setAtleti(result);
+      })
+      .catch((error) => console.log("Fetch error:", error));
+  };
+
+  const handleFieldChange = (propertyName, propertyValue) => {
+    setAtleti({ ...atleta, [propertyName]: propertyValue });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetchLogin();
+  };
+
   return (
     <Row>
       <Col lg={6}>
@@ -8,28 +49,55 @@ const Registrazione = ({ handleToggle }) => {
       </Col>
       <Col lg={6} className="position-relative bg-white">
         <div className="position-absolute top-50 start-50 translate-middle">
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
               <Form.Label>Nome</Form.Label>
-              <Form.Control type="text" placeholder="nome" />
+              <Form.Control
+                type="text"
+                placeholder="nome"
+                value={atleta.nome}
+                onChange={(e) => handleFieldChange("nome", e.target.value)}
+              />
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Cognome</Form.Label>
-              <Form.Control type="text" placeholder="cognome" />
+              <Form.Control
+                type="text"
+                placeholder="cognome"
+                value={atleta.cognome}
+                onChange={(e) => handleFieldChange("cognome", e.target.value)}
+              />
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Email</Form.Label>
-              <Form.Control type="email" placeholder="name@example.com" />
+              <Form.Control
+                type="email"
+                placeholder="name@example.com"
+                value={atleta.email}
+                onChange={(e) => handleFieldChange("email", e.target.value)}
+              />
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Numero di Telefono</Form.Label>
-              <Form.Control type="text" placeholder="cellulare" />
+              <Form.Control
+                type="text"
+                placeholder="cellulare"
+                value={atleta.numeroDiCellulare}
+                onChange={(e) =>
+                  handleFieldChange("numeroDiCellulare", e.target.value)
+                }
+              />
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                value={atleta.password}
+                onChange={(e) => handleFieldChange("password", e.target.value)}
+              />
             </Form.Group>
-            <Button>Registrati</Button>
+            <Button type="submit">Registrati</Button>
           </Form>
           <p className="mt-3" onClick={handleToggle}>
             Hai già un account? <u>Accedi</u>
