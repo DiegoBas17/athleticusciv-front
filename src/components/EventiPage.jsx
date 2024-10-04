@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import TopBar from "./TopBar";
+import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const EventiPage = () => {
   const [partite, setPartite] = useState(null);
+  const navigate = useNavigate();
 
   const fetchAtleta = () => {
     fetch(`http://localhost:3001/partite`, {
@@ -35,6 +38,9 @@ const EventiPage = () => {
       {partite?.map((partita, index) => (
         <div key={index}>
           <h3>{partita.data}</h3>
+          <Button onClick={() => navigate("/partite/" + partita.id)}>
+            partita
+          </Button>
         </div>
       ))}
     </>

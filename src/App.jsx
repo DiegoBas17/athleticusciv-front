@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import ProfiloPage from "./components/ProfiloPage";
 import MembriPage from "./components/MembriPage";
 import EventiPage from "./components/EventiPage";
+import PartitaPage from "./components/PartitaPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/profilo/:id" element={<ProfiloPage />} />
         <Route path="/Legends-of-Athleticus" element={<MembriPage />} />
         <Route path="/eventi" element={<EventiPage />} />
+        <Route path="/partite/:id" element={<PartitaPage />} />
       </Routes>
     </BrowserRouter>
   );
