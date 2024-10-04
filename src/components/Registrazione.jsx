@@ -44,11 +44,17 @@ const Registrazione = ({ handleToggle }) => {
 
   return (
     <Row>
-      <Col lg={6}>
+      <Col md={6} lg={6} className="d-none d-md-block">
         <div style={{ height: "100vh" }}></div>
       </Col>
-      <Col lg={6} className="position-relative bg-white">
-        <div className="position-absolute top-50 start-50 translate-middle">
+      <Col
+        sm={12}
+        md={6}
+        lg={6}
+        className="d-flex justify-content-center align-items-center bg-white"
+        style={{ height: "100vh" }}
+      >
+        <div>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
               <Form.Label>Nome</Form.Label>

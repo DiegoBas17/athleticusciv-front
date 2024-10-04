@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setAtleta } from "../redux/actions/AtletaAction";
 
 const Login = ({ handleToggle }) => {
   const [atletaLog, setAtletalog] = useState({
@@ -9,6 +11,7 @@ const Login = ({ handleToggle }) => {
   });
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const fetchLogin = () => {
     fetch("http://localhost:3001/auth/login", {
@@ -29,6 +32,7 @@ const Login = ({ handleToggle }) => {
         /* console.log(result); */
         setAtletalog(result);
         localStorage.setItem("accessToken", result.accessToken);
+        dispatch(setAtleta(result.atleta));
         navigate("/home");
       })
       .catch((error) => console.log("Fetch error:", error));
@@ -45,8 +49,14 @@ const Login = ({ handleToggle }) => {
 
   return (
     <Row>
-      <Col lg={6} className="position-relative bg-white">
-        <div className="position-absolute top-50 start-50 translate-middle">
+      <Col
+        sm={12}
+        md={6}
+        lg={6}
+        className="d-flex justify-content-center align-items-center bg-white"
+        style={{ height: "100vh" }}
+      >
+        <div>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Email</Form.Label>
@@ -76,7 +86,7 @@ const Login = ({ handleToggle }) => {
           </p>
         </div>
       </Col>
-      <Col lg={6}>
+      <Col md={6} lg={6} className="d-none d-md-block">
         <div style={{ height: "100vh" }}></div>
       </Col>
     </Row>
