@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setAtleta } from "../redux/actions/AtletaAction";
+import { setAtleta } from "../redux/actions/atletaAction";
 
 const Login = ({ handleToggle }) => {
   const [atletaLog, setAtletalog] = useState({
