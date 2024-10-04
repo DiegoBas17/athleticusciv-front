@@ -1,13 +1,10 @@
-import { useParams } from "react-router-dom";
-import TopBar from "./TopBar";
 import { useEffect, useState } from "react";
+import TopBar from "./TopBar";
 
-const ProfiloPage = () => {
-  const { id } = useParams();
-  const [atleta, setAtleta] = useState(null);
-
+const MembriPage = () => {
+  const [atleti, setAtleti] = useState(null);
   const fetchAtleta = () => {
-    fetch(`http://localhost:3001/atleti/${id}`, {
+    fetch(`http://localhost:3001/atleti`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -21,7 +18,9 @@ const ProfiloPage = () => {
         }
       })
       .then((result) => {
-        setAtleta(result);
+        console.log(result.content);
+
+        setAtleti(result.content);
       })
       .catch((error) => console.log("Fetch error:", error));
   };
@@ -29,13 +28,17 @@ const ProfiloPage = () => {
   useEffect(() => {
     fetchAtleta();
   }, []);
-
   return (
     <>
       <TopBar />
-      <div>Profilo</div>
-      <div>ciao {atleta.nome}</div>
+      <div>membri</div>
+      <div>ciao</div>
+      {atleti?.map((membro, index) => (
+        <div key={index}>
+          <h3>{membro.nome}</h3>
+        </div>
+      ))}
     </>
   );
 };
-export default ProfiloPage;
+export default MembriPage;

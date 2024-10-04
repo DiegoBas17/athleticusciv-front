@@ -38,7 +38,7 @@ const TopBar = () => {
             >
               <NavDropdown.Item
                 onClick={() => {
-                  navigate("/atleti/" + "me");
+                  navigate("/profilo/me");
                 }}
               >
                 Profilo
