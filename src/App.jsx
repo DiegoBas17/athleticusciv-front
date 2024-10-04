@@ -5,6 +5,7 @@ import LoginRegistrazionePage from "./components/LoginRegistrazionePage";
 import Home from "./components/Home";
 import ProfiloPage from "./components/ProfiloPage";
 import MembriPage from "./components/MembriPage";
+import EventiPage from "./components/EventiPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/profilo/:id" element={<ProfiloPage />} />
         <Route path="/Legends-of-Athleticus" element={<MembriPage />} />
+        <Route path="/eventi" element={<EventiPage />} />
       </Routes>
     </BrowserRouter>
   );

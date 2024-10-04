@@ -19,7 +19,7 @@ const TopBar = () => {
             <NavLink to="/Legends-of-Athleticus" className="nav-link">
               Membri
             </NavLink>
-            <NavLink to="/Eventi" className="nav-link">
+            <NavLink to="/eventi" className="nav-link">
               Eventi
             </NavLink>
             <Nav.Link href="#link">Valutazioni</Nav.Link>
