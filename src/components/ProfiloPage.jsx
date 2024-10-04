@@ -34,7 +34,7 @@ const ProfiloPage = () => {
     <>
       <TopBar />
       <div>Profilo</div>
-      <div>ciao {atleta.nome}</div>
+      <div>ciao {atleta?.nome}</div>
     </>
   );
 };

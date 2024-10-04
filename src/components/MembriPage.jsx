@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import TopBar from "./TopBar";
+import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const MembriPage = () => {
   const [atleti, setAtleti] = useState(null);
+  const navigate = useNavigate();
   const fetchAtleta = () => {
     fetch(`http://localhost:3001/atleti`, {
       method: "GET",
@@ -36,6 +39,9 @@ const MembriPage = () => {
       {atleti?.map((membro, index) => (
         <div key={index}>
           <h3>{membro.nome}</h3>
+          <Button onClick={() => navigate(`/profilo/${membro.id}`)}>
+            partita
+          </Button>
         </div>
       ))}
     </>
