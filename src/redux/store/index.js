@@ -1,8 +1,8 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import AtletaReducer from "../reducers/AtletaReducer";
+import atletaReducer from "../reducers/atletaReducer";
 
 const rootReducer = combineReducers({
-  Atleta: AtletaReducer,
+  atleta: atletaReducer,
 });
 
 const store = configureStore({

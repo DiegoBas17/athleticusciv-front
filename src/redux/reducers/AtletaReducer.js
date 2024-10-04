@@ -1,9 +1,9 @@
-import { SET_ATLETA } from "../actions/AtletaAction";
+import { SET_ATLETA } from "../actions/atletaAction";
 
 const initialState = {
   atleta: null,
 };
-const AtletaReducer = (state = initialState, action) => {
+const atletaReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_ATLETA:
       return {
@@ -14,4 +14,4 @@ const AtletaReducer = (state = initialState, action) => {
       return state;
   }
 };
-export default AtletaReducer;
+export default atletaReducer;
