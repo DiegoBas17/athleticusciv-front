@@ -2,34 +2,34 @@ import { useEffect, useState } from "react";
 import TopBar from "./TopBar";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import httpClient from "../services/httpClient";
+import { useSelector } from "react-redux";
 
 const EventiPage = () => {
   const [partite, setPartite] = useState(null);
   const navigate = useNavigate();
+  const loginError = useSelector((state) => state.errors.loginError);
 
-  const fetchAtleta = () => {
-    fetch(`http://localhost:3001/partite`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
+  const fetchPartite = () => {
+    httpClient
+      .get("/partite")
       .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error("Errore nel reperimento del profilo");
-        }
+        setPartite(response.data.content);
       })
-      .then((result) => {
-        setPartite(result.content);
-      })
-      .catch((error) => console.log("Fetch error:", error));
+      .catch((error) => {
+        console.log("Errore nella richiesta:", error);
+      });
   };
+  useEffect(() => {
+    if (loginError) {
+      navigate("/"); // Reindirizza alla pagina di login se c'è un errore di login
+    }
+  }, [loginError, navigate]);
 
   useEffect(() => {
-    fetchAtleta();
+    fetchPartite();
   }, []);
+
   return (
     <>
       <TopBar />
