@@ -1,0 +1,42 @@
+.first-color {
+  background-color: #014bae;
+  transition: background-color 0.4s ease;
+}
+.second-color {
+  background-color: #ff3131;
+  transition: background-color 0.4s ease;
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.slide-in-left {
+  animation: slideInLeft 0.4s ease forwards;
+}
+
+.slide-in-right {
+  animation: slideInRight 0.4s ease forwards;
+}
+
+u {
+  color: #0d6efd;
+}

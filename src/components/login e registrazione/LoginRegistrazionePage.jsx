@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./loginRegistrazione.scss";
 import Login from "./Login";
 import Registrazione from "./Registrazione";
 

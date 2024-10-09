@@ -20,9 +20,10 @@ const EventiPage = () => {
         console.log("Errore nella richiesta:", error);
       });
   };
+
   useEffect(() => {
     if (loginError) {
-      navigate("/"); // Reindirizza alla pagina di login se c'è un errore di login
+      navigate("/login");
     }
   }, [loginError, navigate]);
 

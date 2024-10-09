@@ -1,0 +1,32 @@
+<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+<!-- loop palloni -->
+<dotlottie-player src="https://lottie.host/bb186f94-4d64-4b4f-bc35-916801c9a288/r2wW2ZAOCi.json" 
+background="transparent" 
+speed="1" 
+style="width: 300px; height: 300px;" 
+loop autoplay></dotlottie-player>
+
+<!-- svg per bottone formazione -->
+<dotlottie-player src="https://lottie.host/6aaed9be-e57e-46c5-9d44-59853229da54/zzZozwO5DE.json" 
+background="transparent" 
+speed="1" style="width: 300px; height: 300px;" 
+loop autoplay></dotlottie-player>
+
+<!-- svg per gol -->
+<dotlottie-player
+src="https://lottie.host/d23bab93-e20a-4353-bfc6-71063ce4c657/NY8kk3quhl.json"
+background="transparent"
+speed="1" style="width: 300px; height: 300px;"
+loop autoplay></dotlottie-player>
+
+<!-- svg per assist -->
+<dotlottie-player src="https://lottie.host/a7b0185d-de69-4257-9b14-56fd0ab13f1a/VBWIEYmkXY.json" ù
+background="transparent" 
+speed="1" style="width: 300px; height: 300px;" 
+loop autoplay></dotlottie-player>
+
+<!-- svg per voti -->
+<dotlottie-player src="https://lottie.host/f64a0278-6714-4350-bc5c-65011e006e8f/idMpk5d1nt.json" 
+background="transparent" speed="1" 
+style="width: 300px; height: 300px;" 
+loop autoplay></dotlottie-player>

@@ -40,7 +40,6 @@ httpClient.interceptors.response.use(
           type: SET_LOGIN_ERROR,
           payload: true,
         });
-        localStorage.removeItem("accessToken");
       }
     }
     return Promise.reject(error);

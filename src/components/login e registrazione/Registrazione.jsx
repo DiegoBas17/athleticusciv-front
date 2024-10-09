@@ -10,7 +10,7 @@ const Registrazione = ({ handleToggle }) => {
     password: "",
   });
 
-  const fetchLogin = () => {
+  const fetchRegistrazione = () => {
     fetch("http://localhost:3001/auth/register", {
       method: "POST",
       headers: {
@@ -39,7 +39,8 @@ const Registrazione = ({ handleToggle }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetchLogin();
+    fetchRegistrazione();
+    handleToggle();
   };
 
   return (

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import TopBar from "./TopBar";
 import { useParams } from "react-router-dom";
 
-const PartitaPage = () => {
+const Partita = () => {
   const { id } = useParams();
   const [partita, setPartita] = useState(null);
 
@@ -39,4 +39,4 @@ const PartitaPage = () => {
     </>
   );
 };
-export default PartitaPage;
+export default Partita;

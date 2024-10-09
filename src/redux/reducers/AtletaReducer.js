@@ -7,6 +7,7 @@ const atletaReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_ATLETA:
       return {
+        ...state,
         atleta: action.payload,
       };
 

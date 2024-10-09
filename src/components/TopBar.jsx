@@ -7,13 +7,13 @@ const TopBar = () => {
   return (
     <Navbar expand="lg">
       <Container>
-        <NavLink to="/home" className="nav-link">
+        <NavLink to="/" className="nav-link">
           Athleticus CIV
         </NavLink>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <NavLink to="/home" className="nav-link">
+            <NavLink to="/" className="nav-link">
               Home
             </NavLink>
             <NavLink to="/Legends-of-Athleticus" className="nav-link">
@@ -22,8 +22,12 @@ const TopBar = () => {
             <NavLink to="/eventi" className="nav-link">
               Eventi
             </NavLink>
-            <Nav.Link href="#link">Valutazioni</Nav.Link>
-            <Nav.Link href="#link">Calendario</Nav.Link>
+            <NavLink to="/" className="nav-link">
+              Valutazioni
+            </NavLink>
+            <NavLink to="/" className="nav-link">
+              Calendario
+            </NavLink>
           </Nav>
           <div className="d-flex">
             <img
