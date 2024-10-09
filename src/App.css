@@ -1,16 +1,8 @@
-.light-color {
-  background-color: #ffeee6;
-}
-
-.pastel-color,
 body {
-  background-color: #fecaac;
+  background-color: #778089;
+  color: white;
 }
 
-.saturated-color {
-  background-color: #f06d21;
-}
-
-.dark-color {
-  background-color: #8b3c0d;
+.civ-color {
+  background-color: #1a1d1f;
 }
