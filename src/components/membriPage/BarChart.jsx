@@ -38,7 +38,7 @@ const BarChart = ({ showAtleta }) => {
     },
   };
 
-  return <Bar data={data} options={options} />;
+  return <Bar data={data} options={options} className="mx-auto" />;
 };
 
 export default BarChart;
