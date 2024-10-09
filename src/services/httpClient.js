@@ -6,10 +6,14 @@ import {
   SET_LOGIN_ERROR,
 } from "../redux/reducers/errorReducer";
 import uniqid from "uniqid";
+import { setAtleta } from "../redux/actions/atletaAction";
 
 const httpClient = axios.create({
   baseURL: "http://localhost:3001",
 });
+
+/* Variabile per evitare il loop */
+let isFetchingProfile = false;
 
 httpClient.interceptors.request.use((config) => {
   const token = localStorage.getItem("accessToken");
@@ -20,7 +24,18 @@ httpClient.interceptors.request.use((config) => {
 });
 
 httpClient.interceptors.response.use(
-  (response) => {
+  async (response) => {
+    if (!isFetchingProfile && response.config.url !== "/atleti/me") {
+      try {
+        isFetchingProfile = true;
+        const meResponse = await httpClient.get("/atleti/me");
+        store.dispatch(setAtleta(meResponse.data));
+      } catch (error) {
+        console.error("Errore durante l'aggiornamento dell'atleta", error);
+      } finally {
+        isFetchingProfile = false;
+      }
+    }
     store.dispatch({ type: RESET_ERRORS });
     return response;
   },
