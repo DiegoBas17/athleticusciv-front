@@ -24,7 +24,7 @@ const RadarChart = ({ showAtleta }) => {
     labels: ["Difesa", "Velocità", "Resistenza", "Tiro", "Tecnica"],
     datasets: [
       {
-        label: `${showAtleta?.nome} ${showAtleta?.cognome} - Statistiche`,
+        label: `Statistiche`,
         data: [
           showAtleta?.valutazione.difesa,
           showAtleta?.valutazione.velocità,
@@ -36,7 +36,7 @@ const RadarChart = ({ showAtleta }) => {
         borderColor: "white", // Colore del bordo del grafico
         borderWidth: 2, // Spessore del bordo del grafico
         pointBackgroundColor: "white", // Colore di sfondo dei punti sul grafico
-        pointBorderColor: "red)", // Colore del bordo dei punti
+        pointBorderColor: "white", // Colore del bordo dei punti
         pointBorderWidth: 2, // Spessore del bordo dei punti
         pointHoverBackgroundColor: "rgba(255, 99, 132, 1)", // Colore di sfondo dei punti al passaggio del mouse
         pointHoverBorderColor: "rgba(255, 99, 132, 1)", // Colore del bordo dei punti al passaggio del mouse
