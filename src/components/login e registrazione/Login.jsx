@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-/* import { useDispatch } from "react-redux"; */
 import { useNavigate } from "react-router-dom";
-/* import { setAtleta } from "../../redux/actions/atletaAction"; */
 
 const Login = ({ handleToggle }) => {
   const [atletaLog, setAtletalog] = useState({
@@ -11,7 +9,6 @@ const Login = ({ handleToggle }) => {
   });
 
   const navigate = useNavigate();
-  /* const dispatch = useDispatch(); */
 
   const fetchLogin = () => {
     fetch("http://localhost:3001/auth/login", {
@@ -32,8 +29,6 @@ const Login = ({ handleToggle }) => {
         console.log(result);
         setAtletalog(result);
         localStorage.setItem("accessToken", result.accessToken);
-        localStorage.setItem("atleta", JSON.stringify(result.atleta));
-        /* dispatch(setAtleta(result.atleta)); */
         navigate("/");
       })
       .catch((error) => console.log("Fetch error:", error));
