@@ -12,7 +12,6 @@ const MembriPage = () => {
   const navigate = useNavigate();
   const loginError = useSelector((state) => state.errors.loginError);
   const startingAtleta = JSON.parse(localStorage.getItem("atleta"));
-
   const [selectAtleta, setSelectAtleta] = useState(null);
   const showAtleta = selectAtleta ? selectAtleta : startingAtleta;
 
@@ -41,7 +40,7 @@ const MembriPage = () => {
       <TopBar />
       <Row>
         <Col lg={4}>
-          <div className="bgCiv p-4 rounded-4">
+          <div className="pastel-color p-4 rounded-4">
             <h2 className="text-center">Leggende dell&rsquo;Athleticus</h2>
             <Row className="g-2">
               {atleti?.map((membro, index) => (
