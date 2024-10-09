@@ -9,7 +9,6 @@ import {
   Legend,
 } from "chart.js";
 
-// Registrazione dei componenti di Chart.js
 ChartJS.register(
   RadialLinearScale,
   PointElement,
@@ -26,20 +25,20 @@ const RadarChart = ({ showAtleta }) => {
       {
         label: `Statistiche`,
         data: [
-          showAtleta?.valutazione.difesa,
-          showAtleta?.valutazione.velocità,
-          showAtleta?.valutazione.resistenza,
-          showAtleta?.valutazione.tiro,
-          showAtleta?.valutazione.tecnica,
+          showAtleta.valutazione?.difesa,
+          showAtleta.valutazione?.velocità,
+          showAtleta.valutazione?.resistenza,
+          showAtleta.valutazione?.tiro,
+          showAtleta.valutazione?.tecnica,
         ],
-        backgroundColor: "rgba(54, 162, 235, 0.2)", // Colore di sfondo dell'area del grafico
+        backgroundColor: "rgba(54, 162, 235, 0.6)", // Colore di sfondo dell'area del grafico
         borderColor: "white", // Colore del bordo del grafico
         borderWidth: 2, // Spessore del bordo del grafico
         pointBackgroundColor: "white", // Colore di sfondo dei punti sul grafico
         pointBorderColor: "white", // Colore del bordo dei punti
         pointBorderWidth: 2, // Spessore del bordo dei punti
-        pointHoverBackgroundColor: "rgba(255, 99, 132, 1)", // Colore di sfondo dei punti al passaggio del mouse
-        pointHoverBorderColor: "rgba(255, 99, 132, 1)", // Colore del bordo dei punti al passaggio del mouse
+        pointHoverBackgroundColor: "white", // Colore di sfondo dei punti al passaggio del mouse
+        pointHoverBorderColor: "white", // Colore del bordo dei punti al passaggio del mouse
         pointHoverRadius: 5, // Raggio dei punti al passaggio del mouse
       },
     ],
@@ -54,12 +53,31 @@ const RadarChart = ({ showAtleta }) => {
           display: false, // Nascondi i valori dei tick
         },
         grid: {
-          color: "rgba(255, 255, 255, 0.3)", // Colore della griglia del grafico
+          color: "white", // Colore della griglia del grafico
+        },
+        angleLines: {
+          color: "white", // Colore delle linee radiali
+        },
+        pointLabels: {
+          color: "white", // Colore delle etichette delle categorie
         },
       },
     },
     plugins: {
+      legend: {
+        labels: {
+          color: "white", // Colore del testo della legenda
+          font: {
+            size: 14, // Modifica la dimensione del testo della legenda
+          },
+        },
+      },
       tooltip: {
+        backgroundColor: "rgba(255, 255, 255, 0.9)", // Colore di sfondo del tooltip
+        titleColor: "black", // Colore del titolo del tooltip
+        bodyColor: "black", // Colore del testo all'interno del tooltip
+        borderColor: "rgba(0, 0, 0, 0.1)", // Colore del bordo del tooltip
+        borderWidth: 1, // Spessore del bordo del tooltip
         callbacks: {
           label: function (tooltipItem) {
             return `${tooltipItem.dataset.label}: ${tooltipItem.raw.toFixed(
@@ -71,7 +89,7 @@ const RadarChart = ({ showAtleta }) => {
     },
   };
 
-  return <Radar data={data} options={options} />;
+  return <Radar data={data} options={options} className="mx-auto" />;
 };
 
 export default RadarChart;
