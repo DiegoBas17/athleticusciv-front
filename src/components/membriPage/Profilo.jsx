@@ -1,5 +1,7 @@
 import { Col, Row } from "react-bootstrap";
 import RadarChart from "./RadarChart";
+import BarChart from "./BarChart";
+import DoughnutChart from "./DoughnutChart";
 
 const Profilo = ({ showAtleta }) => {
   console.log(showAtleta);
@@ -9,7 +11,6 @@ const Profilo = ({ showAtleta }) => {
       {showAtleta ? (
         <div className="civ-color p-4 rounded-4">
           <h1>Profilo</h1>
-
           <Row className="g-2">
             <Col lg={4}>
               <h2>
@@ -21,8 +22,6 @@ const Profilo = ({ showAtleta }) => {
                 style={{ width: "50%" }}
                 className="rounded-circle"
               />
-            </Col>
-            <Col lg={6}>
               <div>
                 <h3>Dati:</h3>
                 <div className="border border-1 rounded-4 p-2">
@@ -31,8 +30,6 @@ const Profilo = ({ showAtleta }) => {
                   <p>numero di telefono: {showAtleta.numeroTelefono}</p>
                 </div>
               </div>
-            </Col>
-            <Col lg={6}>
               <div className="border border-1 rounded-4 p-2">
                 <p>partite giocate: {showAtleta.partiteGiocate}</p>
                 <p>assist: {showAtleta.totaleAssist}</p>
@@ -43,8 +40,17 @@ const Profilo = ({ showAtleta }) => {
               </div>
             </Col>
             <Col lg={6}>
-              <div style={{ height: "20rem" }} className="rounded-4 p-3">
+              <div
+                style={{ height: "15rem" }}
+                className="rounded-4 p-3 mx-auto"
+              >
                 <RadarChart showAtleta={showAtleta} />
+              </div>
+              <div style={{ height: "15rem" }} className="rounded-4 p-3">
+                <BarChart showAtleta={showAtleta} />
+              </div>
+              <div style={{ height: "15rem" }} className="rounded-4 p-3">
+                <DoughnutChart showAtleta={showAtleta} />
               </div>
             </Col>
           </Row>
