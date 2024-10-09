@@ -1,13 +1,22 @@
-import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { Container, Dropdown, Nav, Navbar } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/athleticusCIVLogo.jpg";
 
 const TopBar = () => {
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    navigate("/login");
+  };
   return (
-    <Navbar expand="lg">
+    <Navbar
+      expand="lg"
+      className="civ-color rounded-4 my-2"
+      data-bs-theme="dark"
+    >
       <Container>
-        <NavLink to="/" className="nav-link">
+        <NavLink to="/" className="nav-link me-4">
           Athleticus CIV
         </NavLink>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -22,44 +31,21 @@ const TopBar = () => {
             <NavLink to="/eventi" className="nav-link">
               Eventi
             </NavLink>
-            <NavLink to="/" className="nav-link">
-              Valutazioni
-            </NavLink>
-            <NavLink to="/" className="nav-link">
-              Calendario
-            </NavLink>
           </Nav>
-          <div className="d-flex">
-            <img
-              src={logo}
-              style={{ height: "3vh" }}
-              className="rounded-circle"
-            />
-            <NavDropdown
-              id="basic-nav-dropdown"
-              align={"end"}
-              autoClose="outside"
-            >
-              <NavDropdown.Item
-                onClick={() => {
-                  navigate("/profilo/me");
-                }}
-              >
-                Profilo
-              </NavDropdown.Item>
-              <NavDropdown.Item
-                onClick={() => {
-                  navigate("/profilo");
-                }}
-              >
-                Formazioni
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Impostazioni
-              </NavDropdown.Item>
-            </NavDropdown>
-          </div>
+          <Dropdown align="end">
+            <Dropdown.Toggle as="span" id="dropdown-custom-components">
+              <img
+                src={logo}
+                style={{ height: "3vh", cursor: "pointer" }}
+                className="rounded-circle"
+                alt="Logo"
+              />
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </Navbar.Collapse>
       </Container>
     </Navbar>
