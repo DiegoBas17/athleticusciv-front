@@ -25,11 +25,11 @@ const TopBar = () => {
             <NavLink to="/" className="nav-link">
               Home
             </NavLink>
-            <NavLink to="/Legends-of-Athleticus" className="nav-link">
-              Membri
+            <NavLink to="/leggende-del-CIV" className="nav-link">
+              Leggende Del CIV
             </NavLink>
-            <NavLink to="/eventi" className="nav-link">
-              Eventi
+            <NavLink to="/partite" className="nav-link">
+              Partite
             </NavLink>
           </Nav>
           <Dropdown align="end">

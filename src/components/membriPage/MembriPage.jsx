@@ -39,6 +39,9 @@ const MembriPage = () => {
     <Container>
       <TopBar />
       <Row className="g-2">
+        <Col lg={8}>
+          <Profilo showAtleta={showAtleta} />
+        </Col>
         <Col lg={4}>
           <div className="civ-color p-4 rounded-4">
             <h2 className="text-center">Leggende dell&rsquo;Athleticus</h2>
@@ -60,9 +63,6 @@ const MembriPage = () => {
               </div>
             ))}
           </div>
-        </Col>
-        <Col lg={8}>
-          <Profilo showAtleta={showAtleta} />
         </Col>
       </Row>
     </Container>

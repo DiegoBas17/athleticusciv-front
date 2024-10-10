@@ -40,10 +40,7 @@ const Profilo = ({ showAtleta }) => {
               </div>
             </Col>
             <Col lg={6}>
-              <div
-                style={{ height: "15rem" }}
-                className="rounded-4 p-3 mx-auto"
-              >
+              <div style={{ height: "15rem" }} className="rounded-4 p-3">
                 <RadarChart showAtleta={showAtleta} />
               </div>
               <div style={{ height: "15rem" }} className="rounded-4 p-3">
