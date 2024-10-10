@@ -23,23 +23,30 @@ const RadarChart = ({ showAtleta }) => {
     labels: ["Difesa", "Velocità", "Resistenza", "Tiro", "Tecnica"],
     datasets: [
       {
-        label: `Statistiche`,
+        label: "Valutazione Admin",
         data: [
-          showAtleta.valutazione?.difesa,
-          showAtleta.valutazione?.velocità,
-          showAtleta.valutazione?.resistenza,
-          showAtleta.valutazione?.tiro,
-          showAtleta.valutazione?.tecnica,
+          showAtleta.valutazioneAdmin?.difesa,
+          showAtleta.valutazioneAdmin?.velocità,
+          showAtleta.valutazioneAdmin?.resistenza,
+          showAtleta.valutazioneAdmin?.tiro,
+          showAtleta.valutazioneAdmin?.tecnica,
         ],
-        backgroundColor: "rgba(54, 162, 235, 0.6)", // Colore di sfondo dell'area del grafico
-        borderColor: "white", // Colore del bordo del grafico
-        borderWidth: 2, // Spessore del bordo del grafico
-        pointBackgroundColor: "white", // Colore di sfondo dei punti sul grafico
-        pointBorderColor: "white", // Colore del bordo dei punti
-        pointBorderWidth: 2, // Spessore del bordo dei punti
-        pointHoverBackgroundColor: "white", // Colore di sfondo dei punti al passaggio del mouse
-        pointHoverBorderColor: "white", // Colore del bordo dei punti al passaggio del mouse
-        pointHoverRadius: 5, // Raggio dei punti al passaggio del mouse
+        backgroundColor: "rgba(255, 99, 132, 0.6)", // Colore di sfondo per valutazione admin
+        borderColor: "rgba(255, 99, 132, 1)", // Colore del bordo per valutazione admin
+        borderWidth: 2,
+      },
+      {
+        label: "Valutazione CIV",
+        data: [
+          showAtleta.valutazioneCIV?.difesa,
+          showAtleta.valutazioneCIV?.velocità,
+          showAtleta.valutazioneCIV?.resistenza,
+          showAtleta.valutazioneCIV?.tiro,
+          showAtleta.valutazioneCIV?.tecnica,
+        ],
+        backgroundColor: "rgba(54, 162, 235, 0.6)", // Colore di sfondo per valutazione CIV
+        borderColor: "rgba(54, 162, 235, 1)", // Colore del bordo per valutazione CIV
+        borderWidth: 2,
       },
     ],
   };
@@ -50,34 +57,34 @@ const RadarChart = ({ showAtleta }) => {
         min: 0,
         max: 10,
         ticks: {
-          display: false, // Nascondi i valori dei tick
+          display: false,
         },
         grid: {
-          color: "white", // Colore della griglia del grafico
+          color: "white",
         },
         angleLines: {
-          color: "white", // Colore delle linee radiali
+          color: "white",
         },
         pointLabels: {
-          color: "white", // Colore delle etichette delle categorie
+          color: "white",
         },
       },
     },
     plugins: {
       legend: {
         labels: {
-          color: "white", // Colore del testo della legenda
+          color: "white",
           font: {
-            size: 14, // Modifica la dimensione del testo della legenda
+            size: 14,
           },
         },
       },
       tooltip: {
-        backgroundColor: "rgba(255, 255, 255, 0.9)", // Colore di sfondo del tooltip
-        titleColor: "black", // Colore del titolo del tooltip
-        bodyColor: "black", // Colore del testo all'interno del tooltip
-        borderColor: "rgba(0, 0, 0, 0.1)", // Colore del bordo del tooltip
-        borderWidth: 1, // Spessore del bordo del tooltip
+        backgroundColor: "rgba(255, 255, 255, 0.9)",
+        titleColor: "black",
+        bodyColor: "black",
+        borderColor: "rgba(0, 0, 0, 0.1)",
+        borderWidth: 1,
         callbacks: {
           label: function (tooltipItem) {
             return `${tooltipItem.dataset.label}: ${tooltipItem.raw.toFixed(

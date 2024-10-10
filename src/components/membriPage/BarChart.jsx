@@ -8,7 +8,6 @@ import {
   Legend,
 } from "chart.js";
 
-// Registrazione dei componenti di Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
 const BarChart = ({ showAtleta }) => {
