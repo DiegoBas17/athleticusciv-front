@@ -4,8 +4,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginRegistrazionePage from "./components/login e registrazione/LoginRegistrazionePage";
 import Home from "./components/Home";
 import MembriPage from "./components/membriPage/MembriPage";
-import PartitaPage from "./components/PartitaPage";
 import PartitePage from "./components/PartitePage";
+import PrenotazioiniPage from "./components/PrenotazioiniPage";
 
 function App() {
   return (
@@ -15,7 +15,10 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/leggende-del-CIV" element={<MembriPage />} />
         <Route path="/partite" element={<PartitePage />} />
-        <Route path="/partite/:id" element={<PartitaPage />} />
+        <Route
+          path="/partite/prenotazioni/:partitaId"
+          element={<PrenotazioiniPage />}
+        />
       </Routes>
     </BrowserRouter>
   );
