@@ -1,9 +1,10 @@
 import { Container, Dropdown, Nav, Navbar } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
-import logo from "../assets/athleticusCIVLogo.jpg";
+import { useSelector } from "react-redux";
 
 const TopBar = () => {
   const navigate = useNavigate();
+  const atleta = useSelector((state) => state.atleta.atleta);
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
@@ -35,13 +36,12 @@ const TopBar = () => {
           <Dropdown align="end">
             <Dropdown.Toggle as="span" id="dropdown-custom-components">
               <img
-                src={logo}
+                src={atleta?.avatar}
                 style={{ height: "3vh", cursor: "pointer" }}
                 className="rounded-circle"
-                alt="Logo"
+                alt="avatar"
               />
             </Dropdown.Toggle>
-
             <Dropdown.Menu>
               <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
             </Dropdown.Menu>
