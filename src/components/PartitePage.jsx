@@ -17,6 +17,7 @@ const PartitePage = () => {
     orario: "",
     tipoPartita: "",
   });
+  const [editingPartita, setEditingPartita] = useState(null);
 
   const fetchPartite = () => {
     httpClient
@@ -131,8 +132,14 @@ const PartitePage = () => {
     const localDateTime = `${newPartita.data}T${newPartita.orario}`;
     const partitaData = { ...newPartita, data: localDateTime };
     console.log("Dati inviati:", partitaData);
-    httpClient
-      .post("/partite", { ...newPartita, data: localDateTime })
+    const request = editingPartita
+      ? httpClient.put(`/partite/${editingPartita}`, {
+          ...newPartita,
+          data: localDateTime,
+        })
+      : httpClient.post("/partite", { ...newPartita, data: localDateTime });
+
+    request
       .then((response) => {
         console.log("Partita creata:", response.data);
         setShowModal(false);
@@ -154,6 +161,7 @@ const PartitePage = () => {
       tipoPartita: partita.tipoPartita,
     });
     setShowModal(true);
+    setEditingPartita(partita.id);
   };
 
   const handleDeletePartita = (partitaId) => {
@@ -197,6 +205,7 @@ const PartitePage = () => {
                   luogo: "",
                   tipoPartita: "",
                 });
+                setEditingPartita(null);
                 setShowModal(true);
               }}
               style={{ cursor: "pointer" }}
@@ -399,8 +408,8 @@ const PartitePage = () => {
                 <option value="calciotto">Calciotto</option>
               </select>
             </div>
-            <Button variant="primary" type="submit">
-              Crea Partita
+            <Button type="submit">
+              {editingPartita ? "Aggiorna Partita" : "Crea Partita"}
             </Button>
           </form>
         </Modal.Body>
