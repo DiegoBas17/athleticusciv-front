@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import MembriPage from "./components/membriPage/MembriPage";
 import PartitePage from "./components/PartitePage";
 import PrenotazioiniPage from "./components/PrenotazioiniPage";
+import StatistichePartite from "./components/StatistichePartite";
 
 function App() {
   return (
@@ -18,6 +19,10 @@ function App() {
         <Route
           path="/partite/prenotazioni/:partitaId"
           element={<PrenotazioiniPage />}
+        />
+        <Route
+          path="/partite/statistiche/:partitaId"
+          element={<StatistichePartite />}
         />
       </Routes>
     </BrowserRouter>
