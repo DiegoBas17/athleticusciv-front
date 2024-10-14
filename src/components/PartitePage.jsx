@@ -318,8 +318,13 @@ const PartitePage = () => {
                       >
                         Modifica prenotazioni
                       </Dropdown.Item>
-                      <Dropdown.Item as="button">
-                        Crea statistiche
+                      <Dropdown.Item
+                        as="button"
+                        onClick={() => {
+                          navigate(`/partite/statistiche/${partita.id}`);
+                        }}
+                      >
+                        Vai a statistiche
                       </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
