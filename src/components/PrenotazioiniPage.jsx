@@ -9,6 +9,7 @@ const PrenotazioiniPage = () => {
   const [partita, setPartita] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [statoPrenotazione, setStatoPrenotazione] = useState(null);
+  const [prenotazioneSelezionata, setPrenotazioneSelezionata] = useState(null);
 
   const fetchPartita = () => {
     httpClient
@@ -127,8 +128,32 @@ const PrenotazioiniPage = () => {
       });
   };
 
-  const handleEditPrenotazione = (prenotazioneId) => {
+  const handleEditPrenotazione = (prenotazione) => {
+    setPrenotazioneSelezionata(prenotazione);
     setShowModal(true);
+  };
+
+  const handleSavePrenotazione = (event) => {
+    event.preventDefault();
+
+    const updatedPrenotazione = {
+      ...prenotazioneSelezionata,
+      statoPrenotazione,
+    };
+
+    httpClient
+      .put(
+        `/prenotazioni-partite/${prenotazioneSelezionata.id}`,
+        updatedPrenotazione
+      )
+      .then((response) => {
+        console.log(response);
+        fetchPartita();
+        setShowModal(false);
+      })
+      .catch((error) => {
+        console.log("Errore nella modifica della prenotazione:", error);
+      });
   };
 
   return (
@@ -184,9 +209,7 @@ const PrenotazioiniPage = () => {
                       <Dropdown.Menu>
                         <Dropdown.Item
                           as="button"
-                          onClick={() =>
-                            handleEditPrenotazione(prenotazione.id)
-                          }
+                          onClick={() => handleEditPrenotazione(prenotazione)}
                         >
                           Modifica Prenotazione
                         </Dropdown.Item>
@@ -216,25 +239,27 @@ const PrenotazioiniPage = () => {
           <Modal.Title>Modifica Prenotazione</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form>
+          <form onSubmit={handleSavePrenotazione}>
             <div className="mb-3">
-              <label className="form-label">Tipo Partita</label>
+              <label className="form-label">Stato Prenotazione</label>
               <select
                 className="form-select"
-                value={statoPrenotazione}
-                onChange={(e) =>
-                  setStatoPrenotazione({ statoPrenotazione: e.target.value })
+                value={
+                  statoPrenotazione ||
+                  prenotazioneSelezionata?.statoPrenotazione ||
+                  ""
                 }
+                onChange={(e) => setStatoPrenotazione(e.target.value)}
                 required
               >
-                <option value="">Seleziona il tipo di partita</option>
-                <option value="calcio">Calcio</option>
-                <option value="calcetto">Calcetto</option>
-                <option value="calciotto">Calciotto</option>
+                <option value="">Seleziona lo stato</option>
+                <option value="ATTESA">Attesa</option>
+                <option value="APPROVATA">Approvata</option>
+                <option value="RIFIUTATA">Rifiutata</option>
               </select>
             </div>
             <Button variant="primary" type="submit">
-              Crea Partita
+              Salva Modifiche
             </Button>
           </form>
         </Modal.Body>
