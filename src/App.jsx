@@ -2,11 +2,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginRegistrazionePage from "./components/login e registrazione/LoginRegistrazionePage";
-import Home from "./components/Home";
 import MembriPage from "./components/membriPage/MembriPage";
-import PartitePage from "./components/PartitePage";
-import PrenotazioiniPage from "./components/PrenotazioiniPage";
-import StatistichePartite from "./components/StatistichePartite";
+import Home from "./components/home/Home";
+import PartitePage from "./components/partitePage/PartitePage";
+import PrenotazioiniPage from "./components/partitePage/PrenotazioiniPage";
+import StatistichePartite from "./components/partitePage/StatistichePartite";
 
 function App() {
   return (
