@@ -1,5 +1,5 @@
 import { Container } from "react-bootstrap";
-import TopBar from "./TopBar";
+import TopBar from "../TopBar";
 
 const Home = () => {
   return (
