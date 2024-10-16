@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
-import TopBar from "./TopBar";
 import { Button, Col, Container, Dropdown, Modal, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import httpClient from "../services/httpClient";
+import httpClient from "../../services/httpClient";
+import TopBar from "../TopBar";
 
 const PrenotazioiniPage = () => {
   const { partitaId } = useParams();
@@ -162,7 +162,9 @@ const PrenotazioiniPage = () => {
       {partita && (
         <div className="civ-color p-4 rounded-4">
           <h1>Prenotazini Partita</h1>
-          <h6>{getDateInfo(partita.data).mese}</h6>
+          <h6>
+            {getDateInfo(partita.data).mese} - {partita.tipoPartita}
+          </h6>
           <p>
             {getDateInfo(partita.data).giornoDellaSettimana}{" "}
             {getDateInfo(partita.data).numeroDelGiorno} ore:{" "}
