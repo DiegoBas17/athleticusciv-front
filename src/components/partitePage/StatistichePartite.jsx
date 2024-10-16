@@ -1,8 +1,10 @@
 import { Button, Container, Form, Modal } from "react-bootstrap";
-import TopBar from "./TopBar";
-import httpClient from "../services/httpClient";
+import httpClient from "../../services/httpClient";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import TopBar from "../TopBar";
+import StarRating from "./StarRating";
 
 const StatistichePartite = () => {
   const { partitaId } = useParams();
@@ -33,6 +35,7 @@ const StatistichePartite = () => {
     analisiAllenatore: "",
   });
   const [showFormTracker, setShowFormTracker] = useState();
+  const atleta = useSelector((state) => state.atleta.atleta);
 
   const getDateInfo = (data) => {
     const mesi = [
@@ -145,13 +148,19 @@ const StatistichePartite = () => {
       });
   };
 
+  const isAdminOrSuperadmin = () => {
+    return atleta.ruolo === "ADMIN" || atleta.ruolo === "SUPERADMIN";
+  };
+
   return (
     <Container>
       <TopBar />
       {partita && partita.statistiche.length !== 0 ? (
         <div className="civ-color p-4 rounded-4">
           <h1>Statistiche Partita</h1>
-          <h6>{getDateInfo(partita.data).mese}</h6>
+          <h6>
+            {getDateInfo(partita.data).mese} - {partita.tipoPartita}
+          </h6>
           <p>
             {getDateInfo(partita.data).giornoDellaSettimana}{" "}
             {getDateInfo(partita.data).numeroDelGiorno} ore:{" "}
@@ -178,7 +187,7 @@ const StatistichePartite = () => {
                     ? "Nascondi Dettagli Tracker"
                     : "Mostra Dettagli Tracker"}
                 </button>
-              ) : (
+              ) : isAdminOrSuperadmin() ? (
                 <button
                   className="btn btn-secondary"
                   onClick={() => {
@@ -186,23 +195,31 @@ const StatistichePartite = () => {
                     setStatisticaId(statistica.id);
                   }}
                 >
-                  Aggiugi Tracker
+                  Aggiungi Tracker
                 </button>
+              ) : (
+                <></>
               )}
-              <Button
-                onClick={() => {
-                  setShowModal(true);
-                  setModificaStatistica({
-                    ...modificaStatistica,
-                    coloreSquadra: statistica.coloreSquadra,
-                    gol: statistica.gol,
-                    assist: statistica.assist,
-                  });
-                  setStatisticaId(statistica.id);
-                }}
-              >
-                Modifica statistica
-              </Button>
+              {isAdminOrSuperadmin() ? (
+                <Button
+                  onClick={() => {
+                    setShowModal(true);
+                    setModificaStatistica({
+                      ...modificaStatistica,
+                      coloreSquadra: statistica.coloreSquadra,
+                      gol: statistica.gol,
+                      assist: statistica.assist,
+                    });
+                    setStatisticaId(statistica.id);
+                  }}
+                >
+                  Modifica statistica
+                </Button>
+              ) : (
+                <></>
+              )}
+              <Button>Vota {statistica.atleta.cognome}</Button>
+              <StarRating statistica={statistica} />
               {showTrackerDetails && (
                 <div className="mt-3 p-3 border border-secondary rounded">
                   <h5>Dettagli Tracker</h5>
