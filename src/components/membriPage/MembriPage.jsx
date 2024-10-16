@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import httpClient from "../../services/httpClient";
 import Profilo from "./Profilo";
-import "./membriPage.scss";
+import "./membriPage.css";
 
 const MembriPage = () => {
   const [atleti, setAtleti] = useState(null);
