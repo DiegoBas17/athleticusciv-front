@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import TopBar from "./TopBar";
 import { Button, Col, Container, Dropdown, Modal, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import httpClient from "../services/httpClient";
 import { useSelector } from "react-redux";
+import TopBar from "../TopBar";
+import httpClient from "../../services/httpClient";
 
 const PartitePage = () => {
   const [partite, setPartite] = useState(null);
@@ -21,7 +21,7 @@ const PartitePage = () => {
 
   const fetchPartite = () => {
     httpClient
-      .get("/partite")
+      .get("/partite?sortBy=data")
       .then((response) => {
         setPartite(response.data.content);
         console.log(partite);
@@ -117,7 +117,7 @@ const PartitePage = () => {
   };
 
   const isAdminOrSuperadmin = () => {
-    return atleta.ruolo === "ADMIN" || atleta.ruolo === "SUPERADMIN";
+    return atleta?.ruolo === "ADMIN" || atleta?.ruolo === "SUPERADMIN";
   };
 
   const getPrenotazioneId = (partita) => {
@@ -190,7 +190,7 @@ const PartitePage = () => {
       <div className="civ-color p-4 rounded-4">
         <div className="d-flex justify-content-between align-items-center">
           <h1>Partite Del CIV</h1>
-          {isAdminOrSuperadmin && (
+          {isAdminOrSuperadmin() && (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="25"
@@ -343,6 +343,17 @@ const PartitePage = () => {
                       onClick={() => handlePrenotati(partita.id)}
                     >
                       Prenotati
+                    </Button>
+                  )}
+                  {partita.statistiche.length == 0 ? (
+                    <></>
+                  ) : (
+                    <Button
+                      onClick={() => {
+                        navigate(`/partite/statistiche/${partita.id}`);
+                      }}
+                    >
+                      Vai alle statistiche
                     </Button>
                   )}
                 </div>
