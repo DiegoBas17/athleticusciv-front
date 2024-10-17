@@ -37,7 +37,7 @@ const TopBar = () => {
             <Dropdown.Toggle as="span" id="dropdown-custom-components">
               <img
                 src={atleta?.avatar}
-                style={{ height: "3vh", cursor: "pointer" }}
+                style={{ height: "2rem", width: "2rem", cursor: "pointer" }}
                 className="rounded-circle"
                 alt="avatar"
               />
