@@ -1,9 +1,8 @@
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import ChartDataLabels from "chartjs-plugin-datalabels"; // Importa il plugin
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
-// Registrazione dei componenti di Chart.js
-ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels); // Registra il plugin
+ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
 const DoughnutChart = ({ showAtleta }) => {
   const data = {

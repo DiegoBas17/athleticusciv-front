@@ -1,3 +1,4 @@
+import "./membriPage.css";
 import { useEffect, useState } from "react";
 import TopBar from "../TopBar";
 import { Col, Container, Row } from "react-bootstrap";
@@ -5,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import httpClient from "../../services/httpClient";
 import Profilo from "./Profilo";
-import "./membriPage.css";
 
 const MembriPage = () => {
   const [atleti, setAtleti] = useState(null);
@@ -40,7 +40,12 @@ const MembriPage = () => {
       <TopBar />
       <Row className="g-2">
         <Col lg={8}>
-          <Profilo showAtleta={showAtleta} />
+          <Profilo
+            showAtleta={showAtleta}
+            meProfile={startingAtleta}
+            fetchAtleta={fetchAtleta}
+            setSelectAtleta={setSelectAtleta}
+          />
         </Col>
         <Col lg={4}>
           <div className="civ-color p-4 rounded-4">

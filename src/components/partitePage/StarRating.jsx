@@ -38,11 +38,13 @@ const StarRating = ({ statistica }) => {
         .put(`/voti/${existingVote.id}`, { voto: value })
         .then((response) => {
           console.log("Voto aggiornato:", response);
-          setExistingVote({ ...existingVote, voto: value });
+          const updatedVote = { ...existingVote, voto: value };
+          setExistingVote(updatedVote);
           const updatedVotes = statistica.voti.map((v) =>
             v.atleta.id === atleta.id ? { ...v, voto: value } : v
           );
           calculateAverageVote(updatedVotes);
+          statistica.voti = updatedVotes;
         })
         .catch((error) => {
           console.error("Errore durante l'aggiornamento del voto:", error);
@@ -56,11 +58,15 @@ const StarRating = ({ statistica }) => {
         })
         .then((response) => {
           console.log("Voto salvato:", response);
-          setExistingVote(response.id);
-          const updatedVotes = statistica.voti.map((v) =>
-            v.atleta.id === atleta.id ? { ...v, voto: value } : v
-          );
+          const newVote = {
+            id: response.data.id,
+            atleta: { id: atleta.id },
+            voto: value,
+          };
+          setExistingVote(newVote);
+          const updatedVotes = [...statistica.voti, newVote];
           calculateAverageVote(updatedVotes);
+          statistica.voti = updatedVotes;
         })
         .catch((error) => {
           console.error("Errore durante il salvataggio del voto:", error);
