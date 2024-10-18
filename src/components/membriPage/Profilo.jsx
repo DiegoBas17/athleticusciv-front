@@ -76,8 +76,6 @@ const Profilo = ({ showAtleta, meProfile, fetchAtleta, setSelectAtleta }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("dati inviati atleta", atleta);
-
     const endpoint = isMeProfile() ? `/atleti/me` : `/atleti/${showAtleta.id}`;
     httpClient
       .put(endpoint, atleta)
