@@ -1,4 +1,4 @@
-import { Button, Col, Modal, Row } from "react-bootstrap";
+import { Button, Col, Dropdown, Modal, Row } from "react-bootstrap";
 import RadarChart from "./RadarChart";
 import BarChart from "./BarChart";
 import DoughnutChart from "./DoughnutChart";
@@ -23,6 +23,22 @@ const Profilo = ({ showAtleta, meProfile, fetchAtleta, setSelectAtleta }) => {
   });
   const [file, setFile] = useState(null);
   const [showModalAvatar, setShowModalAvatar] = useState(false);
+  const [showModalAuthorization, setShowModalAuthorization] = useState(false);
+  const [authorization, setAuthorization] = useState({
+    ruolo: "",
+  });
+  const [valutazione, setValutazione] = useState({
+    difesa: 0,
+    velocità: 0,
+    resistenza: 0,
+    tiro: 0,
+    tecnica: 0,
+  });
+  const [showModalValutazione, setShowModalValutazione] = useState(false);
+  const [valutazioneSelected, setValutazioneSelected] = useState({
+    id: "",
+    tipoValutazione: "",
+  });
 
   const isMeProfile = () => {
     return showAtleta?.id == meProfile?.id;
@@ -113,6 +129,61 @@ const Profilo = ({ showAtleta, meProfile, fetchAtleta, setSelectAtleta }) => {
     }
   };
 
+  const handleUpdateAuthorization = (e) => {
+    e.preventDefault();
+    httpClient
+      .patch(`/atleti/${showAtleta.id}/authorization`, authorization)
+      .then((response) => {
+        console.log("Autorizzazione aggiornata con successo", response);
+        setSelectAtleta({
+          ...showAtleta,
+          ruolo: authorization.ruolo.toUpperCase(),
+        });
+        fetchAtleta();
+        setShowModalAuthorization(false);
+      })
+      .catch((error) => {
+        console.log("Errore nella richiesta:", error);
+      });
+  };
+
+  const handleUpadteValutazione = (e) => {
+    e.preventDefault();
+    httpClient
+      .put(`/valutazioni/${valutazioneSelected.id}`, valutazione)
+      .then((response) => {
+        console.log("Valutazione aggiornata con successo", response);
+        setSelectAtleta((prevAtleta) => ({
+          ...prevAtleta,
+          [valutazioneSelected.tipoValutazione === "valutazioneAdmin"
+            ? "valutazioneAdmin"
+            : "valutazioneCIV"]: {
+            ...valutazione,
+          },
+        }));
+        fetchAtleta();
+        setShowModalValutazione(false);
+      })
+      .catch((error) => {
+        console.log("Errore nella richiesta:", error);
+      });
+  };
+
+  const handleOpenModalValutazione = (tipo, valutazioneData) => {
+    setValutazioneSelected({
+      id: valutazioneData.id,
+      tipoValutazione: tipo,
+    });
+    setValutazione({
+      difesa: valutazioneData.difesa,
+      velocità: valutazioneData.velocità,
+      resistenza: valutazioneData.resistenza,
+      tiro: valutazioneData.tiro,
+      tecnica: valutazioneData.tecnica,
+    });
+    setShowModalValutazione(true);
+  };
+
   return (
     <div>
       {showAtleta ? (
@@ -136,7 +207,7 @@ const Profilo = ({ showAtleta, meProfile, fetchAtleta, setSelectAtleta }) => {
                 <div className="d-flex justify-content-between">
                   <p>Membro CIV: {showAtleta.ruolo}</p>{" "}
                   {(isMeProfile() || admin) && (
-                    <div>
+                    <div onClick={() => setShowModalAuthorization(true)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="16"
@@ -215,7 +286,43 @@ const Profilo = ({ showAtleta, meProfile, fetchAtleta, setSelectAtleta }) => {
               </div>
             </Col>
             <Col lg={6}>
-              <div style={{ height: "15rem" }} className="rounded-4 p-3">
+              <div style={{ height: "20rem" }} className="rounded-4 p-3">
+                <Dropdown align="end">
+                  <Dropdown.Toggle as="span" id="dropdown-custom-components">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      className="bi bi-gear-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
+                    </svg>
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item
+                      onClick={() =>
+                        handleOpenModalValutazione(
+                          "valutazioneAdmin",
+                          showAtleta.valutazioneAdmin
+                        )
+                      }
+                    >
+                      Modifica Valutazione Admin
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() =>
+                        handleOpenModalValutazione(
+                          "valutazioneCIV",
+                          showAtleta.valutazioneCIV
+                        )
+                      }
+                    >
+                      Modifica Valutazione CIV
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
                 <RadarChart showAtleta={showAtleta} />
               </div>
               <div style={{ height: "15rem" }} className="rounded-4 p-3">
@@ -351,6 +458,47 @@ const Profilo = ({ showAtleta, meProfile, fetchAtleta, setSelectAtleta }) => {
         </Modal.Body>
       </Modal>
       <Modal
+        show={showModalAuthorization}
+        onHide={() => setShowModalAuthorization(false)}
+        className="text-black"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Modifica Autorizzazione</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form onSubmit={handleUpdateAuthorization}>
+            <div className="mb-3">
+              <label className="form-label">Ruolo nel CIV</label>
+              <select
+                className="form-select"
+                value={authorization.ruolo}
+                onChange={(e) =>
+                  setAuthorization({
+                    ruolo: e.target.value,
+                  })
+                }
+                required
+              >
+                <option value="">Seleziona il ruolo nel CIV</option>
+                <option value="VISITATORE">Visitatore</option>
+                <option value="ATLETA">Atleta</option>
+                <option value="ADMIN">Admin</option>
+                <option value="SUPERADMIN">SuperAdmin</option>
+              </select>
+            </div>
+            <Button type="submit">Aggiorna Ruolo</Button>
+          </form>
+          <Modal.Footer>
+            <Button
+              type="button"
+              onClick={() => setShowModalAuthorization(false)}
+            >
+              Chiudi
+            </Button>
+          </Modal.Footer>
+        </Modal.Body>
+      </Modal>
+      <Modal
         show={showModalAtleta}
         onHide={() => setShowModalAtleta(false)}
         className="text-black"
@@ -447,6 +595,118 @@ const Profilo = ({ showAtleta, meProfile, fetchAtleta, setSelectAtleta }) => {
           <Button variant="secondary" onClick={() => setShowModalAtleta(false)}>
             Annulla
           </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal
+        show={showModalValutazione}
+        onHide={() => setShowModalValutazione(false)}
+        className="text-black"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Modifica Valutazione</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form onSubmit={handleUpadteValutazione}>
+            <div className="mb-3">
+              <label>
+                Difesa:
+                <input
+                  type="number"
+                  name="difesa"
+                  min="0"
+                  max="100"
+                  value={valutazione.difesa}
+                  onChange={(e) =>
+                    setValutazione({
+                      ...valutazione,
+                      difesa: e.target.value,
+                    })
+                  }
+                  required
+                />
+              </label>
+            </div>
+            <div className="mb-3">
+              <label>
+                Velocità:
+                <input
+                  type="number"
+                  name="velocita"
+                  min="0"
+                  max="100"
+                  value={valutazione.velocità}
+                  onChange={(e) =>
+                    setValutazione({
+                      ...valutazione,
+                      velocità: e.target.value,
+                    })
+                  }
+                  required
+                />
+              </label>
+            </div>
+            <div className="mb-3">
+              <label>
+                Resistenza:
+                <input
+                  type="number"
+                  name="resistenza"
+                  min="0"
+                  max="100"
+                  value={valutazione.resistenza}
+                  onChange={(e) =>
+                    setValutazione({
+                      ...valutazione,
+                      resistenza: e.target.value,
+                    })
+                  }
+                  required
+                />
+              </label>
+            </div>
+            <div className="mb-3">
+              <label>
+                Tiro:
+                <input
+                  type="number"
+                  name="tiro"
+                  min="0"
+                  max="100"
+                  value={valutazione.tiro}
+                  onChange={(e) =>
+                    setValutazione({
+                      ...valutazione,
+                      tiro: e.target.value,
+                    })
+                  }
+                  required
+                />
+              </label>
+            </div>
+            <div className="mb-3">
+              <label>
+                Tecnica:
+                <input
+                  type="number"
+                  name="tecnica"
+                  min="0"
+                  max="100"
+                  value={valutazione.tecnica}
+                  onChange={(e) =>
+                    setValutazione({
+                      ...valutazione,
+                      tecnica: e.target.value,
+                    })
+                  }
+                  required
+                />
+              </label>
+            </div>
+            <Button type="submit">Salva</Button>
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <button onClick={() => setShowModalValutazione(false)}>Chiudi</button>
         </Modal.Footer>
       </Modal>
     </div>
