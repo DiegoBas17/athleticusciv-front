@@ -1,11 +1,18 @@
 body {
-  background-color: #778089;
+  color: #004aad;
+  font-family: "Montserrat Alternates", sans-serif;
+  font-weight: 300;
+  font-style: italic;
 }
 
 .civ-color {
-  background-color: #1a1d1f;
+  background-color: #f1f1f1;
 }
 
 .civ-secondColor {
-  background-color: #778089;
+  background-color: rgb(94, 23, 23);
+}
+
+.boxShadowCiv {
+  border: 1px solid #004aad;
 }
