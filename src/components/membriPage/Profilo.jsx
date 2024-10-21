@@ -188,68 +188,102 @@ const Profilo = ({ showAtleta, meProfile, fetchAtleta, setSelectAtleta }) => {
         <div className="civ-color p-4 rounded-4">
           <h1>Profilo</h1>
           <Row className="g-2">
-            <Col lg={4}>
-              <h2>
-                {showAtleta.nome} {showAtleta.cognome}
-              </h2>
-              <div onClick={() => modalAvatar()}>
-                <img
-                  src={showAtleta.avatar}
-                  alt="avatar"
-                  style={{ width: "10rem", height: "10rem" }}
-                  className="rounded-circle"
-                />
-              </div>
-              <div>
-                <h3>Dati:</h3>
-                <div className="d-flex justify-content-between">
-                  <p>Membro CIV: {showAtleta.ruolo}</p>{" "}
-                  {(isMeProfile() || admin) && (
-                    <div onClick={() => setShowModalAuthorization(true)}>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        fill="currentColor"
-                        className="bi bi-pencil"
-                        viewBox="0 0 16 16"
-                      >
-                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
-                      </svg>
-                    </div>
-                  )}
-                </div>
-                <div className="border border-1 rounded-4 p-2">
-                  <div className="d-flex justify-content-between">
-                    <p>email: {showAtleta.email}</p>
-                    {(isMeProfile() || admin) && (
-                      <div
-                        onClick={() => {
-                          setShowModalAtleta(true),
-                            setAtleta({
-                              nome: showAtleta.nome || "",
-                              cognome: showAtleta.cognome || "",
-                              email: showAtleta.email || "",
-                              numeroDiCellulare:
-                                showAtleta.numeroTelefono || "",
-                              password: "",
-                            });
-                        }}
-                      >
+            <Col lg={5}>
+              <div className="d-flex justify-content-between align-items-center">
+                <h2>
+                  {showAtleta.nome} {showAtleta.cognome}
+                </h2>
+                {(isMeProfile() || admin) && (
+                  <Dropdown align="end">
+                    <Dropdown.Toggle as="span" id="dropdown-custom-components">
+                      {isMeProfile() ? (
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="16"
                           height="16"
                           fill="currentColor"
-                          className="bi bi-pencil"
+                          className="bi bi-gear-fill mb-1"
                           viewBox="0 0 16 16"
                         >
-                          <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
+                          <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
                         </svg>
-                      </div>
-                    )}
-                  </div>
-                  <p>numero di telefono: {showAtleta.numeroTelefono}</p>
+                      ) : (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          className="bi bi-person-fill-gear"
+                          viewBox="0 0 16 16"
+                        >
+                          <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0" />
+                        </svg>
+                      )}
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item
+                        onClick={() => {
+                          setShowModalAtleta(true),
+                            setAtleta({
+                              nome: showAtleta.nome,
+                              cognome: showAtleta.cognome,
+                              email: showAtleta.email,
+                              numeroDiCellulare: showAtleta.numeroTelefono,
+                              password: "",
+                            });
+                        }}
+                      >
+                        Modifica dati personali
+                      </Dropdown.Item>
+                      <Dropdown.Item onClick={() => setShowModal(true)}>
+                        Modifica ruoli preferti
+                      </Dropdown.Item>
+                      <Dropdown.Item onClick={() => modalAvatar()}>
+                        Modifica immagine profilo
+                      </Dropdown.Item>
+                      {admin && (
+                        <>
+                          <Dropdown.Item
+                            onClick={() => setShowModalAuthorization(true)}
+                          >
+                            Modifica Autorizzazione
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            onClick={() =>
+                              handleOpenModalValutazione(
+                                "valutazioneAdmin",
+                                showAtleta.valutazioneAdmin
+                              )
+                            }
+                          >
+                            Modifica Valutazione Admin
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            onClick={() =>
+                              handleOpenModalValutazione(
+                                "valutazioneCIV",
+                                showAtleta.valutazioneCIV
+                              )
+                            }
+                          >
+                            Modifica Valutazione CIV
+                          </Dropdown.Item>
+                        </>
+                      )}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                )}
+              </div>
+              <img
+                src={showAtleta.avatar}
+                alt="avatar"
+                style={{ width: "10rem", height: "10rem" }}
+                className="rounded-circle"
+              />
+              <div>
+                <h3>Dati:</h3>
+                <div className="d-flex justify-content-between">
+                  <p>Membro CIV: {showAtleta.ruolo}</p>
                 </div>
               </div>
               <div className="border border-1 rounded-4 p-2">
@@ -258,20 +292,6 @@ const Profilo = ({ showAtleta, meProfile, fetchAtleta, setSelectAtleta }) => {
                     Ruolo in campo Principale:{" "}
                     {showAtleta?.ruoloInCampoPrimario}
                   </p>
-                  {(isMeProfile() || admin) && (
-                    <div onClick={() => setShowModal(true)}>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        fill="currentColor"
-                        className="bi bi-pencil"
-                        viewBox="0 0 16 16"
-                      >
-                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
-                      </svg>
-                    </div>
-                  )}
                 </div>
                 <p>
                   Ruolo in campo Secondario:{" "}
@@ -283,44 +303,8 @@ const Profilo = ({ showAtleta, meProfile, fetchAtleta, setSelectAtleta }) => {
                 </p>
               </div>
             </Col>
-            <Col lg={6}>
+            <Col lg={7}>
               <div style={{ height: "20rem" }} className="rounded-4 p-3">
-                <Dropdown align="end">
-                  <Dropdown.Toggle as="span" id="dropdown-custom-components">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      className="bi bi-gear-fill"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
-                    </svg>
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item
-                      onClick={() =>
-                        handleOpenModalValutazione(
-                          "valutazioneAdmin",
-                          showAtleta.valutazioneAdmin
-                        )
-                      }
-                    >
-                      Modifica Valutazione Admin
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      onClick={() =>
-                        handleOpenModalValutazione(
-                          "valutazioneCIV",
-                          showAtleta.valutazioneCIV
-                        )
-                      }
-                    >
-                      Modifica Valutazione CIV
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
                 <RadarChart showAtleta={showAtleta} />
               </div>
               <div style={{ height: "15rem" }} className="rounded-4 p-3">

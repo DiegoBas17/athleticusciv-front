@@ -11,11 +11,7 @@ const TopBar = () => {
     navigate("/login");
   };
   return (
-    <Navbar
-      expand="lg"
-      className="civ-color rounded-4 my-2"
-      data-bs-theme="dark"
-    >
+    <Navbar expand="lg" className="civ-color rounded-4 my-2 p-2">
       <Container>
         <NavLink to="/" className="nav-link me-4">
           Athleticus CIV

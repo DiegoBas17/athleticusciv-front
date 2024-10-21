@@ -54,7 +54,10 @@ const MembriPage = () => {
               <div
                 key={index}
                 className="border-bottom d-flex justify-content-between mt-2"
-                onClick={() => setSelectAtleta(membro)}
+                onClick={() => {
+                  setSelectAtleta(membro);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
               >
                 <p>
                   {membro.nome} {membro.cognome}
