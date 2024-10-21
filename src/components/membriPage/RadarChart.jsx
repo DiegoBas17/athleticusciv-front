@@ -31,8 +31,8 @@ const RadarChart = ({ showAtleta }) => {
           showAtleta.valutazioneAdmin?.tiro,
           showAtleta.valutazioneAdmin?.tecnica,
         ],
-        backgroundColor: "rgba(255, 99, 132, 0.6)", // Colore di sfondo per valutazione admin
-        borderColor: "rgba(255, 99, 132, 1)", // Colore del bordo per valutazione admin
+        backgroundColor: "rgba(255, 99, 132, 0.6)", // Sfondo per valutazione admin
+        borderColor: "rgba(255, 99, 132, 1)", // Bordo per valutazione admin
         borderWidth: 2,
       },
       {
@@ -44,8 +44,8 @@ const RadarChart = ({ showAtleta }) => {
           showAtleta.valutazioneCIV?.tiro,
           showAtleta.valutazioneCIV?.tecnica,
         ],
-        backgroundColor: "rgba(54, 162, 235, 0.6)", // Colore di sfondo per valutazione CIV
-        borderColor: "rgba(54, 162, 235, 1)", // Colore del bordo per valutazione CIV
+        backgroundColor: "rgba(54, 162, 235, 0.6)", // Sfondo per valutazione CIV
+        borderColor: "rgba(54, 162, 235, 1)", // Bordo per valutazione CIV
         borderWidth: 2,
       },
     ],
@@ -60,20 +60,20 @@ const RadarChart = ({ showAtleta }) => {
           display: false,
         },
         grid: {
-          color: "white",
+          color: "#004aad", // Colore del reticolo
         },
         angleLines: {
-          color: "white",
+          color: "#004aad", // Colore delle linee degli angoli
         },
         pointLabels: {
-          color: "white",
+          color: "#004aad", // Colore delle etichette dei punti
         },
       },
     },
     plugins: {
       legend: {
         labels: {
-          color: "white",
+          color: "#004aad", // Colore delle etichette nella legenda
           font: {
             size: 14,
           },

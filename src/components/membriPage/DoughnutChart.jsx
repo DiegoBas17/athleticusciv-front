@@ -33,8 +33,13 @@ const DoughnutChart = ({ showAtleta }) => {
   const options = {
     responsive: true,
     plugins: {
+      legend: {
+        labels: {
+          color: "#004aad", // Colore delle etichette della legenda
+        },
+      },
       datalabels: {
-        color: "white", // Colore del testo
+        color: "#004aad", // Colore del testo dei numeri all'interno della ciambella
         formatter: (value) => value.toFixed(2), // Formattazione dei numeri
         font: {
           weight: "light",
