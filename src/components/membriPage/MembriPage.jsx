@@ -48,7 +48,7 @@ const MembriPage = () => {
           />
         </Col>
         <Col lg={4}>
-          <div className="civ-color p-4 rounded-4">
+          <div className="civ-color p-4 rounded-4 border border-3">
             <h2 className="text-center">Leggende dell&rsquo;Athleticus</h2>
             {atleti?.map((membro, index) => (
               <div

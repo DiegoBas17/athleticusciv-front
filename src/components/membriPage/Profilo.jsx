@@ -185,7 +185,7 @@ const Profilo = ({ showAtleta, meProfile, fetchAtleta, setSelectAtleta }) => {
   return (
     <div>
       {showAtleta ? (
-        <div className="civ-color p-4 rounded-4">
+        <div className="civ-color p-4 rounded-4 border border-3">
           <h1>Profilo</h1>
           <Row className="g-2">
             <Col lg={5}>
@@ -281,18 +281,13 @@ const Profilo = ({ showAtleta, meProfile, fetchAtleta, setSelectAtleta }) => {
                 className="rounded-circle"
               />
               <div>
-                <h3>Dati:</h3>
-                <div className="d-flex justify-content-between">
-                  <p>Membro CIV: {showAtleta.ruolo}</p>
-                </div>
+                <h3 className="mt-3">Dati:</h3>
               </div>
               <div className="border border-1 rounded-4 p-2">
-                <div className="d-flex justify-content-between">
-                  <p>
-                    Ruolo in campo Principale:{" "}
-                    {showAtleta?.ruoloInCampoPrimario}
-                  </p>
-                </div>
+                <p>Membro CIV: {showAtleta.ruolo}</p>
+                <p>
+                  Ruolo in campo Principale: {showAtleta?.ruoloInCampoPrimario}
+                </p>
                 <p>
                   Ruolo in campo Secondario:{" "}
                   {showAtleta?.ruoloInCampoSecondario}
@@ -304,13 +299,13 @@ const Profilo = ({ showAtleta, meProfile, fetchAtleta, setSelectAtleta }) => {
               </div>
             </Col>
             <Col lg={7}>
-              <div style={{ height: "20rem" }} className="rounded-4 p-3">
+              <div className="rounded-4 p-3 w-100">
                 <RadarChart showAtleta={showAtleta} />
               </div>
-              <div style={{ height: "15rem" }} className="rounded-4 p-3">
+              <div className="rounded-4 p-3 w-100">
                 <BarChart showAtleta={showAtleta} />
               </div>
-              <div style={{ height: "15rem" }} className="rounded-4 p-3">
+              <div className="rounded-4 p-3 w-100">
                 <DoughnutChart showAtleta={showAtleta} />
               </div>
             </Col>

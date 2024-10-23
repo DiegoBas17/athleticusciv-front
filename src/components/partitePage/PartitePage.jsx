@@ -187,7 +187,7 @@ const PartitePage = () => {
   return (
     <Container>
       <TopBar />
-      <div className="civ-color p-4 rounded-4">
+      <div className="civ-color p-4 rounded-4 border border-3">
         <div className="d-flex justify-content-between align-items-center">
           <h1>Partite Del CIV</h1>
           {isAdminOrSuperadmin() && (
@@ -218,18 +218,18 @@ const PartitePage = () => {
         {partite?.map((partita, index) => (
           <div
             key={index}
-            className="civ-secondColor my-2 p-2 rounded-4 border border-1 rounded-2"
+            className="my-2 p-2 rounded-4 border border-3 rounded-2"
           >
-            <Row>
+            <Row className="g-3">
               <Col lg={2}>
-                <div className="d-flex flex-column align-items-center border-end">
+                <div className="d-flex flex-column align-items-center mt-2">
                   <h4>{getDateInfo(partita.data).giornoDellaSettimana}</h4>
                   <h2>{getDateInfo(partita.data).numeroDelGiorno}</h2>
                   <h6>{getDateInfo(partita.data).mese}</h6>
                 </div>
               </Col>
               <Col lg={2}>
-                <div className="text-center mt-4">
+                <div className="text-center border-start border-end p-3">
                   <div className="d-flex justify-content-center align-items-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -256,9 +256,10 @@ const PartitePage = () => {
                     </svg>
                     <a
                       href={partita.luogo}
-                      className="text-decoration-none text-white"
+                      className="text-decoration-none"
                       target="_blank"
                       rel="noopener noreferrer"
+                      style={{ color: "#004aad" }}
                     >
                       {extractPlaceName(partita.luogo)}
                     </a>
@@ -266,9 +267,15 @@ const PartitePage = () => {
                 </div>
               </Col>
               <Col lg={6}>
-                <div className="border-start border-1 h-100 px-3">
-                  <div>Lista Partecipanati</div>
-                  <div className="d-flex">
+                <div className="border border-1 h-100 p-2 text-center rounded-4">
+                  <div
+                    onClick={() =>
+                      navigate(`/partite/prenotazioni/${partita.id}`)
+                    }
+                  >
+                    Lista Partecipanati
+                  </div>
+                  <div className="d-flex justify-content-center">
                     {partita.prenotazioniPartite?.map((prenotazione, index) => (
                       <div key={index}>
                         <img
@@ -285,13 +292,17 @@ const PartitePage = () => {
               <Col lg={2}>
                 {isAdminOrSuperadmin() && (
                   <Dropdown align="end">
-                    <Dropdown.Toggle as="span" id="dropdown-custom-components">
+                    <Dropdown.Toggle
+                      as="div"
+                      id="dropdown-custom-components"
+                      className="w-100 text-center"
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="25"
                         height="25"
                         fill="currentColor"
-                        className="bi bi-person-fill-gear m-2"
+                        className="bi bi-person-fill-gear"
                         viewBox="0 0 16 16"
                       >
                         <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0" />
@@ -329,34 +340,33 @@ const PartitePage = () => {
                     </Dropdown.Menu>
                   </Dropdown>
                 )}
-                <div className="d-flex justify-content-between align-items-center">
-                  {isPrenotato(partita) ? (
-                    <Button
-                      variant="danger"
-                      onClick={() => handleDisdici(partita)}
-                    >
-                      Disdici
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="success"
-                      onClick={() => handlePrenotati(partita.id)}
-                    >
-                      Prenotati
-                    </Button>
-                  )}
-                  {partita.statistiche.length == 0 ? (
-                    <></>
-                  ) : (
-                    <Button
-                      onClick={() => {
-                        navigate(`/partite/statistiche/${partita.id}`);
-                      }}
-                    >
-                      Vai alle statistiche
-                    </Button>
-                  )}
-                </div>
+                {isPrenotato(partita) ? (
+                  <button
+                    className="btn-shiny1 py-2 px-3 m-1 w-100"
+                    onClick={() => handleDisdici(partita)}
+                  >
+                    Disdici
+                  </button>
+                ) : (
+                  <button
+                    className="btn-shiny3 py-2 px-3 m-1 w-100"
+                    onClick={() => handlePrenotati(partita.id)}
+                  >
+                    Prenotati
+                  </button>
+                )}
+                {partita.statistiche.length == 0 ? (
+                  <></>
+                ) : (
+                  <button
+                    className="btn-shiny2 py-2 px-3 m-1 w-100"
+                    onClick={() => {
+                      navigate(`/partite/statistiche/${partita.id}`);
+                    }}
+                  >
+                    Statistiche
+                  </button>
+                )}
               </Col>
             </Row>
           </div>

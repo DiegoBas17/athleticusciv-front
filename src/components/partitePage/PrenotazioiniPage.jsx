@@ -3,6 +3,7 @@ import { Button, Col, Container, Dropdown, Modal, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import httpClient from "../../services/httpClient";
 import TopBar from "../TopBar";
+import { useSelector } from "react-redux";
 
 const PrenotazioiniPage = () => {
   const { partitaId } = useParams();
@@ -10,6 +11,8 @@ const PrenotazioiniPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [statoPrenotazione, setStatoPrenotazione] = useState(null);
   const [prenotazioneSelezionata, setPrenotazioneSelezionata] = useState(null);
+  const atleta = useSelector((state) => state.atleta.atleta);
+  const admin = atleta?.ruolo == "ADMIN" || atleta?.ruolo == "SUPERADMIN";
 
   const fetchPartita = () => {
     httpClient
@@ -77,7 +80,7 @@ const PrenotazioiniPage = () => {
             xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"
-            fill="yellow"
+            fill="blck"
             className="bi bi-hourglass-split"
             viewBox="0 0 16 16"
           >
@@ -160,75 +163,79 @@ const PrenotazioiniPage = () => {
     <Container>
       <TopBar />
       {partita && (
-        <div className="civ-color p-4 rounded-4">
-          <h1>Prenotazini Partita</h1>
-          <h6>
-            {getDateInfo(partita.data).mese} - {partita.tipoPartita}
-          </h6>
-          <p>
-            {getDateInfo(partita.data).giornoDellaSettimana}{" "}
-            {getDateInfo(partita.data).numeroDelGiorno} ore:{" "}
-            {getDateInfo(partita.data).orario}
-          </p>
-          <Row>
-            <Col>
-              <h3>Lista Prenotati</h3>
-              {partita.prenotazioniPartite.map((prenotazione, index) => (
-                <div
-                  key={index}
-                  className="d-flex justify-content-between align-items-center civ-secondColor p-2 rounded-4 my-1"
-                >
-                  <div className="my-1 d-flex align-items-center">
+        <div className="civ-color p-4 rounded-4 border border-3">
+          <h1>Prenotazioni Partita</h1>
+          <div className="my-4">
+            <h4>
+              {getDateInfo(partita.data).mese} - {partita.tipoPartita}
+            </h4>
+            <h5>
+              {getDateInfo(partita.data).giornoDellaSettimana}{" "}
+              {getDateInfo(partita.data).numeroDelGiorno} ore:{" "}
+              {getDateInfo(partita.data).orario}
+            </h5>
+          </div>
+          <h2>Lista Prenotati</h2>{" "}
+          <Row className="g-3">
+            {partita.prenotazioniPartite.map((prenotazione, index) => (
+              <>
+                <Col style={{ height: "4rem" }} key={index} xs={12}>
+                  <div className="d-flex align-items-center">
                     <img
                       src={prenotazione.atleta.avatar}
                       alt="avatar-atleta"
                       className="rounded-circle"
+                      style={{ width: "4rem", height: "4rem" }}
                     />
-                    <div className="ms-2">
+                    <h4 className="ms-2">
                       {prenotazione.atleta.nome} {prenotazione.atleta.cognome}
-                    </div>
-                    <div className="ms-2">
-                      {statoPrenotazioneIcon(prenotazione.statoPrenotazione)}
+                    </h4>
+                    <div className="ms-auto">
+                      <div>
+                        {statoPrenotazioneIcon(prenotazione.statoPrenotazione)}
+                      </div>
+                      {admin && (
+                        <Dropdown align="end">
+                          <Dropdown.Toggle
+                            as="div"
+                            id="dropdown-custom-components"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="1.3rem"
+                              height="1.3rem"
+                              fill="currentColor"
+                              className="bi bi-person-fill-gear"
+                              viewBox="0 0 16 16"
+                            >
+                              <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0" />
+                            </svg>
+                          </Dropdown.Toggle>
+                          <Dropdown.Menu>
+                            <Dropdown.Item
+                              as="button"
+                              onClick={() =>
+                                handleEditPrenotazione(prenotazione)
+                              }
+                            >
+                              Modifica Prenotazione
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                              as="button"
+                              onClick={() =>
+                                handleDeletePrenotazione(prenotazione.id)
+                              }
+                            >
+                              Cancella Prenotazione
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      )}
                     </div>
                   </div>
-                  <div>
-                    <Dropdown align="end">
-                      <Dropdown.Toggle
-                        as="span"
-                        id="dropdown-custom-components"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="25"
-                          height="25"
-                          fill="currentColor"
-                          className="bi bi-person-fill-gear m-2"
-                          viewBox="0 0 16 16"
-                        >
-                          <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0" />
-                        </svg>
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item
-                          as="button"
-                          onClick={() => handleEditPrenotazione(prenotazione)}
-                        >
-                          Modifica Prenotazione
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          as="button"
-                          onClick={() =>
-                            handleDeletePrenotazione(prenotazione.id)
-                          }
-                        >
-                          Cancella Prenotazione
-                        </Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </div>
-                </div>
-              ))}
-            </Col>
+                </Col>
+              </>
+            ))}
           </Row>
         </div>
       )}

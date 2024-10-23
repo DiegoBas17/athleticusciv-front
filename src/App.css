@@ -16,3 +16,111 @@ body {
 .boxShadowCiv {
   border: 1px solid #004aad;
 }
+/* bottoni CIV */
+.btn-shiny3 {
+  font-weight: 400;
+  color: #fff;
+  cursor: pointer;
+  text-align: center;
+  border: none;
+  background-size: 300% 100%;
+  border-radius: 50px;
+  moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+
+.btn-shiny3:hover {
+  background-position: 100% 0;
+  moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+
+.btn-shiny3:focus {
+  outline: none;
+}
+
+.btn-shiny3 {
+  background-image: linear-gradient(
+    to right,
+    #0ba360,
+    #3cba92,
+    #30dd8a,
+    #2bb673
+  );
+}
+
+.btn-shiny1 {
+  font-weight: 400;
+  color: #fff;
+  cursor: pointer;
+  text-align: center;
+  border: none;
+  background-size: 300% 100%;
+  border-radius: 50px;
+  moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+
+.btn-shiny1:hover {
+  background-position: 100% 0;
+  moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+
+.btn-shiny1:focus {
+  outline: none;
+}
+
+.btn-shiny1 {
+  background-image: linear-gradient(
+    to right,
+    #eb3941,
+    #f15e64,
+    #e14e53,
+    #e2373f
+  );
+}
+
+.btn-shiny2 {
+  font-weight: 400;
+  color: #fff;
+  cursor: pointer;
+  text-align: center;
+  border: none;
+  background-size: 300% 100%;
+  border-radius: 50px;
+  moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+
+.btn-shiny2:hover {
+  background-position: 100% 0;
+  moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+
+.btn-shiny2:focus {
+  outline: none;
+}
+
+.btn-shiny2 {
+  background-image: linear-gradient(
+    to right,
+    #25aae1,
+    #4481eb,
+    #04befe,
+    #3f86ed
+  );
+}

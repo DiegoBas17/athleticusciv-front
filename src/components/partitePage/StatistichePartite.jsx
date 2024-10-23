@@ -1,4 +1,4 @@
-import { Button, Container, Form, Modal } from "react-bootstrap";
+import { Button, Col, Container, Form, Modal, Row } from "react-bootstrap";
 import httpClient from "../../services/httpClient";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -156,7 +156,7 @@ const StatistichePartite = () => {
     <Container>
       <TopBar />
       {partita && partita.statistiche.length !== 0 ? (
-        <div className="civ-color p-4 rounded-4">
+        <div className="civ-color p-4 rounded-4 border border-3">
           <h1>Statistiche Partita</h1>
           <h6>
             {getDateInfo(partita.data).mese} - {partita.tipoPartita}
@@ -167,116 +167,127 @@ const StatistichePartite = () => {
             {getDateInfo(partita.data).orario}
           </p>
           <h3>Lista Statistiche</h3>
-          {partita.statistiche?.map((statistica, index) => (
-            <div key={index}>
-              <div className="d-flex align-items-center">
-                <img src={statistica.atleta.avatar} />
-                <h3 className="ms-1">
-                  {statistica.atleta.nome} {statistica.atleta.cognome}
-                </h3>
-              </div>
-              <div>Squadra: {statistica.coloreSquadra}</div>
-              <div>Assist: {statistica.assist}</div>
-              <div>Gol: {statistica.gol}</div>
-              {statistica?.tracker ? (
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => setShowTrackerDetails(!showTrackerDetails)}
-                >
-                  {showTrackerDetails
-                    ? "Nascondi Dettagli Tracker"
-                    : "Mostra Dettagli Tracker"}
-                </button>
-              ) : isAdminOrSuperadmin() ? (
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => {
-                    setShowFormTracker(true);
-                    setStatisticaId(statistica.id);
-                  }}
-                >
-                  Aggiungi Tracker
-                </button>
-              ) : (
-                <></>
-              )}
-              {isAdminOrSuperadmin() ? (
-                <Button
-                  onClick={() => {
-                    setShowModal(true);
-                    setModificaStatistica({
-                      ...modificaStatistica,
-                      coloreSquadra: statistica.coloreSquadra,
-                      gol: statistica.gol,
-                      assist: statistica.assist,
-                    });
-                    setStatisticaId(statistica.id);
-                  }}
-                >
-                  Modifica statistica
-                </Button>
-              ) : (
-                <></>
-              )}
-              <Button>Vota {statistica.atleta.cognome}</Button>
-              <StarRating statistica={statistica} />
-              {showTrackerDetails && (
-                <div className="mt-3 p-3 border border-secondary rounded">
-                  <h5>Dettagli Tracker</h5>
-                  <p>
-                    <strong>Tipo Partita:</strong>{" "}
-                    {statistica.tracker.tipoPartita}
-                  </p>
-                  <p>
-                    <strong>Attività:</strong> {statistica.tracker.attività} km
-                  </p>
-                  <p>
-                    <strong>Distanza:</strong> {statistica.tracker.distanza} km
-                  </p>
-                  <p>
-                    <strong>Passaggi:</strong> {statistica.tracker.passaggi}
-                  </p>
-                  <p>
-                    <strong>Corsa:</strong> {statistica.tracker.corsa}
-                  </p>
-                  <p>
-                    <strong>Numero Sprint:</strong>{" "}
-                    {statistica.tracker.numeroSprint}
-                  </p>
-                  <p>
-                    <strong>Sprint Medio:</strong>{" "}
-                    {statistica.tracker.sprintMedio} m/s
-                  </p>
-                  <p>
-                    <strong>Sprint Massimo:</strong>{" "}
-                    {statistica.tracker.sprintMassimo} m/s
-                  </p>
-                  <p>
-                    <strong>Possesso:</strong> {statistica.tracker.possesso}
-                  </p>
-                  <p>
-                    <strong>Tiri:</strong> {statistica.tracker.tiri}
-                  </p>
-                  <p>
-                    <strong>Tiro Massimo:</strong>{" "}
-                    {statistica.tracker.tiroMassimo} km/h
-                  </p>
-                  <p>
-                    <strong>Tiro Medio:</strong> {statistica.tracker.tiroMedio}{" "}
-                    km/h
-                  </p>
-                  <p>
-                    <strong>Valutazione 5 Stelle:</strong>{" "}
-                    {statistica.tracker.valutazione5Stelle}
-                  </p>
-                  <p>
-                    <strong>Analisi Allenatore:</strong>{" "}
-                    {statistica.tracker.analisiAllenatore}
-                  </p>
+          <Row>
+            {partita.statistiche?.map((statistica, index) => (
+              <Col key={index} xs={12} lg={6}>
+                <div className="rounded-4 border border-3 p-3">
+                  <div className="d-flex align-items-center">
+                    <img
+                      src={statistica.atleta.avatar}
+                      className="rounded-circle"
+                      style={{ width: "4rem", height: "4rem" }}
+                    />
+                    <h3 className="ms-2">
+                      {statistica.atleta.nome} {statistica.atleta.cognome}
+                    </h3>
+                  </div>
+                  <div>Squadra: {statistica.coloreSquadra}</div>
+                  <div>Assist: {statistica.assist}</div>
+                  <div>Gol: {statistica.gol}</div>
+                  {statistica?.tracker ? (
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => setShowTrackerDetails(!showTrackerDetails)}
+                    >
+                      {showTrackerDetails
+                        ? "Nascondi Dettagli Tracker"
+                        : "Mostra Dettagli Tracker"}
+                    </button>
+                  ) : (
+                    isAdminOrSuperadmin() && (
+                      <button
+                        className="btn-shiny3 py-2 px-3 m-1"
+                        onClick={() => {
+                          setShowFormTracker(true);
+                          setStatisticaId(statistica.id);
+                        }}
+                      >
+                        Aggiungi Tracker
+                      </button>
+                    )
+                  )}
+                  {isAdminOrSuperadmin() ? (
+                    <button
+                      className="btn-shiny2 py-2 px-3 m-1"
+                      onClick={() => {
+                        setShowModal(true);
+                        setModificaStatistica({
+                          ...modificaStatistica,
+                          tipoPartita: partita.tipoPartita,
+                          coloreSquadra: statistica.coloreSquadra,
+                          gol: statistica.gol,
+                          assist: statistica.assist,
+                        });
+                        setStatisticaId(statistica.id);
+                      }}
+                    >
+                      Modifica statistica
+                    </button>
+                  ) : (
+                    <></>
+                  )}
+                  <StarRating statistica={statistica} />
+                  {showTrackerDetails && (
+                    <div className="mt-3 p-3 border border-secondary rounded">
+                      <h5>Dettagli Tracker</h5>
+                      <p>
+                        <strong>Tipo Partita:</strong>{" "}
+                        {statistica.tracker.tipoPartita}
+                      </p>
+                      <p>
+                        <strong>Attività:</strong> {statistica.tracker.attività}{" "}
+                        km
+                      </p>
+                      <p>
+                        <strong>Distanza:</strong> {statistica.tracker.distanza}{" "}
+                        km
+                      </p>
+                      <p>
+                        <strong>Passaggi:</strong> {statistica.tracker.passaggi}
+                      </p>
+                      <p>
+                        <strong>Corsa:</strong> {statistica.tracker.corsa}
+                      </p>
+                      <p>
+                        <strong>Numero Sprint:</strong>{" "}
+                        {statistica.tracker.numeroSprint}
+                      </p>
+                      <p>
+                        <strong>Sprint Medio:</strong>{" "}
+                        {statistica.tracker.sprintMedio} m/s
+                      </p>
+                      <p>
+                        <strong>Sprint Massimo:</strong>{" "}
+                        {statistica.tracker.sprintMassimo} m/s
+                      </p>
+                      <p>
+                        <strong>Possesso:</strong> {statistica.tracker.possesso}
+                      </p>
+                      <p>
+                        <strong>Tiri:</strong> {statistica.tracker.tiri}
+                      </p>
+                      <p>
+                        <strong>Tiro Massimo:</strong>{" "}
+                        {statistica.tracker.tiroMassimo} km/h
+                      </p>
+                      <p>
+                        <strong>Tiro Medio:</strong>{" "}
+                        {statistica.tracker.tiroMedio} km/h
+                      </p>
+                      <p>
+                        <strong>Valutazione 5 Stelle:</strong>{" "}
+                        {statistica.tracker.valutazione5Stelle}
+                      </p>
+                      <p>
+                        <strong>Analisi Allenatore:</strong>{" "}
+                        {statistica.tracker.analisiAllenatore}
+                      </p>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          ))}
+              </Col>
+            ))}
+          </Row>
         </div>
       ) : (
         <Button onClick={() => handleCreateStatistiche()}>
