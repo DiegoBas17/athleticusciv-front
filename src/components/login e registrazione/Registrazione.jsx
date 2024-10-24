@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 const Registrazione = ({ handleToggle }) => {
   const [atleta, setAtleti] = useState({
@@ -29,8 +30,9 @@ const Registrazione = ({ handleToggle }) => {
       .then((result) => {
         console.log("Fatture fetched:", result);
         setAtleti(result);
+        handleToggle();
       })
-      .catch((error) => console.log("Fetch error:", error));
+      .catch((error) => toast.error(error.message));
   };
 
   const handleFieldChange = (propertyName, propertyValue) => {
@@ -40,7 +42,6 @@ const Registrazione = ({ handleToggle }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     fetchRegistrazione();
-    handleToggle();
   };
 
   return (

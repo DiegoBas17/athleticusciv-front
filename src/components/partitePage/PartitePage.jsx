@@ -268,7 +268,7 @@ const PartitePage = () => {
                 </div>
               </Col>
               <Col lg={6}>
-                <div className="border border-1 h-100 p-2 text-center rounded-4">
+                <div className="border border-1 h-100 p-2 text-center rounded-4 scale">
                   <div
                     onClick={() =>
                       navigate(`/partite/prenotazioni/${partita.id}`)
@@ -351,7 +351,7 @@ const PartitePage = () => {
                   </button>
                 ) : (
                   <button
-                    className="btn-shiny3 py-2 px-3 m-1 w-100"
+                    className="btn-shiny3 py-2 px-3 m-1 w-100 scale"
                     onClick={() => handlePrenotati(partita.id)}
                   >
                     Prenotati

@@ -89,7 +89,7 @@ const StarRating = ({ statistica }) => {
           ★
         </span>
       ))}
-      <p>Voto medio: {averageVote}</p>
+      <p>Voto medio: {averageVote?.toFixed(2)}</p>
     </div>
   );
 };

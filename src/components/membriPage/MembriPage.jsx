@@ -67,13 +67,13 @@ const MembriPage = () => {
             {atleti?.map((membro, index) => (
               <div
                 key={index}
-                className="border-bottom d-flex justify-content-between mt-2"
+                className="border-bottom d-flex justify-content-between mt-2 scale "
                 onClick={() => {
                   setSelectAtleta(membro);
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
               >
-                <p>
+                <p className={membro.id == showAtleta.id ? "fw-semibold" : ""}>
                   {membro.nome} {membro.cognome}
                 </p>
                 <img

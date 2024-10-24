@@ -12,6 +12,7 @@ import httpClient from "../../services/httpClient";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import HeroHome from "./HeroHome";
+import { toast } from "react-toastify";
 
 const Home = () => {
   const [notizie, setNotizie] = useState(null);
@@ -40,7 +41,7 @@ const Home = () => {
         setNotizie(response.data.content);
       })
       .catch((error) => {
-        console.log("Errore nella richiesta:", error);
+        toast.error(error.message);
       });
   };
 
@@ -66,9 +67,10 @@ const Home = () => {
       .then(() => {
         fetchNotizie();
         setShowModal(false);
+        toast.success("Notizia creata con successo");
       })
       .catch((error) => {
-        console.log("Errore nella richiesta:", error);
+        toast.error(error.message);
       });
   };
 
@@ -83,7 +85,7 @@ const Home = () => {
         setShowModalUpdateImg(false);
       })
       .catch((error) => {
-        console.log("Errore nella richiesta:", error);
+        toast.error(error.message);
       });
   };
 
@@ -96,7 +98,7 @@ const Home = () => {
         setShowModalText(false);
       })
       .catch((error) => {
-        console.log("Errore nella richiesta:", error);
+        toast.error(error.message);
       });
   };
 
@@ -108,7 +110,7 @@ const Home = () => {
         fetchNotizie();
       })
       .catch((error) => {
-        console.log("Errore nella cancellazione della partita:", error);
+        toast.error(error.message);
       });
   };
 
@@ -125,7 +127,7 @@ const Home = () => {
               width="1.6rem"
               height="1.6rem"
               fill="currentColor"
-              className="bi bi-plus-square me-1"
+              className="bi bi-plus-square me-1 scale"
               viewBox="0 0 16 16"
               onClick={() => {
                 setShowModal(true);
@@ -140,6 +142,7 @@ const Home = () => {
         <Row className="mt-4 g-2">
           {notizie?.length > 0 && (
             <>
+              {/* Notizia 1 */}
               <Col xs={12} className="mb-4">
                 <div className="boxShadowCiv rounded-4 overflow-hidden">
                   <Row>
@@ -151,12 +154,15 @@ const Home = () => {
                       />
                     </Col>
                     <Col xs={12} lg={6}>
-                      <div className="p-3">
+                      <div className="p-3 h-100 d-flex flex-column">
                         <div className="d-flex justify-content-between">
                           <h3>{notizie[0].titolo}</h3>
+                        </div>
+                        <h5>{notizie[0].testo}</h5>
+                        <div className="d-flex justify-content-between mt-auto">
                           {isAdminOrSuperadmin() && (
                             <div>
-                              <Dropdown align="end">
+                              <Dropdown align="end" className="scale">
                                 <Dropdown.Toggle
                                   as="span"
                                   id="dropdown-custom-components"
@@ -208,30 +214,29 @@ const Home = () => {
                               </Dropdown>
                             </div>
                           )}
+                          <p>Autore: {notizie[0].autore}</p>
                         </div>
-                        <h5>{notizie[0].testo}</h5>
-                        <p className="text-end me-3">
-                          Autore: {notizie[0].autore}
-                        </p>
                       </div>
                     </Col>
                   </Row>
                 </div>
               </Col>
+              {/* Notizia 2 */}
               {notizie.length > 1 && (
                 <Col xs={12} md={6} className="mb-4">
-                  <div className="boxShadowCiv rounded-4 overflow-hidden">
+                  <div className="boxShadowCiv rounded-4 overflow-hidden h-100 d-flex flex-column">
                     <img
                       src={notizie[1].immagine}
                       alt="immagine notizia principale"
                       width="100%"
                     />
-                    <div className="p-3">
-                      <div className="d-flex justify-content-between">
-                        <h3>{notizie[1].titolo}</h3>
+                    <div className="p-3 d-flex flex-column flex-grow-1">
+                      <h3>{notizie[1].titolo}</h3>
+                      <h5>{notizie[1].testo}</h5>
+                      <div className="d-flex justify-content-between mt-auto">
                         {isAdminOrSuperadmin() && (
                           <div>
-                            <Dropdown align="end">
+                            <Dropdown align="end" className="scale">
                               <Dropdown.Toggle
                                 as="span"
                                 id="dropdown-custom-components"
@@ -283,26 +288,27 @@ const Home = () => {
                             </Dropdown>
                           </div>
                         )}
+                        <p>Autore: {notizie[1].autore}</p>
                       </div>
-                      <h5>{notizie[1].testo}</h5>
-                      <p className="text-end">Autore: {notizie[1].autore}</p>
                     </div>
                   </div>
                 </Col>
               )}
+              {/* notizia 3 */}
               {notizie.length > 2 && (
                 <Col xs={12} md={6} className="mb-4">
-                  <div className="boxShadowCiv rounded-4 overflow-hidden">
+                  <div className="boxShadowCiv rounded-4 overflow-hidden h-100 d-flex flex-column">
                     <img
                       src={notizie[2].immagine}
                       alt="immagine notizia principale"
                       width="100%"
                     />
-                    <div className="p-3">
-                      <div className="d-flex justify-content-between">
-                        <h2>{notizie[2].titolo}</h2>
+                    <div className="p-3 d-flex flex-column flex-grow-1">
+                      <h3>{notizie[2].titolo}</h3>
+                      <h5>{notizie[2].testo}</h5>
+                      <div className="d-flex justify-content-between mt-auto">
                         {isAdminOrSuperadmin() && (
-                          <Dropdown align="end">
+                          <Dropdown align="end" className="scale">
                             <Dropdown.Toggle
                               as="span"
                               id="dropdown-custom-components"
@@ -353,73 +359,77 @@ const Home = () => {
                             </Dropdown.Menu>
                           </Dropdown>
                         )}
+                        <p>Autore: {notizie[2].autore}</p>
                       </div>
-                      <h5>{notizie[2].testo}</h5>
-                      <p className="text-end">Autore: {notizie[2].autore}</p>
                     </div>
                   </div>
                 </Col>
               )}
+              {/* Altre Notizie */}
               {notizie.slice(3).map((notizia, index) => (
                 <Col xs={12} md={6} lg={4} key={index} className="mb-4">
-                  <div className="boxShadowCiv rounded-4 overflow-hidden">
+                  <div className="boxShadowCiv rounded-4 overflow-hidden h-100 d-flex flex-column">
                     <img src={notizia.immagine} width="100%" />
-                    <div className="p-3">
+                    <div className="p-3 d-flex flex-column flex-grow-1">
                       <div className="d-flex justify-content-between">
                         <h3>{notizia.titolo}</h3>
-                        <Dropdown align="end">
-                          <Dropdown.Toggle
-                            as="span"
-                            id="dropdown-custom-components"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="25"
-                              height="25"
-                              fill="currentColor"
-                              className="bi bi-person-fill-gear"
-                              viewBox="0 0 16 16"
-                            >
-                              <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0" />
-                            </svg>
-                          </Dropdown.Toggle>
-                          <Dropdown.Menu>
-                            <Dropdown.Item
-                              as="button"
-                              onClick={() => {
-                                setShowModalUpdateImg(true);
-                                setNotiziaSelected(notizia.id);
-                              }}
-                            >
-                              Modifica Immagine
-                            </Dropdown.Item>
-                            <Dropdown.Item
-                              as="button"
-                              onClick={() => {
-                                setShowModalText(true);
-                                setNotiziaSelected(notizia.id);
-                                setUpdateText({
-                                  titolo: notizia.titolo,
-                                  testo: notizia.testo,
-                                  autore: notizia.autore,
-                                });
-                              }}
-                            >
-                              Modifica Testo
-                            </Dropdown.Item>
-                            <Dropdown.Item
-                              as="button"
-                              onClick={() => {
-                                deleteNotizia(notizia.id);
-                              }}
-                            >
-                              Elimina Notizia
-                            </Dropdown.Item>
-                          </Dropdown.Menu>
-                        </Dropdown>
                       </div>
                       <h5>{notizia.testo}</h5>
-                      <p className="text-end">Autore: {notizia.autore}</p>
+                      <div className="d-flex justify-content-between mt-auto">
+                        {isAdminOrSuperadmin() && (
+                          <Dropdown align="end" className="scale">
+                            <Dropdown.Toggle
+                              as="span"
+                              id="dropdown-custom-components"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="25"
+                                height="25"
+                                fill="currentColor"
+                                className="bi bi-person-fill-gear"
+                                viewBox="0 0 16 16"
+                              >
+                                <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0" />
+                              </svg>
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                              <Dropdown.Item
+                                as="button"
+                                onClick={() => {
+                                  setShowModalUpdateImg(true);
+                                  setNotiziaSelected(notizia.id);
+                                }}
+                              >
+                                Modifica Immagine
+                              </Dropdown.Item>
+                              <Dropdown.Item
+                                as="button"
+                                onClick={() => {
+                                  setShowModalText(true);
+                                  setNotiziaSelected(notizia.id);
+                                  setUpdateText({
+                                    titolo: notizia.titolo,
+                                    testo: notizia.testo,
+                                    autore: notizia.autore,
+                                  });
+                                }}
+                              >
+                                Modifica Testo
+                              </Dropdown.Item>
+                              <Dropdown.Item
+                                as="button"
+                                onClick={() => {
+                                  deleteNotizia(notizia.id);
+                                }}
+                              >
+                                Elimina Notizia
+                              </Dropdown.Item>
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        )}
+                        <p>Autore: {notizia.autore}</p>
+                      </div>
                     </div>
                   </div>
                 </Col>
@@ -480,7 +490,7 @@ const Home = () => {
                 }
               />
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" className="mt-2">
               Salva
             </Button>
           </Form>
