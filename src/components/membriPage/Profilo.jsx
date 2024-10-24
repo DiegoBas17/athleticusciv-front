@@ -1,11 +1,17 @@
-import { Button, Col, Dropdown, Modal, Row } from "react-bootstrap";
+import { Button, Col, Dropdown, Form, Modal, Row } from "react-bootstrap";
 import RadarChart from "./RadarChart";
 import BarChart from "./BarChart";
 import DoughnutChart from "./DoughnutChart";
 import httpClient from "../../services/httpClient";
 import { useState } from "react";
 
-const Profilo = ({ showAtleta, meProfile, fetchAtleta, setSelectAtleta }) => {
+const Profilo = ({
+  showAtleta,
+  meProfile,
+  fetchAtleta,
+  setSelectAtleta,
+  handleDeleteAtleta,
+}) => {
   const admin = meProfile?.ruolo == "ADMIN" || meProfile?.ruolo == "SUPERADMIN";
   const [ruoliInCampo, setRuoliInCampo] = useState({
     ruoloInCampoPrimario: "",
@@ -39,6 +45,16 @@ const Profilo = ({ showAtleta, meProfile, fetchAtleta, setSelectAtleta }) => {
     id: "",
     tipoValutazione: "",
   });
+  const [storico, setStorico] = useState({
+    mediaGol: "",
+    mediaAssist: "",
+    mediaVoti: "",
+    partiteGiocate: "",
+    totaleGol: "",
+    totaleAssist: "",
+  });
+  const [showStorico, setShowStorico] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
 
   const isMeProfile = () => {
     return showAtleta?.id == meProfile?.id;
@@ -182,9 +198,32 @@ const Profilo = ({ showAtleta, meProfile, fetchAtleta, setSelectAtleta }) => {
     setShowModalValutazione(true);
   };
 
+  const handleStorico = (e) => {
+    e.preventDefault();
+    httpClient
+      .put(`/atleti/${showAtleta.id}/storico`, storico)
+      .then((response) => {
+        console.log("Storico aggiornato con successo", response);
+        setSelectAtleta({
+          ...showAtleta,
+          mediaGol: storico.mediaGol,
+          mediaAssist: storico.mediaAssist,
+          mediaVoti: storico.mediaVoti,
+          partiteGiocate: storico.partiteGiocate,
+          totaleGol: storico.totaleGol,
+          totaleAssist: storico.totaleAssist,
+        });
+        fetchAtleta();
+        setShowStorico(false);
+      })
+      .catch((error) => {
+        console.log("Errore nella richiesta:", error);
+      });
+  };
+
   return (
     <div>
-      {showAtleta ? (
+      {showAtleta && (
         <div className="civ-color p-4 rounded-4 border border-3">
           <h1>Profilo</h1>
           <Row className="g-2">
@@ -268,6 +307,12 @@ const Profilo = ({ showAtleta, meProfile, fetchAtleta, setSelectAtleta }) => {
                           >
                             Modifica Valutazione CIV
                           </Dropdown.Item>
+                          <Dropdown.Item onClick={() => setShowStorico(true)}>
+                            Modifica Storico
+                          </Dropdown.Item>
+                          <Dropdown.Item onClick={() => setShowDelete(true)}>
+                            Elimina Atleta
+                          </Dropdown.Item>
                         </>
                       )}
                     </Dropdown.Menu>
@@ -298,27 +343,21 @@ const Profilo = ({ showAtleta, meProfile, fetchAtleta, setSelectAtleta }) => {
                 </p>
               </div>
             </Col>
-            <Col lg={7}>
-              <div className="rounded-4 p-3 w-100">
+            <Col xs={12} lg={7}>
+              <div className="p-1 w-75 mx-lg-auto">
                 <RadarChart showAtleta={showAtleta} />
               </div>
-              <div className="rounded-4 p-3 w-100">
+              <div className="p-1 w-75 mx-lg-auto">
                 <BarChart showAtleta={showAtleta} />
               </div>
-              <div className="rounded-4 p-3 w-100">
+              <div className="p-1 w-75 mx-lg-auto">
                 <DoughnutChart showAtleta={showAtleta} />
               </div>
             </Col>
           </Row>
         </div>
-      ) : (
-        <div>oh no..</div>
       )}
-      <Modal
-        show={showModal}
-        onHide={() => setShowModal(false)}
-        className="text-black"
-      >
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Modifica Ruoli in Campo</Modal.Title>
         </Modal.Header>
@@ -407,11 +446,7 @@ const Profilo = ({ showAtleta, meProfile, fetchAtleta, setSelectAtleta }) => {
           </Button>
         </Modal.Footer>
       </Modal>
-      <Modal
-        show={showModalAvatar}
-        onHide={() => setShowModalAvatar(false)}
-        className="text-black"
-      >
+      <Modal show={showModalAvatar} onHide={() => setShowModalAvatar(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Modifica Avatar</Modal.Title>
         </Modal.Header>
@@ -437,7 +472,6 @@ const Profilo = ({ showAtleta, meProfile, fetchAtleta, setSelectAtleta }) => {
       <Modal
         show={showModalAuthorization}
         onHide={() => setShowModalAuthorization(false)}
-        className="text-black"
       >
         <Modal.Header closeButton>
           <Modal.Title>Modifica Autorizzazione</Modal.Title>
@@ -475,11 +509,7 @@ const Profilo = ({ showAtleta, meProfile, fetchAtleta, setSelectAtleta }) => {
           </Modal.Footer>
         </Modal.Body>
       </Modal>
-      <Modal
-        show={showModalAtleta}
-        onHide={() => setShowModalAtleta(false)}
-        className="text-black"
-      >
+      <Modal show={showModalAtleta} onHide={() => setShowModalAtleta(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Modifica Atleta</Modal.Title>
         </Modal.Header>
@@ -577,7 +607,6 @@ const Profilo = ({ showAtleta, meProfile, fetchAtleta, setSelectAtleta }) => {
       <Modal
         show={showModalValutazione}
         onHide={() => setShowModalValutazione(false)}
-        className="text-black"
       >
         <Modal.Header closeButton>
           <Modal.Title>Modifica Valutazione</Modal.Title>
@@ -685,6 +714,121 @@ const Profilo = ({ showAtleta, meProfile, fetchAtleta, setSelectAtleta }) => {
         <Modal.Footer>
           <button onClick={() => setShowModalValutazione(false)}>Chiudi</button>
         </Modal.Footer>
+      </Modal>
+      <Modal show={showStorico} onHide={() => setShowStorico(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Inserisci Valori Atleta</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleStorico}>
+            <Form.Group controlId="mediaGol">
+              <Form.Label>Media Gol</Form.Label>
+              <Form.Control
+                type="number"
+                value={storico.mediaGol}
+                onChange={(e) =>
+                  setStorico({ ...storico, mediaGol: e.target.value })
+                }
+                placeholder="Inserisci la media gol"
+                min="0"
+                step="0.01"
+                required
+              />
+            </Form.Group>
+            <Form.Group controlId="mediaAssist">
+              <Form.Label>Media Assist</Form.Label>
+              <Form.Control
+                type="number"
+                value={storico.mediaAssist}
+                onChange={(e) =>
+                  setStorico({ ...storico, mediaAssist: e.target.value })
+                }
+                placeholder="Inserisci la media assist"
+                min="0"
+                step="0.01"
+                required
+              />
+            </Form.Group>
+            <Form.Group controlId="mediaVoti">
+              <Form.Label>Media Voti</Form.Label>
+              <Form.Control
+                type="number"
+                value={storico.mediaVoti}
+                onChange={(e) =>
+                  setStorico({ ...storico, mediaVoti: e.target.value })
+                }
+                placeholder="Inserisci la media voti"
+                min="0"
+                max="10"
+                step="0.01"
+                required
+              />
+            </Form.Group>
+            <Form.Group controlId="partiteGiocate">
+              <Form.Label>Partite Giocate</Form.Label>
+              <Form.Control
+                type="number"
+                value={storico.partiteGiocate}
+                onChange={(e) =>
+                  setStorico({ ...storico, partiteGiocate: e.target.value })
+                }
+                placeholder="Inserisci il numero di partite giocate"
+                min="0"
+                required
+              />
+            </Form.Group>
+            <Form.Group controlId="totaleGol">
+              <Form.Label>Totale Gol</Form.Label>
+              <Form.Control
+                type="number"
+                value={storico.totaleGol}
+                onChange={(e) =>
+                  setStorico({ ...storico, totaleGol: e.target.value })
+                }
+                placeholder="Inserisci il totale gol"
+                min="0"
+                required
+              />
+            </Form.Group>
+            <Form.Group controlId="totaleAssist">
+              <Form.Label>Totale Assist</Form.Label>
+              <Form.Control
+                type="number"
+                value={storico.totaleAssist}
+                onChange={(e) =>
+                  setStorico({ ...storico, totaleAssist: e.target.value })
+                }
+                placeholder="Inserisci il totale assist"
+                min="0"
+                required
+              />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              Salva
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
+      <Modal
+        show={showDelete}
+        onHide={() => setShowDelete(false)}
+        className="text-black"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Elimina Atleta</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h3>Sei sicuro di voler eliminare questo Atleta?</h3>
+          <Button
+            type="button"
+            onClick={() => {
+              setShowDelete(false);
+              handleDeleteAtleta(showAtleta.id);
+            }}
+          >
+            elimina
+          </Button>
+        </Modal.Body>
       </Modal>
     </div>
   );
