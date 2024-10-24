@@ -171,7 +171,7 @@ const StatistichePartite = () => {
             {partita.statistiche?.map((statistica, index) => (
               <Col key={index} xs={12} lg={6}>
                 <div className="rounded-4 border border-3 p-3">
-                  <div className="d-flex align-items-center">
+                  <div className="d-flex align-items-center mb-2">
                     <img
                       src={statistica.atleta.avatar}
                       className="rounded-circle"
