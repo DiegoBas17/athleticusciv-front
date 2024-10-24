@@ -40,7 +40,11 @@ const DoughnutChart = ({ showAtleta }) => {
       },
       datalabels: {
         color: "#004aad", // Colore del testo dei numeri all'interno della ciambella
-        formatter: (value) => value.toFixed(2), // Formattazione dei numeri
+        formatter: (value) => {
+          return typeof value === "number" && !isNaN(value)
+            ? value.toFixed(2)
+            : value;
+        },
         font: {
           weight: "light",
           size: 16, // Dimensione del testo
@@ -48,8 +52,14 @@ const DoughnutChart = ({ showAtleta }) => {
       },
       tooltip: {
         callbacks: {
-          label: (tooltipItem) =>
-            `${tooltipItem.label}: ${tooltipItem.raw.toFixed(2)}`,
+          label: (tooltipItem) => {
+            const value = tooltipItem.raw;
+            return `${tooltipItem.label}: ${
+              typeof value === "number" && !isNaN(value)
+                ? value.toFixed(2)
+                : value
+            }`;
+          },
         },
       },
     },

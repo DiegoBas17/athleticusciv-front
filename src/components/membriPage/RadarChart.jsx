@@ -86,10 +86,13 @@ const RadarChart = ({ showAtleta }) => {
         borderColor: "rgba(0, 0, 0, 0.1)",
         borderWidth: 1,
         callbacks: {
-          label: function (tooltipItem) {
-            return `${tooltipItem.dataset.label}: ${tooltipItem.raw.toFixed(
-              2
-            )}`;
+          label: (tooltipItem) => {
+            const value = tooltipItem.raw;
+            return `${tooltipItem.label}: ${
+              typeof value === "number" && !isNaN(value)
+                ? value.toFixed(2)
+                : value
+            }`;
           },
         },
       },
