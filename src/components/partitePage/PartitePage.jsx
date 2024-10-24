@@ -18,10 +18,11 @@ const PartitePage = () => {
     tipoPartita: "",
   });
   const [editingPartita, setEditingPartita] = useState(null);
+  const [pagina, setPagina] = useState(0);
 
   const fetchPartite = () => {
     httpClient
-      .get("/partite?sortBy=data")
+      .get(`/partite?sortBy=data&page=${pagina}`)
       .then((response) => {
         setPartite(response.data.content);
         console.log(partite);
@@ -39,7 +40,7 @@ const PartitePage = () => {
 
   useEffect(() => {
     fetchPartite();
-  }, []);
+  }, [pagina]);
 
   const getDateInfo = (data) => {
     const mesi = [
@@ -272,6 +273,7 @@ const PartitePage = () => {
                     onClick={() =>
                       navigate(`/partite/prenotazioni/${partita.id}`)
                     }
+                    style={{ cursor: "pointer" }}
                   >
                     Lista Partecipanati
                   </div>
@@ -371,6 +373,22 @@ const PartitePage = () => {
             </Row>
           </div>
         ))}
+        <div className="d-flex justify-content-between">
+          {pagina !== 0 && (
+            <button
+              className="btn-shiny2 py-2 px-3 m-1"
+              onClick={() => setPagina(pagina - 1)}
+            >
+              Indietro
+            </button>
+          )}
+          <button
+            className="btn-shiny2 py-2 px-3 m-1"
+            onClick={() => setPagina(pagina + 1)}
+          >
+            Avanti
+          </button>
+        </div>
       </div>
       <Modal
         show={showModal}
