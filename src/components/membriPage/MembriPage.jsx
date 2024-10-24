@@ -26,6 +26,19 @@ const MembriPage = () => {
       });
   };
 
+  const handleDeleteAtleta = (atletaId) => {
+    httpClient
+      .delete(`/atleti/${atletaId}`)
+      .then((response) => {
+        console.log("Atleta cancellato:", response.data);
+        setSelectAtleta(startingAtleta);
+        fetchAtleta();
+      })
+      .catch((error) => {
+        console.log("Errore nella cancellazione della partita:", error);
+      });
+  };
+
   useEffect(() => {
     if (loginError) {
       navigate("/login");
@@ -45,6 +58,7 @@ const MembriPage = () => {
             meProfile={startingAtleta}
             fetchAtleta={fetchAtleta}
             setSelectAtleta={setSelectAtleta}
+            handleDeleteAtleta={handleDeleteAtleta}
           />
         </Col>
         <Col lg={4}>
