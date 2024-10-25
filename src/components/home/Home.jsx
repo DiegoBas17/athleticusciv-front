@@ -1,18 +1,14 @@
-import {
-  Button,
-  Col,
-  Container,
-  Dropdown,
-  Form,
-  Modal,
-  Row,
-} from "react-bootstrap";
+import { Button, Col, Container, Form, Modal, Row } from "react-bootstrap";
 import TopBar from "../TopBar";
 import httpClient from "../../services/httpClient";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import HeroHome from "./HeroHome";
 import { toast } from "react-toastify";
+import ModalDeleteNotizia from "./ModalDeleteNotizia";
+import ModalGestisciNotizie from "./ModalGestisciNotizie";
+import DropdownHome from "./DropdownHome";
+import ModalCorpoNotizia from "./ModalCorpoNotizia";
 
 const Home = () => {
   const [notizie, setNotizie] = useState(null);
@@ -33,10 +29,12 @@ const Home = () => {
     autore: "",
   });
   const [showModalText, setShowModalText] = useState(false);
+  const [pagina, setPagina] = useState(0);
+  const [showDelete, setShowDelete] = useState(false);
 
   const fetchNotizie = () => {
     httpClient
-      .get("/notizie?sortBy=dataCreazione&order=desc")
+      .get(`/notizie?sortBy=dataCreazione&order=desc&page=${pagina}`)
       .then((response) => {
         setNotizie(response.data.content);
       })
@@ -47,7 +45,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchNotizie();
-  }, []);
+  }, [pagina]);
 
   const isAdminOrSuperadmin = () => {
     return atleta?.ruolo === "ADMIN" || atleta?.ruolo === "SUPERADMIN";
@@ -83,6 +81,7 @@ const Home = () => {
       .then(() => {
         fetchNotizie();
         setShowModalUpdateImg(false);
+        toast.success("Notizia aggiornata con successo");
       })
       .catch((error) => {
         toast.error(error.message);
@@ -96,6 +95,7 @@ const Home = () => {
       .then(() => {
         fetchNotizie();
         setShowModalText(false);
+        toast.success("Notizia aggiornata con successo");
       })
       .catch((error) => {
         toast.error(error.message);
@@ -105,8 +105,8 @@ const Home = () => {
   const deleteNotizia = (notiziaId) => {
     httpClient
       .delete(`/notizie/${notiziaId}`)
-      .then((response) => {
-        console.log("Notizia cancellata:", response.data);
+      .then(() => {
+        toast.success("Notizia eliminata con successo");
         fetchNotizie();
       })
       .catch((error) => {
@@ -137,7 +137,7 @@ const Home = () => {
               <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
               <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
             </svg>
-          )}{" "}
+          )}
         </div>
         <Row className="mt-4 g-2">
           {notizie?.length > 0 && (
@@ -162,56 +162,20 @@ const Home = () => {
                         <div className="d-flex justify-content-between mt-auto">
                           {isAdminOrSuperadmin() && (
                             <div>
-                              <Dropdown align="end" className="scale">
-                                <Dropdown.Toggle
-                                  as="span"
-                                  id="dropdown-custom-components"
-                                >
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="25"
-                                    height="25"
-                                    fill="currentColor"
-                                    className="bi bi-person-fill-gear"
-                                    viewBox="0 0 16 16"
-                                  >
-                                    <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0" />
-                                  </svg>
-                                </Dropdown.Toggle>
-                                <Dropdown.Menu>
-                                  <Dropdown.Item
-                                    as="button"
-                                    onClick={() => {
-                                      setShowModalUpdateImg(true),
-                                        setNotiziaSelected(notizie[0].id);
-                                    }}
-                                  >
-                                    Modifica Immagine
-                                  </Dropdown.Item>
-                                  <Dropdown.Item
-                                    as="button"
-                                    onClick={() => {
-                                      setShowModalText(true),
-                                        setNotiziaSelected(notizie[0].id),
-                                        setUpdateText({
-                                          titolo: notizie[0].titolo,
-                                          testo: notizie[0].testo,
-                                          autore: notizie[0].autore,
-                                        });
-                                    }}
-                                  >
-                                    Modifica Testo
-                                  </Dropdown.Item>
-                                  <Dropdown.Item
-                                    as="button"
-                                    onClick={() => {
-                                      deleteNotizia(notizie[0].id);
-                                    }}
-                                  >
-                                    Elimina Notizia
-                                  </Dropdown.Item>
-                                </Dropdown.Menu>
-                              </Dropdown>
+                              <DropdownHome
+                                setShowModalUpdateImg={setShowModalUpdateImg}
+                                setNotiziaSelected={setNotiziaSelected}
+                                notizia={notizie[0]}
+                                setShowModalText={setShowModalText}
+                                setUpdateText={setUpdateText}
+                                setShowDelete={setShowDelete}
+                              />
+                              <ModalDeleteNotizia
+                                showDelete={showDelete}
+                                setShowDelete={setShowDelete}
+                                deleteNotizia={deleteNotizia}
+                                notizia={notizie[0]}
+                              />
                             </div>
                           )}
                           <p>Autore: {notizie[0].autore}</p>
@@ -235,58 +199,22 @@ const Home = () => {
                       <h5>{notizie[1].testo}</h5>
                       <div className="d-flex justify-content-between mt-auto">
                         {isAdminOrSuperadmin() && (
-                          <div>
-                            <Dropdown align="end" className="scale">
-                              <Dropdown.Toggle
-                                as="span"
-                                id="dropdown-custom-components"
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="25"
-                                  height="25"
-                                  fill="currentColor"
-                                  className="bi bi-person-fill-gear"
-                                  viewBox="0 0 16 16"
-                                >
-                                  <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0" />
-                                </svg>
-                              </Dropdown.Toggle>
-                              <Dropdown.Menu>
-                                <Dropdown.Item
-                                  as="button"
-                                  onClick={() => {
-                                    setShowModalUpdateImg(true),
-                                      setNotiziaSelected(notizie[1].id);
-                                  }}
-                                >
-                                  Modifica Immagine
-                                </Dropdown.Item>
-                                <Dropdown.Item
-                                  as="button"
-                                  onClick={() => {
-                                    setShowModalText(true),
-                                      setNotiziaSelected(notizie[1].id),
-                                      setUpdateText({
-                                        titolo: notizie[1].titolo,
-                                        testo: notizie[1].testo,
-                                        autore: notizie[1].autore,
-                                      });
-                                  }}
-                                >
-                                  Modifica Testo
-                                </Dropdown.Item>
-                                <Dropdown.Item
-                                  as="button"
-                                  onClick={() => {
-                                    deleteNotizia(notizie[1].id);
-                                  }}
-                                >
-                                  Elimina Notizia
-                                </Dropdown.Item>
-                              </Dropdown.Menu>
-                            </Dropdown>
-                          </div>
+                          <>
+                            <DropdownHome
+                              setShowModalUpdateImg={setShowModalUpdateImg}
+                              setNotiziaSelected={setNotiziaSelected}
+                              notizia={notizie[1]}
+                              setShowModalText={setShowModalText}
+                              setUpdateText={setUpdateText}
+                              setShowDelete={setShowDelete}
+                            />
+                            <ModalDeleteNotizia
+                              showDelete={showDelete}
+                              setShowDelete={setShowDelete}
+                              deleteNotizia={deleteNotizia}
+                              notizia={notizie[1]}
+                            />
+                          </>
                         )}
                         <p>Autore: {notizie[1].autore}</p>
                       </div>
@@ -308,56 +236,22 @@ const Home = () => {
                       <h5>{notizie[2].testo}</h5>
                       <div className="d-flex justify-content-between mt-auto">
                         {isAdminOrSuperadmin() && (
-                          <Dropdown align="end" className="scale">
-                            <Dropdown.Toggle
-                              as="span"
-                              id="dropdown-custom-components"
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="25"
-                                height="25"
-                                fill="currentColor"
-                                className="bi bi-person-fill-gear"
-                                viewBox="0 0 16 16"
-                              >
-                                <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0" />
-                              </svg>
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                              <Dropdown.Item
-                                as="button"
-                                onClick={() => {
-                                  setShowModalUpdateImg(true),
-                                    setNotiziaSelected(notizie[2].id);
-                                }}
-                              >
-                                Modifica Immagine
-                              </Dropdown.Item>
-                              <Dropdown.Item
-                                as="button"
-                                onClick={() => {
-                                  setShowModalText(true),
-                                    setNotiziaSelected(notizie[2].id),
-                                    setUpdateText({
-                                      titolo: notizie[2].titolo,
-                                      testo: notizie[2].testo,
-                                      autore: notizie[2].autore,
-                                    });
-                                }}
-                              >
-                                Modifica Testo
-                              </Dropdown.Item>
-                              <Dropdown.Item
-                                as="button"
-                                onClick={() => {
-                                  deleteNotizia(notizie[2].id);
-                                }}
-                              >
-                                Elimina Notizia
-                              </Dropdown.Item>
-                            </Dropdown.Menu>
-                          </Dropdown>
+                          <>
+                            <DropdownHome
+                              setShowModalUpdateImg={setShowModalUpdateImg}
+                              setNotiziaSelected={setNotiziaSelected}
+                              notizia={notizie[2]}
+                              setShowModalText={setShowModalText}
+                              setUpdateText={setUpdateText}
+                              setShowDelete={setShowDelete}
+                            />
+                            <ModalDeleteNotizia
+                              showDelete={showDelete}
+                              setShowDelete={setShowDelete}
+                              deleteNotizia={deleteNotizia}
+                              notizia={notizie[2]}
+                            />
+                          </>
                         )}
                         <p>Autore: {notizie[2].autore}</p>
                       </div>
@@ -377,56 +271,22 @@ const Home = () => {
                       <h5>{notizia.testo}</h5>
                       <div className="d-flex justify-content-between mt-auto">
                         {isAdminOrSuperadmin() && (
-                          <Dropdown align="end" className="scale">
-                            <Dropdown.Toggle
-                              as="span"
-                              id="dropdown-custom-components"
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="25"
-                                height="25"
-                                fill="currentColor"
-                                className="bi bi-person-fill-gear"
-                                viewBox="0 0 16 16"
-                              >
-                                <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0" />
-                              </svg>
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                              <Dropdown.Item
-                                as="button"
-                                onClick={() => {
-                                  setShowModalUpdateImg(true);
-                                  setNotiziaSelected(notizia.id);
-                                }}
-                              >
-                                Modifica Immagine
-                              </Dropdown.Item>
-                              <Dropdown.Item
-                                as="button"
-                                onClick={() => {
-                                  setShowModalText(true);
-                                  setNotiziaSelected(notizia.id);
-                                  setUpdateText({
-                                    titolo: notizia.titolo,
-                                    testo: notizia.testo,
-                                    autore: notizia.autore,
-                                  });
-                                }}
-                              >
-                                Modifica Testo
-                              </Dropdown.Item>
-                              <Dropdown.Item
-                                as="button"
-                                onClick={() => {
-                                  deleteNotizia(notizia.id);
-                                }}
-                              >
-                                Elimina Notizia
-                              </Dropdown.Item>
-                            </Dropdown.Menu>
-                          </Dropdown>
+                          <>
+                            <DropdownHome
+                              setShowModalUpdateImg={setShowModalUpdateImg}
+                              setNotiziaSelected={setNotiziaSelected}
+                              notizia={notizia}
+                              setShowModalText={setShowModalText}
+                              setUpdateText={setUpdateText}
+                              setShowDelete={setShowDelete}
+                            />
+                            <ModalDeleteNotizia
+                              showDelete={showDelete}
+                              setShowDelete={setShowDelete}
+                              deleteNotizia={deleteNotizia}
+                              notizia={notizia}
+                            />
+                          </>
                         )}
                         <p>Autore: {notizia.autore}</p>
                       </div>
@@ -437,113 +297,37 @@ const Home = () => {
             </>
           )}
         </Row>
+        <div className="d-flex justify-content-between">
+          {pagina > 0 && (
+            <button
+              className="btn-shiny2 py-2 px-3 m-1"
+              onClick={() => setPagina(pagina - 1)}
+            >
+              Indietro
+            </button>
+          )}
+          <button
+            className="btn-shiny2 py-2 px-3 m-1"
+            onClick={() => setPagina(pagina + 1)}
+          >
+            Avanti
+          </button>
+        </div>
       </div>
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title className="text-black">Gestisci Notizia</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleCreateNotizia}>
-            <Form.Group controlId="formTitolo">
-              <Form.Label>Titolo</Form.Label>
-              <Form.Control
-                type="text"
-                name="titolo"
-                value={formData.titolo}
-                onChange={(e) =>
-                  setFormData({ ...formData, titolo: e.target.value })
-                }
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="formTesto">
-              <Form.Label>Testo</Form.Label>
-              <Form.Control
-                as="textarea"
-                name="testo"
-                value={formData.testo}
-                onChange={(e) =>
-                  setFormData({ ...formData, testo: e.target.value })
-                }
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="formAutore">
-              <Form.Label>Autore</Form.Label>
-              <Form.Control
-                type="text"
-                name="autore"
-                value={formData.autore}
-                onChange={(e) =>
-                  setFormData({ ...formData, autore: e.target.value })
-                }
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="formImmagine">
-              <Form.Label>Immagine</Form.Label>
-              <Form.Control
-                type="file"
-                name="immagine"
-                onChange={(e) =>
-                  setFormData({ ...formData, immagine: e.target.files[0] })
-                }
-              />
-            </Form.Group>
-            <Button variant="primary" type="submit" className="mt-2">
-              Salva
-            </Button>
-          </Form>
-        </Modal.Body>
-      </Modal>
-      <Modal show={showModalText} onHide={() => setShowModalText(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title className="text-black">Gestisci Notizia</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleUpdateText}>
-            <Form.Group controlId="formTitolo">
-              <Form.Label>Titolo</Form.Label>
-              <Form.Control
-                type="text"
-                name="titolo"
-                value={updateText.titolo}
-                onChange={(e) =>
-                  setUpdateText({ ...updateText, titolo: e.target.value })
-                }
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="formTesto">
-              <Form.Label>Testo</Form.Label>
-              <Form.Control
-                as="textarea"
-                name="testo"
-                value={updateText.testo}
-                onChange={(e) =>
-                  setUpdateText({ ...updateText, testo: e.target.value })
-                }
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="formAutore">
-              <Form.Label>Autore</Form.Label>
-              <Form.Control
-                type="text"
-                name="autore"
-                value={updateText.autore}
-                onChange={(e) =>
-                  setUpdateText({ ...updateText, autore: e.target.value })
-                }
-                required
-              />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Salva
-            </Button>
-          </Form>
-        </Modal.Body>
-      </Modal>
+      <ModalGestisciNotizie
+        showModal={showModal}
+        setShowModal={setShowModal}
+        handleCreateNotizia={handleCreateNotizia}
+        formData={formData}
+        setFormData={setFormData}
+      />
+      <ModalCorpoNotizia
+        showModalText={showModalText}
+        setShowModalText={setShowModalText}
+        handleUpdateText={handleUpdateText}
+        updateText={updateText}
+        setUpdateText={setUpdateText}
+      />
       <Modal
         show={showModalUpdateImg}
         onHide={() => setShowModalUpdateImg(false)}
@@ -561,7 +345,7 @@ const Home = () => {
                 required
               />
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" className="mt-2">
               Salva
             </Button>
           </Form>

@@ -1,6 +1,7 @@
 import { Container, Dropdown, Nav, Navbar } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const TopBar = () => {
   const navigate = useNavigate();
@@ -9,11 +10,12 @@ const TopBar = () => {
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
     navigate("/login");
+    toast.success("Logout eseguito con successo");
   };
   return (
     <Navbar
       expand="lg"
-      className="civ-color rounded-4 border border-3 my-2 p-2"
+      className="civ-color rounded-4 border border-3 my-2 p-2 titleCIV"
     >
       <Container>
         <NavLink to="/" className="nav-link me-4">
