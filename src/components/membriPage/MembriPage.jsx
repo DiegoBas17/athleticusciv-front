@@ -1,4 +1,3 @@
-import "./membriPage.css";
 import { useEffect, useState } from "react";
 import TopBar from "../TopBar";
 import { Col, Container, Row } from "react-bootstrap";
@@ -6,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import httpClient from "../../services/httpClient";
 import Profilo from "./Profilo";
+import { toast } from "react-toastify";
 
 const MembriPage = () => {
   const [atleti, setAtleti] = useState(null);
@@ -22,20 +22,20 @@ const MembriPage = () => {
         setAtleti(response.data.content);
       })
       .catch((error) => {
-        console.log("Errore nella richiesta:", error);
+        toast.error(error.message);
       });
   };
 
   const handleDeleteAtleta = (atletaId) => {
     httpClient
       .delete(`/atleti/${atletaId}`)
-      .then((response) => {
-        console.log("Atleta cancellato:", response.data);
+      .then(() => {
+        toast.success("Atleta eliminato con successo");
         setSelectAtleta(startingAtleta);
         fetchAtleta();
       })
       .catch((error) => {
-        console.log("Errore nella cancellazione della partita:", error);
+        toast.error(error.message);
       });
   };
 
@@ -48,6 +48,7 @@ const MembriPage = () => {
   useEffect(() => {
     fetchAtleta();
   }, []);
+
   return (
     <Container>
       <TopBar />
@@ -63,7 +64,9 @@ const MembriPage = () => {
         </Col>
         <Col lg={4}>
           <div className="civ-color p-4 rounded-4 border border-3">
-            <h2 className="text-center">Leggende dell&rsquo;Athleticus</h2>
+            <h2 className="text-center titleCIV">
+              Leggende dell&rsquo;Athleticus
+            </h2>
             {atleti?.map((membro, index) => (
               <div
                 key={index}

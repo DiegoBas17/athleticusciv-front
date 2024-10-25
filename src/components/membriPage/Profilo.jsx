@@ -4,6 +4,7 @@ import BarChart from "./BarChart";
 import DoughnutChart from "./DoughnutChart";
 import httpClient from "../../services/httpClient";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const Profilo = ({
   showAtleta,
@@ -67,8 +68,8 @@ const Profilo = ({
       : `/atleti/${showAtleta.id}/ruoli`;
     httpClient
       .put(endpoint, ruoliInCampo)
-      .then((response) => {
-        console.log("Ruolo aggiornato con successo", response);
+      .then(() => {
+        toast.success("Ruoli in campo aggiornati con successo");
         setSelectAtleta({
           ...showAtleta,
           ruoloInCampoPrimario: ruoliInCampo.ruoloInCampoPrimario.toUpperCase(),
@@ -86,7 +87,7 @@ const Profilo = ({
         });
       })
       .catch((error) => {
-        console.log("Errore nella richiesta:", error);
+        toast.error(error.message);
       });
   };
 
@@ -95,8 +96,8 @@ const Profilo = ({
     const endpoint = isMeProfile() ? `/atleti/me` : `/atleti/${showAtleta.id}`;
     httpClient
       .put(endpoint, atleta)
-      .then((response) => {
-        console.log("Atleta aggiornato con successo", response);
+      .then(() => {
+        toast.success("Atleta aggiornato con successo");
         fetchAtleta();
         setShowModalAtleta(false);
         setSelectAtleta({
@@ -115,7 +116,7 @@ const Profilo = ({
         });
       })
       .catch((error) => {
-        console.log("Errore nella richiesta:", error);
+        toast.error(error.message);
       });
   };
 
@@ -128,12 +129,12 @@ const Profilo = ({
       : `/atleti/${showAtleta.id}/avatar`;
     httpClient
       .put(endpoint, formData)
-      .then((response) => {
-        console.log("Avatar aggiornato con successo", response);
+      .then(() => {
+        toast.success("Avatar aggiornato con successo");
         fetchAtleta();
       })
       .catch((error) => {
-        console.log("Errore nella richiesta:", error);
+        toast.error(error.message);
       });
   };
 
@@ -147,8 +148,8 @@ const Profilo = ({
     e.preventDefault();
     httpClient
       .patch(`/atleti/${showAtleta.id}/authorization`, authorization)
-      .then((response) => {
-        console.log("Autorizzazione aggiornata con successo", response);
+      .then(() => {
+        toast.success("Autorizzazione aggiornata con successo");
         setSelectAtleta({
           ...showAtleta,
           ruolo: authorization.ruolo.toUpperCase(),
@@ -157,7 +158,7 @@ const Profilo = ({
         setShowModalAuthorization(false);
       })
       .catch((error) => {
-        console.log("Errore nella richiesta:", error);
+        toast.error(error.message);
       });
   };
 
@@ -165,8 +166,8 @@ const Profilo = ({
     e.preventDefault();
     httpClient
       .put(`/valutazioni/${valutazioneSelected.id}`, valutazione)
-      .then((response) => {
-        console.log("Valutazione aggiornata con successo", response);
+      .then(() => {
+        toast.success("Valutazione aggiornata con successo");
         setSelectAtleta((prevAtleta) => ({
           ...prevAtleta,
           [valutazioneSelected.tipoValutazione === "valutazioneAdmin"
@@ -179,7 +180,7 @@ const Profilo = ({
         setShowModalValutazione(false);
       })
       .catch((error) => {
-        console.log("Errore nella richiesta:", error);
+        toast.error(error.message);
       });
   };
 
@@ -202,8 +203,8 @@ const Profilo = ({
     e.preventDefault();
     httpClient
       .put(`/atleti/${showAtleta.id}/storico`, storico)
-      .then((response) => {
-        console.log("Storico aggiornato con successo", response);
+      .then(() => {
+        toast.success("Storico aggiornato con successo");
         setSelectAtleta({
           ...showAtleta,
           mediaGol: storico.mediaGol,
@@ -217,14 +218,14 @@ const Profilo = ({
         setShowStorico(false);
       })
       .catch((error) => {
-        console.log("Errore nella richiesta:", error);
+        toast.error(error.message);
       });
   };
 
   return (
     <div>
       {showAtleta && (
-        <div className="civ-color p-4 rounded-4 border border-3">
+        <div className="civ-color p-3 rounded-4 border border-3">
           <h1>Profilo</h1>
           <Row className="g-2">
             <Col lg={5}>
@@ -325,32 +326,37 @@ const Profilo = ({
                 style={{ width: "10rem", height: "10rem" }}
                 className="rounded-circle"
               />
-              <div>
-                <h3 className="mt-3">Dati:</h3>
-              </div>
-              <div className="border border-1 rounded-4 p-2">
-                <p>Membro CIV: {showAtleta.ruolo}</p>
+              <h3 className="mt-3 fw-bold">Dati:</h3>
+              <div className="border border-3 rounded-4 p-2">
                 <p>
-                  Ruolo in campo Principale: {showAtleta?.ruoloInCampoPrimario}
+                  <b>Membro CIV:</b> <br />
+                  {showAtleta.ruolo}
                 </p>
                 <p>
-                  Ruolo in campo Secondario:{" "}
+                  <b>Ruolo in campo Principale: </b>
+                  <br />
+                  {showAtleta?.ruoloInCampoPrimario}
+                </p>
+                <p>
+                  <b>Ruolo in campo Secondario: </b>
+                  <br />
                   {showAtleta?.ruoloInCampoSecondario}
                 </p>
-                <p>
-                  Ruolo in campo Alternativo:{" "}
+                <p className="mb-0">
+                  <b>Ruolo in campo Alternativo: </b>
+                  <br />
                   {showAtleta?.ruoloInCampoAlternativo}
                 </p>
               </div>
             </Col>
             <Col xs={12} lg={7}>
-              <div className="p-1 w-75 w-xs-50 mx-lg-auto">
+              <div className="w-75 w-xs-50 mx-lg-auto mb-1">
                 <RadarChart showAtleta={showAtleta} />
               </div>
-              <div className="p-1 w-75 mx-lg-auto">
+              <div className="w-75 mx-lg-auto mb-4">
                 <BarChart showAtleta={showAtleta} />
               </div>
-              <div className="p-1 w-75 mx-lg-auto">
+              <div className="w-75 mx-lg-auto">
                 <DoughnutChart showAtleta={showAtleta} />
               </div>
             </Col>

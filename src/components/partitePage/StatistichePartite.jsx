@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import TopBar from "../TopBar";
 import StarRating from "./StarRating";
+import { toast } from "react-toastify";
 
 const StatistichePartite = () => {
   const { partitaId } = useParams();
@@ -85,14 +86,13 @@ const StatistichePartite = () => {
       .get(`/partite/${partitaId}`)
       .then((response) => {
         setPartita(response.data);
-        console.log(partita);
         setModificaStatistica({
           ...modificaStatistica,
           tipoPartita: partita.tipoPartita,
         });
       })
       .catch((error) => {
-        console.log("Errore nella richiesta:", error);
+        toast.error(error.message);
       });
   };
 
@@ -103,26 +103,26 @@ const StatistichePartite = () => {
   const handleCreateStatistiche = () => {
     httpClient
       .post(`/statistiche/${partita.id}`)
-      .then((response) => {
-        console.log("Satistiche Create:", response);
+      .then(() => {
+        toast.success("Statistica creata con successo");
         fetchPartita();
       })
       .catch((error) => {
-        console.log("Errore nella creazione delle statistiche:", error);
+        toast.error(error.message);
       });
   };
 
   const handleSaveEdit = (e) => {
     e.preventDefault();
-    console.log(modificaStatistica);
     httpClient
       .put(`/statistiche/${statisticaId}`, modificaStatistica)
       .then(() => {
+        toast.success("Statistica modificata con successo");
         fetchPartita();
         setShowModal(false);
       })
       .catch((error) => {
-        console.log("Errore nella modifica delle statistiche:", error);
+        toast.error(error.message);
       });
   };
 
@@ -138,13 +138,13 @@ const StatistichePartite = () => {
     e.preventDefault();
     httpClient
       .post(`/tracker/${statisticaId}`, trackerData)
-      .then((response) => {
-        console.log("Tracker creato:", response.data);
+      .then(() => {
+        toast.success("Tracker creato con successo");
         fetchPartita();
         setShowFormTracker(false);
       })
       .catch((error) => {
-        console.error("Errore nella creazione del tracker:", error);
+        toast.error(error.message);
       });
   };
 
@@ -171,7 +171,7 @@ const StatistichePartite = () => {
             {partita.statistiche?.map((statistica, index) => (
               <Col key={index} xs={12} lg={6}>
                 <div className="rounded-4 border border-3 p-3">
-                  <div className="d-flex align-items-center mb-2">
+                  <div className="d-flex align-items-center mb-3">
                     <img
                       src={statistica.atleta.avatar}
                       className="rounded-circle"
@@ -181,12 +181,12 @@ const StatistichePartite = () => {
                       {statistica.atleta.nome} {statistica.atleta.cognome}
                     </h3>
                   </div>
-                  <div>Squadra: {statistica.coloreSquadra}</div>
-                  <div>Assist: {statistica.assist}</div>
-                  <div>Gol: {statistica.gol}</div>
+                  <p className="mb-1">Squadra: {statistica.coloreSquadra}</p>
+                  <p className="mb-1">Assist: {statistica.assist}</p>
+                  <p className="mb-2">Gol: {statistica.gol}</p>
                   {statistica?.tracker ? (
                     <button
-                      className="btn btn-secondary"
+                      className="btn-shiny2 py-2 px-3 m-1 scale"
                       onClick={() => setShowTrackerDetails(!showTrackerDetails)}
                     >
                       {showTrackerDetails
@@ -196,7 +196,7 @@ const StatistichePartite = () => {
                   ) : (
                     isAdminOrSuperadmin() && (
                       <button
-                        className="btn-shiny3 py-2 px-3 m-1"
+                        className="btn-shiny3 py-2 px-3 m-1 scale"
                         onClick={() => {
                           setShowFormTracker(true);
                           setStatisticaId(statistica.id);
@@ -208,7 +208,7 @@ const StatistichePartite = () => {
                   )}
                   {isAdminOrSuperadmin() ? (
                     <button
-                      className="btn-shiny2 py-2 px-3 m-1"
+                      className="btn-shiny2 py-2 px-3 m-1 scale"
                       onClick={() => {
                         setShowModal(true);
                         setModificaStatistica({
@@ -290,9 +290,23 @@ const StatistichePartite = () => {
           </Row>
         </div>
       ) : (
-        <Button onClick={() => handleCreateStatistiche()}>
-          Crea Statistiche
-        </Button>
+        <>
+          <div className="centerGridCIV">
+            <div className="text-center">
+              <h2>Non ci sono ancora statistiche per questa partita!</h2>
+              <h4>
+                Assicurati prima di crearle di avere il giusto numero di
+                partecipanti i giusti partecipanti!
+              </h4>
+              <button
+                className="btn-shiny2 py-2 px-3 m-1"
+                onClick={() => handleCreateStatistiche()}
+              >
+                Crea Statistiche
+              </button>
+            </div>
+          </div>
+        </>
       )}
       <Modal
         show={showModal}
