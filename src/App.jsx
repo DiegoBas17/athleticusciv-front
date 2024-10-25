@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginRegistrazionePage from "./components/login e registrazione/LoginRegistrazionePage";
