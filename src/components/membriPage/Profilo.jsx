@@ -1,10 +1,17 @@
-import { Button, Col, Dropdown, Form, Modal, Row } from "react-bootstrap";
+import { Col, Dropdown, Row } from "react-bootstrap";
 import RadarChart from "./RadarChart";
 import BarChart from "./BarChart";
 import DoughnutChart from "./DoughnutChart";
 import httpClient from "../../services/httpClient";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import ModalModificaRuoliInCampo from "./ModalModificaRuoliInCampo";
+import ModalModificaAtleta from "./ModalModificaAtleta";
+import ModalModificaValutazione from "./ModalModificaValutazione";
+import ModalValoriAtleta from "./ModalValoriAtleta";
+import ModalModifcaAvatar from "./ModalModifcaAvatar";
+import ModalModificaAutorizzazione from "./ModalModificaAutorizzazione";
+import ModalEliminaAtleta from "./ModalEliminaAtleta";
 
 const Profilo = ({
   showAtleta,
@@ -363,479 +370,54 @@ const Profilo = ({
           </Row>
         </div>
       )}
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modifica Ruoli in Campo</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form onSubmit={handleChangeRole}>
-            <div className="mb-3">
-              <label className="form-label">Ruolo Primario</label>
-              <select
-                className="form-select"
-                value={ruoliInCampo.ruoloInCampoPrimario}
-                onChange={(e) =>
-                  setRuoliInCampo({
-                    ...ruoliInCampo,
-                    ruoloInCampoPrimario: e.target.value,
-                  })
-                }
-                required
-              >
-                <option value="">Seleziona il ruolo primario</option>
-                <option value="portiere">Portiere</option>
-                <option value="difensore">Difensore</option>
-                <option value="terzino">Terzino</option>
-                <option value="centrocampista">Centrocampista Centrale</option>
-                <option value="centrocampistalaterale">
-                  Centrocampista Laterale
-                </option>
-                <option value="attaccante">Attaccante</option>
-              </select>
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Ruolo Secondario</label>
-              <select
-                className="form-select"
-                value={ruoliInCampo.ruoloInCampoSecondario}
-                onChange={(e) =>
-                  setRuoliInCampo({
-                    ...ruoliInCampo,
-                    ruoloInCampoSecondario: e.target.value,
-                  })
-                }
-                required
-              >
-                <option value="">Seleziona il ruolo secondario</option>
-                <option value="portiere">Portiere</option>
-                <option value="difensore">Difensore</option>
-                <option value="terzino">Terzino</option>
-                <option value="centrocampista">Centrocampista Centrale</option>
-                <option value="centrocampistalaterale">
-                  Centrocampista Laterale
-                </option>
-                <option value="attaccante">Attaccante</option>
-              </select>
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Ruolo Alternativo</label>
-              <select
-                className="form-select"
-                value={ruoliInCampo.ruoloInCampoAlternativo}
-                onChange={(e) =>
-                  setRuoliInCampo({
-                    ...ruoliInCampo,
-                    ruoloInCampoAlternativo: e.target.value,
-                  })
-                }
-                required
-              >
-                <option value="">Seleziona il ruolo alternativo</option>
-                <option value="portiere">Portiere</option>
-                <option value="difensore">Difensore</option>
-                <option value="terzino">Terzino</option>
-                <option value="centrocampista">Centrocampista Centrale</option>
-                <option value="centrocampistalaterale">
-                  Centrocampista Laterale
-                </option>
-                <option value="attaccante">Attaccante</option>
-              </select>
-            </div>
-            <Button type="submit">
-              {isMeProfile() ? "Aggiorna Ruoli" : "Aggiorna Ruoli come Admin"}
-            </Button>
-          </form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Annulla
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <Modal show={showModalAvatar} onHide={() => setShowModalAvatar(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modifica Avatar</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form onSubmit={handleUpdateAvatar}>
-            <input
-              type="file"
-              onChange={(e) => {
-                setFile(e.target.files[0]);
-              }}
-              accept="image/*"
-              required
-            />
-            <Button type="submit">Aggiorna Avatar</Button>
-          </form>
-          <Modal.Footer>
-            <Button type="button" onClick={() => setShowModalAvatar(false)}>
-              Chiudi
-            </Button>
-          </Modal.Footer>
-        </Modal.Body>
-      </Modal>
-      <Modal
-        show={showModalAuthorization}
-        onHide={() => setShowModalAuthorization(false)}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Modifica Autorizzazione</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form onSubmit={handleUpdateAuthorization}>
-            <div className="mb-3">
-              <label className="form-label">Ruolo nel CIV</label>
-              <select
-                className="form-select"
-                value={authorization.ruolo}
-                onChange={(e) =>
-                  setAuthorization({
-                    ruolo: e.target.value,
-                  })
-                }
-                required
-              >
-                <option value="">Seleziona il ruolo nel CIV</option>
-                <option value="VISITATORE">Visitatore</option>
-                <option value="ATLETA">Atleta</option>
-                <option value="ADMIN">Admin</option>
-                <option value="SUPERADMIN">SuperAdmin</option>
-              </select>
-            </div>
-            <Button type="submit">Aggiorna Ruolo</Button>
-          </form>
-          <Modal.Footer>
-            <Button
-              type="button"
-              onClick={() => setShowModalAuthorization(false)}
-            >
-              Chiudi
-            </Button>
-          </Modal.Footer>
-        </Modal.Body>
-      </Modal>
-      <Modal show={showModalAtleta} onHide={() => setShowModalAtleta(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modifica Atleta</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label className="form-label">Nome</label>
-              <input
-                type="text"
-                className="form-control"
-                name="nome"
-                value={atleta.nome}
-                onChange={(e) =>
-                  setAtleta({
-                    ...atleta,
-                    nome: e.target.value,
-                  })
-                }
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Cognome</label>
-              <input
-                type="text"
-                className="form-control"
-                name="cognome"
-                value={atleta.cognome}
-                onChange={(e) =>
-                  setAtleta({
-                    ...atleta,
-                    cognome: e.target.value,
-                  })
-                }
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Email</label>
-              <input
-                type="email"
-                className="form-control"
-                name="email"
-                value={atleta.email}
-                onChange={(e) =>
-                  setAtleta({
-                    ...atleta,
-                    email: e.target.value,
-                  })
-                }
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Numero di Cellulare</label>
-              <input
-                type="text"
-                className="form-control"
-                name="numeroDiCellulare"
-                value={atleta.numeroDiCellulare}
-                onChange={(e) =>
-                  setAtleta({
-                    ...atleta,
-                    numeroDiCellulare: e.target.value,
-                  })
-                }
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Password</label>
-              <input
-                type="password"
-                className="form-control"
-                name="password"
-                value={atleta.password}
-                onChange={(e) =>
-                  setAtleta({
-                    ...atleta,
-                    password: e.target.value,
-                  })
-                }
-                required
-              />
-            </div>
-            <Button type="submit">Salva Atleta</Button>
-          </form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModalAtleta(false)}>
-            Annulla
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <Modal
-        show={showModalValutazione}
-        onHide={() => setShowModalValutazione(false)}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Modifica Valutazione</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form onSubmit={handleUpadteValutazione}>
-            <div className="mb-3">
-              <label>
-                Difesa:
-                <input
-                  type="number"
-                  name="difesa"
-                  min="0"
-                  max="100"
-                  value={valutazione.difesa}
-                  onChange={(e) =>
-                    setValutazione({
-                      ...valutazione,
-                      difesa: e.target.value,
-                    })
-                  }
-                  required
-                />
-              </label>
-            </div>
-            <div className="mb-3">
-              <label>
-                Velocità:
-                <input
-                  type="number"
-                  name="velocita"
-                  min="0"
-                  max="100"
-                  value={valutazione.velocità}
-                  onChange={(e) =>
-                    setValutazione({
-                      ...valutazione,
-                      velocità: e.target.value,
-                    })
-                  }
-                  required
-                />
-              </label>
-            </div>
-            <div className="mb-3">
-              <label>
-                Resistenza:
-                <input
-                  type="number"
-                  name="resistenza"
-                  min="0"
-                  max="100"
-                  value={valutazione.resistenza}
-                  onChange={(e) =>
-                    setValutazione({
-                      ...valutazione,
-                      resistenza: e.target.value,
-                    })
-                  }
-                  required
-                />
-              </label>
-            </div>
-            <div className="mb-3">
-              <label>
-                Tiro:
-                <input
-                  type="number"
-                  name="tiro"
-                  min="0"
-                  max="100"
-                  value={valutazione.tiro}
-                  onChange={(e) =>
-                    setValutazione({
-                      ...valutazione,
-                      tiro: e.target.value,
-                    })
-                  }
-                  required
-                />
-              </label>
-            </div>
-            <div className="mb-3">
-              <label>
-                Tecnica:
-                <input
-                  type="number"
-                  name="tecnica"
-                  min="0"
-                  max="100"
-                  value={valutazione.tecnica}
-                  onChange={(e) =>
-                    setValutazione({
-                      ...valutazione,
-                      tecnica: e.target.value,
-                    })
-                  }
-                  required
-                />
-              </label>
-            </div>
-            <Button type="submit">Salva</Button>
-          </form>
-        </Modal.Body>
-        <Modal.Footer>
-          <button onClick={() => setShowModalValutazione(false)}>Chiudi</button>
-        </Modal.Footer>
-      </Modal>
-      <Modal show={showStorico} onHide={() => setShowStorico(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Inserisci Valori Atleta</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleStorico}>
-            <Form.Group controlId="mediaGol">
-              <Form.Label>Media Gol</Form.Label>
-              <Form.Control
-                type="number"
-                value={storico.mediaGol}
-                onChange={(e) =>
-                  setStorico({ ...storico, mediaGol: e.target.value })
-                }
-                placeholder="Inserisci la media gol"
-                min="0"
-                step="0.01"
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="mediaAssist">
-              <Form.Label>Media Assist</Form.Label>
-              <Form.Control
-                type="number"
-                value={storico.mediaAssist}
-                onChange={(e) =>
-                  setStorico({ ...storico, mediaAssist: e.target.value })
-                }
-                placeholder="Inserisci la media assist"
-                min="0"
-                step="0.01"
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="mediaVoti">
-              <Form.Label>Media Voti</Form.Label>
-              <Form.Control
-                type="number"
-                value={storico.mediaVoti}
-                onChange={(e) =>
-                  setStorico({ ...storico, mediaVoti: e.target.value })
-                }
-                placeholder="Inserisci la media voti"
-                min="0"
-                max="10"
-                step="0.01"
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="partiteGiocate">
-              <Form.Label>Partite Giocate</Form.Label>
-              <Form.Control
-                type="number"
-                value={storico.partiteGiocate}
-                onChange={(e) =>
-                  setStorico({ ...storico, partiteGiocate: e.target.value })
-                }
-                placeholder="Inserisci il numero di partite giocate"
-                min="0"
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="totaleGol">
-              <Form.Label>Totale Gol</Form.Label>
-              <Form.Control
-                type="number"
-                value={storico.totaleGol}
-                onChange={(e) =>
-                  setStorico({ ...storico, totaleGol: e.target.value })
-                }
-                placeholder="Inserisci il totale gol"
-                min="0"
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="totaleAssist">
-              <Form.Label>Totale Assist</Form.Label>
-              <Form.Control
-                type="number"
-                value={storico.totaleAssist}
-                onChange={(e) =>
-                  setStorico({ ...storico, totaleAssist: e.target.value })
-                }
-                placeholder="Inserisci il totale assist"
-                min="0"
-                required
-              />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Salva
-            </Button>
-          </Form>
-        </Modal.Body>
-      </Modal>
-      <Modal
-        show={showDelete}
-        onHide={() => setShowDelete(false)}
-        className="text-black"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Elimina Atleta</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <h3>Sei sicuro di voler eliminare questo Atleta?</h3>
-          <Button
-            type="button"
-            onClick={() => {
-              setShowDelete(false);
-              handleDeleteAtleta(showAtleta.id);
-            }}
-          >
-            elimina
-          </Button>
-        </Modal.Body>
-      </Modal>
+      <ModalModificaRuoliInCampo
+        showModal={showModal}
+        setShowModal={setShowModal}
+        handleChangeRole={handleChangeRole}
+        ruoliInCampo={ruoliInCampo}
+        setRuoliInCampo={setRuoliInCampo}
+        isMeProfile={isMeProfile}
+      />
+      <ModalModifcaAvatar
+        showModalAvatar={showModalAvatar}
+        setShowModalAvatar={setShowModalAvatar}
+        handleUpdateAvatar={handleUpdateAvatar}
+        setFile={setFile}
+      />
+      <ModalModificaAutorizzazione
+        showModalAuthorization={showModalAuthorization}
+        setShowModalAuthorization={setShowModalAuthorization}
+        handleUpdateAuthorization={handleUpdateAuthorization}
+        authorization={authorization}
+        setAuthorization={setAuthorization}
+      />
+      <ModalModificaAtleta
+        showModalAtleta={showModalAtleta}
+        setShowModalAtleta={setShowModalAtleta}
+        handleSubmit={handleSubmit}
+        atleta={atleta}
+        setAtleta={setAtleta}
+      />
+      <ModalModificaValutazione
+        showModalValutazione={showModalValutazione}
+        setShowModalValutazione={setShowModalValutazione}
+        handleUpadteValutazione={handleUpadteValutazione}
+        valutazione={valutazione}
+        setValutazione={setValutazione}
+      />
+      <ModalValoriAtleta
+        showStorico={showStorico}
+        setShowStorico={setShowStorico}
+        handleStorico={handleStorico}
+        storico={storico}
+        setStorico={setStorico}
+      />
+      <ModalEliminaAtleta
+        showDelete={showDelete}
+        setShowDelete={setShowDelete}
+        handleDeleteAtleta={handleDeleteAtleta}
+        showAtleta={showAtleta}
+      />
     </div>
   );
 };
