@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
+import logo from "../../assets/logoRosso.jpeg";
 
 const Registrazione = ({ handleToggle }) => {
   const [atleta, setAtleti] = useState({
@@ -47,7 +48,17 @@ const Registrazione = ({ handleToggle }) => {
   return (
     <Row>
       <Col md={6} lg={6} className="d-none d-md-block">
-        <div style={{ height: "100vh" }}></div>
+        <div
+          style={{ height: "100vh" }}
+          className="w-100 d-flex justify-content-center align-items-center"
+        >
+          <img
+            src={logo}
+            alt="logo"
+            height="40%"
+            style={{ borderRadius: "20px" }}
+          />
+        </div>
       </Col>
       <Col
         sm={12}
@@ -56,7 +67,8 @@ const Registrazione = ({ handleToggle }) => {
         className="d-flex justify-content-center align-items-center bg-white"
         style={{ height: "100vh" }}
       >
-        <div>
+        <div className="border border-1 p-3 rounded-4">
+          <h2>Registrazione</h2>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
               <Form.Label>Nome</Form.Label>

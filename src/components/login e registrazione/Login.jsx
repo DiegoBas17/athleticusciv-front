@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import logo from "../../assets/logoBlu.jpeg";
 
 const Login = ({ handleToggle }) => {
   const [atletaLog, setAtletalog] = useState({
@@ -93,7 +93,12 @@ const Login = ({ handleToggle }) => {
           </div>
         </Col>
         <Col md={6} lg={6} className="d-none d-md-block">
-          <div style={{ height: "100vh" }}></div>
+          <div
+            style={{ height: "100vh" }}
+            className="w-100 d-flex justify-content-center align-items-center"
+          >
+            <img src={logo} alt="logo" height="40%" />
+          </div>
         </Col>
       </Row>
     </>
