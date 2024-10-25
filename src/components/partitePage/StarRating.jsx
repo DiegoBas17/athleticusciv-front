@@ -76,7 +76,7 @@ const StarRating = ({ statistica }) => {
 
   return (
     <div>
-      <h3>Vota {statistica?.atleta.cognome}</h3>
+      <h3 className="mb-0 mt-2">Vota {statistica?.atleta.cognome}</h3>
       {[...Array(10)].map((_, index) => (
         <span
           key={index}
@@ -84,6 +84,7 @@ const StarRating = ({ statistica }) => {
           style={{
             cursor: "pointer",
             color: index < rating ? "#FFD700" : "#ccc",
+            fontSize: "1.6rem",
           }}
         >
           ★
