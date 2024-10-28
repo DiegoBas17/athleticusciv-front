@@ -120,7 +120,7 @@ const Registrazione = ({ handleToggle }) => {
             <Button type="submit">Registrati</Button>
           </Form>
           <p className="mt-3" onClick={handleToggle}>
-            Hai già un account? <u>Accedi</u>
+            Hai già un account? <u role="button">Accedi</u>
           </p>
         </div>
       </Col>

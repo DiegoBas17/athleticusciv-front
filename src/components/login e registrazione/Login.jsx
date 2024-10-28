@@ -88,7 +88,7 @@ const Login = ({ handleToggle }) => {
               <Button type="submit">Login</Button>
             </Form>
             <p className="mt-3" onClick={handleToggle}>
-              Non hai un account? <u>Registrati</u>
+              Non hai un account? <u role="button">Registrati</u>
             </p>
           </div>
         </Col>

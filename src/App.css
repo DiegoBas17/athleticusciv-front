@@ -5,7 +5,7 @@ h1,
 .titleCIV {
   color: #004aad;
   font-family: "Black Ops One", system-ui;
-  font-weight: 400;
+  font-weight: 300;
   font-style: normal;
 }
 p,
@@ -143,7 +143,7 @@ h5 {
 
 .scale:hover {
   scale: 1.03;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .centerGridCIV {

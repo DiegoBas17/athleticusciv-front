@@ -64,19 +64,19 @@ const MembriPage = () => {
         </Col>
         <Col lg={4}>
           <div className="civ-color p-4 rounded-4 border border-3">
-            <h2 className="text-center titleCIV">
+            <h2 className="text-center titleCIV mb-3">
               Leggende dell&rsquo;Athleticus
             </h2>
             {atleti?.map((membro, index) => (
               <div
                 key={index}
-                className="border-bottom d-flex justify-content-between mt-2 scale "
+                className="border-bottom d-flex justify-content-between mt-2 scale"
                 onClick={() => {
                   setSelectAtleta(membro);
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
               >
-                <p className={membro.id == showAtleta.id ? "fw-semibold" : ""}>
+                <p className={membro.id == showAtleta.id ? "fw-bolder" : ""}>
                   {membro.nome} {membro.cognome}
                 </p>
                 <img

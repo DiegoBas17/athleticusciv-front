@@ -89,7 +89,7 @@ const StatistichePartite = () => {
         setPartita(response.data);
         setModificaStatistica({
           ...modificaStatistica,
-          tipoPartita: partita.tipoPartita,
+          tipoPartita: partita?.tipoPartita,
         });
       })
       .catch((error) => {
