@@ -199,6 +199,7 @@ const PartitePage = () => {
               height="25"
               fill="currentColor"
               className="bi bi-plus-square me-1 scale"
+              role="button"
               viewBox="0 0 16 16"
               onClick={() => {
                 setNewPartita({
@@ -286,7 +287,7 @@ const PartitePage = () => {
                           src={prenotazione.atleta.avatar}
                           alt="avatar-atleta"
                           style={{ width: "2rem", height: "2rem" }}
-                          className="rounded-circle"
+                          className="rounded-circle object-fit-cover"
                         />
                       </div>
                     ))}
@@ -325,9 +326,7 @@ const PartitePage = () => {
                     Prenotati
                   </button>
                 )}
-                {partita.statistiche.length == 0 ? (
-                  <></>
-                ) : (
+                {partita.statistiche.length > 0 ? (
                   <button
                     className="btn-shiny2 py-2 px-3 m-1 w-100 scale"
                     onClick={() => {
@@ -336,6 +335,17 @@ const PartitePage = () => {
                   >
                     Statistiche
                   </button>
+                ) : (
+                  isAdminOrSuperadmin() && (
+                    <button
+                      className="btn-shiny2 py-2 px-3 m-1 w-100 scale"
+                      onClick={() => {
+                        navigate(`/partite/statistiche/${partita.id}`);
+                      }}
+                    >
+                      Crea statistiche
+                    </button>
+                  )
                 )}
               </Col>
             </Row>

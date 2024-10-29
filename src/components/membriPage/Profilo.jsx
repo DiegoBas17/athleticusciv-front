@@ -241,7 +241,7 @@ const Profilo = ({
                   {showAtleta.nome} {showAtleta.cognome}
                 </h2>
                 {(isMeProfile() || admin) && (
-                  <Dropdown align="end" className="scale">
+                  <Dropdown align="end" className="scale" role="button">
                     <Dropdown.Toggle as="span" id="dropdown-custom-components">
                       {isMeProfile() ? (
                         <svg
@@ -268,6 +268,7 @@ const Profilo = ({
                       )}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
+                      <Dropdown.Header>Gestione Profilo</Dropdown.Header>
                       <Dropdown.Item
                         onClick={() => {
                           setShowModalAtleta(true),
@@ -290,6 +291,8 @@ const Profilo = ({
                       </Dropdown.Item>
                       {admin && (
                         <>
+                          <Dropdown.Divider />
+                          <Dropdown.Header>Gestione Admin</Dropdown.Header>
                           <Dropdown.Item
                             onClick={() => setShowModalAuthorization(true)}
                           >
@@ -331,20 +334,20 @@ const Profilo = ({
                 src={showAtleta.avatar}
                 alt="avatar"
                 style={{ width: "10rem", height: "10rem" }}
-                className="rounded-circle"
+                className="rounded-circle object-fit-cover"
               />
               <h3 className="mt-3 fw-bold">Dati:</h3>
               <div className="border border-3 rounded-4 p-2">
-                <p>
+                <p className="mb-1">
                   <b>Membro CIV:</b> <br />
                   {showAtleta.ruolo}
                 </p>
-                <p>
+                <p className="mb-1">
                   <b>Ruolo in campo Principale: </b>
                   <br />
                   {showAtleta?.ruoloInCampoPrimario}
                 </p>
-                <p>
+                <p className="mb-1">
                   <b>Ruolo in campo Secondario: </b>
                   <br />
                   {showAtleta?.ruoloInCampoSecondario}
@@ -355,15 +358,15 @@ const Profilo = ({
                   {showAtleta?.ruoloInCampoAlternativo}
                 </p>
               </div>
-            </Col>
-            <Col xs={12} lg={7}>
-              <div className="w-75 w-xs-50 mx-lg-auto mb-1">
-                <RadarChart showAtleta={showAtleta} />
-              </div>
-              <div className="w-75 mx-lg-auto mb-4">
+              <div className="mx-auto mt-2">
                 <BarChart showAtleta={showAtleta} />
               </div>
-              <div className="w-75 mx-lg-auto">
+            </Col>
+            <Col xs={12} lg={7}>
+              <div className="mx-auto mb-4">
+                <RadarChart showAtleta={showAtleta} />
+              </div>
+              <div className="mx-auto">
                 <DoughnutChart showAtleta={showAtleta} />
               </div>
             </Col>

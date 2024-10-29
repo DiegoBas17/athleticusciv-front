@@ -185,7 +185,7 @@ const PrenotazioiniPage = () => {
                       <img
                         src={prenotazione.atleta.avatar}
                         alt="avatar-atleta"
-                        className="rounded-circle"
+                        className="rounded-circle object-fit-cover"
                         style={{ width: "4rem", height: "4rem" }}
                       />
                       <h4 className="ms-2">

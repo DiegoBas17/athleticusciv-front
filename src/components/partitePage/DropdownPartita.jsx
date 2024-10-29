@@ -7,7 +7,7 @@ const DropdownPartita = ({
   navigate,
 }) => {
   return (
-    <Dropdown align="end" className="scale">
+    <Dropdown align="end" className="scale" role="button">
       <Dropdown.Toggle
         as="div"
         id="dropdown-custom-components"
@@ -36,14 +36,6 @@ const DropdownPartita = ({
           onClick={() => navigate(`/partite/prenotazioni/${partita.id}`)}
         >
           Modifica prenotazioni
-        </Dropdown.Item>
-        <Dropdown.Item
-          as="button"
-          onClick={() => {
-            navigate(`/partite/statistiche/${partita.id}`);
-          }}
-        >
-          Vai a statistiche
         </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>

@@ -345,9 +345,12 @@ const Home = () => {
                 required
               />
             </Form.Group>
-            <Button variant="primary" type="submit" className="mt-2">
+            <button
+              type="submit"
+              className="btn-shiny2 py-2 px-3 m-1 w-100 scale mt-3"
+            >
               Salva
-            </Button>
+            </button>
           </Form>
         </Modal.Body>
       </Modal>

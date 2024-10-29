@@ -9,7 +9,7 @@ const DropdownHome = ({
   setShowDelete,
 }) => {
   return (
-    <Dropdown align="end" className="scale">
+    <Dropdown align="end" className="scale" role="button">
       <Dropdown.Toggle as="span" id="dropdown-custom-components">
         <svg
           xmlns="http://www.w3.org/2000/svg"

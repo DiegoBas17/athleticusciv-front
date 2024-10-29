@@ -83,7 +83,7 @@ const MembriPage = () => {
                   src={membro.avatar}
                   alt="avatar"
                   style={{ width: "2rem", height: "2rem" }}
-                  className="rounded-circle"
+                  className="rounded-circle object-fit-cover"
                 />
               </div>
             ))}

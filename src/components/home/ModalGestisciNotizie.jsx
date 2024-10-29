@@ -1,4 +1,4 @@
-import { Button, Form, Modal } from "react-bootstrap";
+import { Form, Modal } from "react-bootstrap";
 
 const ModalGestisciNotizie = ({
   showModal,
@@ -60,9 +60,12 @@ const ModalGestisciNotizie = ({
               }
             />
           </Form.Group>
-          <Button variant="primary" type="submit" className="mt-2">
+          <button
+            type="submit"
+            className="btn-shiny2 py-2 px-3 m-1 w-100 scale mt-3"
+          >
             Salva
-          </Button>
+          </button>
         </Form>
       </Modal.Body>
     </Modal>

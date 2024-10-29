@@ -12,9 +12,9 @@ const ModalDeleteNotizia = ({
         <Modal.Title>Elimina Notizia</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h3>Sei sicuro di voler eliminare questa Notizia?</h3>
+        <h3>Sei sicuro di voler eliminare questa notizia?</h3>
         <Button
-          className="mt-2"
+          className="mt-3 btn-shiny1 py-2 px-3 m-1 w-100 scale"
           type="button"
           onClick={() => {
             setShowDelete(false);

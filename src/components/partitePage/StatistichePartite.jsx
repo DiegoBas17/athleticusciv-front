@@ -296,8 +296,8 @@ const StatistichePartite = () => {
             <div className="text-center">
               <h2>Non ci sono ancora statistiche per questa partita!</h2>
               <h4>
-                Assicurati prima di crearle di avere il giusto numero di
-                partecipanti i giusti partecipanti!
+                Assicurati di avere il giusto numero di partecipanti e i giusti
+                partecipanti!
               </h4>
               <button
                 className="btn-shiny2 py-2 px-3 m-1"

@@ -39,7 +39,7 @@ const TopBar = () => {
               <img
                 src={atleta?.avatar}
                 style={{ height: "2rem", width: "2rem", cursor: "pointer" }}
-                className="rounded-circle"
+                className="rounded-circle object-fit-cover"
                 alt="avatar"
               />
             </Dropdown.Toggle>
