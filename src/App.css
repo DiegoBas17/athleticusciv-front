@@ -151,3 +151,12 @@ h5 {
   place-items: center;
   height: calc(100vh - 80px);
 }
+
+/* Pagina Formazione */
+.bg-campo {
+  background-image: url(../src/assets/vista-verticale-del-campo-di-calcio-mf1pxm0vhxxkmiex.jpg);
+  object-fit: fill;
+  background-repeat: no-repeat;
+  height: 100vh;
+  position: relative;
+}
