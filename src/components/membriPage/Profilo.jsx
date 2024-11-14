@@ -229,6 +229,21 @@ const Profilo = ({
       });
   };
 
+  if (showAtleta.nome == false) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <dotlottie-player
+          src="https://lottie.host/bb186f94-4d64-4b4f-bc35-916801c9a288/r2wW2ZAOCi.json"
+          background="transparent"
+          speed="1"
+          style={{ width: "300px", height: "300px" }}
+          loop
+          autoplay
+        ></dotlottie-player>
+      </div>
+    );
+  }
+
   return (
     <div>
       {showAtleta && (

@@ -38,6 +38,7 @@ const StatistichePartite = () => {
   });
   const [showFormTracker, setShowFormTracker] = useState();
   const atleta = useSelector((state) => state.atleta.atleta);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getDateInfo = (data) => {
     const mesi = [
@@ -83,6 +84,7 @@ const StatistichePartite = () => {
   };
 
   const fetchPartita = () => {
+    setIsLoading(true);
     httpClient
       .get(`/partite/${partitaId}`)
       .then((response) => {
@@ -94,6 +96,9 @@ const StatistichePartite = () => {
       })
       .catch((error) => {
         toast.error(error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -102,6 +107,7 @@ const StatistichePartite = () => {
   }, []);
 
   const handleCreateStatistiche = () => {
+    setIsLoading(true);
     httpClient
       .post(`/statistiche/${partita.id}`)
       .then(() => {
@@ -114,6 +120,7 @@ const StatistichePartite = () => {
   };
 
   const handleSaveEdit = (e) => {
+    setIsLoading(true);
     e.preventDefault();
     httpClient
       .put(`/statistiche/${statisticaId}`, modificaStatistica)
@@ -137,6 +144,7 @@ const StatistichePartite = () => {
 
   const handleCreateTracker = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     httpClient
       .post(`/tracker/${statisticaId}`, trackerData)
       .then(() => {
@@ -152,6 +160,21 @@ const StatistichePartite = () => {
   const isAdminOrSuperadmin = () => {
     return atleta.ruolo === "ADMIN" || atleta.ruolo === "SUPERADMIN";
   };
+
+  if (isLoading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <dotlottie-player
+          src="https://lottie.host/bb186f94-4d64-4b4f-bc35-916801c9a288/r2wW2ZAOCi.json"
+          background="transparent"
+          speed="1"
+          style={{ width: "300px", height: "300px" }}
+          loop
+          autoplay
+        ></dotlottie-player>
+      </div>
+    );
+  }
 
   return (
     <Container>

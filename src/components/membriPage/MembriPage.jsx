@@ -14,8 +14,10 @@ const MembriPage = () => {
   const startingAtleta = useSelector((state) => state.atleta.atleta);
   const [selectAtleta, setSelectAtleta] = useState(null);
   const showAtleta = selectAtleta ? selectAtleta : startingAtleta;
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchAtleta = () => {
+    setIsLoading(true);
     httpClient
       .get("/atleti")
       .then((response) => {
@@ -23,6 +25,9 @@ const MembriPage = () => {
       })
       .catch((error) => {
         toast.error(error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -49,6 +54,20 @@ const MembriPage = () => {
     fetchAtleta();
   }, []);
 
+  if (isLoading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <dotlottie-player
+          src="https://lottie.host/bb186f94-4d64-4b4f-bc35-916801c9a288/r2wW2ZAOCi.json"
+          background="transparent"
+          speed="1"
+          style={{ width: "300px", height: "300px" }}
+          loop
+          autoplay
+        ></dotlottie-player>
+      </div>
+    );
+  }
   return (
     <Container>
       <TopBar />

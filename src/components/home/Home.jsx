@@ -1,4 +1,4 @@
-import { Button, Col, Container, Form, Modal, Row } from "react-bootstrap";
+import { Col, Container, Form, Modal, Row } from "react-bootstrap";
 import TopBar from "../TopBar";
 import httpClient from "../../services/httpClient";
 import { useEffect, useState } from "react";
@@ -31,8 +31,10 @@ const Home = () => {
   const [showModalText, setShowModalText] = useState(false);
   const [pagina, setPagina] = useState(0);
   const [showDelete, setShowDelete] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchNotizie = () => {
+    setIsLoading(true);
     httpClient
       .get(`/notizie?sortBy=dataCreazione&order=desc&page=${pagina}`)
       .then((response) => {
@@ -40,6 +42,9 @@ const Home = () => {
       })
       .catch((error) => {
         toast.error(error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -113,6 +118,21 @@ const Home = () => {
         toast.error(error.message);
       });
   };
+
+  if (isLoading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <dotlottie-player
+          src="https://lottie.host/bb186f94-4d64-4b4f-bc35-916801c9a288/r2wW2ZAOCi.json"
+          background="transparent"
+          speed="1"
+          style={{ width: "300px", height: "300px" }}
+          loop
+          autoplay
+        ></dotlottie-player>
+      </div>
+    );
+  }
 
   return (
     <Container>

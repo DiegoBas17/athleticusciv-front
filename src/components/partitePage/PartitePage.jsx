@@ -24,8 +24,10 @@ const PartitePage = () => {
   const [editingPartita, setEditingPartita] = useState(null);
   const [pagina, setPagina] = useState(0);
   const [showDelete, setShowDelete] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchPartite = () => {
+    setIsLoading(true);
     httpClient
       .get(`/partite?sortBy=data&page=${pagina}`)
       .then((response) => {
@@ -33,6 +35,9 @@ const PartitePage = () => {
       })
       .catch((error) => {
         toast.error(error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -96,6 +101,7 @@ const PartitePage = () => {
   };
 
   const handlePrenotati = (partitaId) => {
+    setIsLoading(true);
     httpClient
       .post(`/prenotazioni-partite/${partitaId}`)
       .then(() => {
@@ -108,6 +114,7 @@ const PartitePage = () => {
   };
 
   const handleDisdici = (partita) => {
+    setIsLoading(true);
     const prenotazioneId = getPrenotazioneId(partita);
     httpClient
       .delete(`/prenotazioni-partite/${prenotazioneId}`)
@@ -167,6 +174,7 @@ const PartitePage = () => {
   };
 
   const handleDeletePartita = (partitaId) => {
+    setIsLoading(true);
     httpClient
       .delete(`/partite/${partitaId}`)
       .then(() => {
@@ -185,6 +193,21 @@ const PartitePage = () => {
       ? decodeURIComponent(match[1].replace(/\+/g, " "))
       : "Luogo sconosciuto";
   };
+
+  if (isLoading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <dotlottie-player
+          src="https://lottie.host/bb186f94-4d64-4b4f-bc35-916801c9a288/r2wW2ZAOCi.json"
+          background="transparent"
+          speed="1"
+          style={{ width: "300px", height: "300px" }}
+          loop
+          autoplay
+        ></dotlottie-player>
+      </div>
+    );
+  }
 
   return (
     <Container>
