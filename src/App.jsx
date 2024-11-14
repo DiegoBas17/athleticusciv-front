@@ -9,6 +9,7 @@ import PartitePage from "./components/partitePage/PartitePage";
 import PrenotazioiniPage from "./components/partitePage/PrenotazioiniPage";
 import StatistichePartite from "./components/partitePage/StatistichePartite";
 import { ToastContainer } from "react-toastify";
+import Formazione from "./components/formazioni/Formazione";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             path="/partite/statistiche/:partitaId"
             element={<StatistichePartite />}
           />
+          <Route path="/formazioni" element={<Formazione />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer
