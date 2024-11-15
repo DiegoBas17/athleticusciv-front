@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import Giocatore from "./Giocatore";
+import { Container } from "react-bootstrap";
+import TopBar from "../TopBar";
 
 const Formazione = () => {
   const [giocatori, setGiocatori] = useState([
@@ -27,32 +29,35 @@ const Formazione = () => {
   };
 
   return (
-    <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-      <div>
-        <h2>Lista Giocatori</h2>
-        {giocatori
-          .filter((giocatore) => !giocatore.isOnField)
-          .map((giocatore) => (
-            <Giocatore
-              key={giocatore.id}
-              giocatore={giocatore}
-              isOnField={false}
-            />
-          ))}
-      </div>
-      <h2>Campo</h2>
-      <div className="bg-campo">
-        {giocatori
-          .filter((giocatore) => giocatore.isOnField)
-          .map((giocatore) => (
-            <Giocatore
-              key={giocatore.id}
-              giocatore={giocatore}
-              isOnField={true}
-            />
-          ))}
-      </div>
-    </DndContext>
+    <Container>
+      <TopBar />
+      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <div>
+          <h2>Lista Giocatori</h2>
+          {giocatori
+            .filter((giocatore) => !giocatore.isOnField)
+            .map((giocatore) => (
+              <Giocatore
+                key={giocatore.id}
+                giocatore={giocatore}
+                isOnField={false}
+              />
+            ))}
+        </div>
+        <h2>Campo</h2>
+        <div className="bg-campo">
+          {giocatori
+            .filter((giocatore) => giocatore.isOnField)
+            .map((giocatore) => (
+              <Giocatore
+                key={giocatore.id}
+                giocatore={giocatore}
+                isOnField={true}
+              />
+            ))}
+        </div>
+      </DndContext>
+    </Container>
   );
 };
 

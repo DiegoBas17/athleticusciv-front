@@ -1,4 +1,5 @@
 import { useDraggable } from "@dnd-kit/core";
+import Maglia from "./Maglia";
 
 const Giocatore = ({ giocatore, isOnField }) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
@@ -20,6 +21,7 @@ const Giocatore = ({ giocatore, isOnField }) => {
   return (
     <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
       {giocatore.nome}
+      <Maglia />
     </div>
   );
 };
