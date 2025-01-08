@@ -13,15 +13,17 @@ const Giocatore = ({ giocatore, isOnField }) => {
     transform: transform
       ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
       : "",
-    padding: "10px",
-    border: "1px solid black",
+    padding: "2px",
     cursor: "grab",
   };
 
   return (
     <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
-      {giocatore.nome}
-      <Maglia />
+      <Maglia
+        numero={giocatore.id}
+        nome={giocatore.nome}
+        colore={giocatore.colore}
+      />
     </div>
   );
 };
