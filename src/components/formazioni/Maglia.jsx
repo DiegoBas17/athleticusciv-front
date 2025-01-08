@@ -33,7 +33,7 @@ const Maglia = ({ numero, nome, colore }) => (
       y="30%"
       textAnchor="middle"
       dominantBaseline="middle"
-      fontSize="50"
+      fontSize="70"
       fill="#FFFFFF"
     >
       {nome}

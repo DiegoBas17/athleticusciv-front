@@ -37,6 +37,12 @@ const DropdownPartita = ({
         >
           Modifica prenotazioni
         </Dropdown.Item>
+        <Dropdown.Item
+          as="button"
+          onClick={() => navigate(`/formazioni/${partita.id}`)}
+        >
+          Crea formazione
+        </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );

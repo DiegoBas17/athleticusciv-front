@@ -3,8 +3,15 @@ import { DndContext, closestCenter } from "@dnd-kit/core";
 import Giocatore from "./Giocatore";
 import { Col, Container, Row } from "react-bootstrap";
 import TopBar from "../TopBar";
+import { useParams } from "react-router-dom";
+import httpClient from "../../services/httpClient";
+import { toast } from "react-toastify";
 
 const Formazione = () => {
+  const { partitaId } = useParams();
+  const [partita, setPartita] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isVertical, setIsVertical] = useState(false);
   const [giocatori, setGiocatori] = useState([
     {
       id: "1",
@@ -40,7 +47,7 @@ const Formazione = () => {
     },
     {
       id: "5",
-      nome: "Rea",
+      nome: "de Sapio",
       x: 0,
       y: 0,
       isOnField: false,
@@ -136,9 +143,24 @@ const Formazione = () => {
     },
   ]);
 
-  const [isVertical, setIsVertical] = useState(false);
+  const fetchPartita = () => {
+    setIsLoading(true);
+    httpClient
+      .get(`/partite/${partitaId}`)
+      .then((response) => {
+        setPartita(response.data.prenotazioniPartite);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
   useEffect(() => {
+    fetchPartita();
+    console.log(partita);
     const handleResize = () => {
       if (window.innerWidth < 992) {
         setIsVertical(true);
@@ -152,6 +174,21 @@ const Formazione = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  if (isLoading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <dotlottie-player
+          src="https://lottie.host/bb186f94-4d64-4b4f-bc35-916801c9a288/r2wW2ZAOCi.json"
+          background="transparent"
+          speed="1"
+          style={{ width: "300px", height: "300px" }}
+          loop
+          autoplay
+        ></dotlottie-player>
+      </div>
+    );
+  }
 
   const handleDragEnd = (event) => {
     const { active, delta } = event;

@@ -28,7 +28,7 @@ function App() {
             path="/partite/statistiche/:partitaId"
             element={<StatistichePartite />}
           />
-          <Route path="/formazioni" element={<Formazione />} />
+          <Route path="/formazioni/:partitaId" element={<Formazione />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer
