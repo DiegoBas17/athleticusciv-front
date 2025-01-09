@@ -31,7 +31,8 @@ const PartitePage = () => {
     httpClient
       .get(`/partite?sortBy=data&page=${pagina}`)
       .then((response) => {
-        setPartite(response.data.content);
+        setPartite(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -49,6 +50,7 @@ const PartitePage = () => {
 
   useEffect(() => {
     fetchPartite();
+    console.log(pagina);
   }, [pagina]);
 
   const getDateInfo = (data) => {
@@ -241,7 +243,7 @@ const PartitePage = () => {
             </svg>
           )}
         </div>
-        {partite?.map((partita, index) => (
+        {partite.content?.map((partita, index) => (
           <div
             key={index}
             className="my-2 p-2 rounded-4 border border-3 rounded-2"
@@ -383,12 +385,14 @@ const PartitePage = () => {
               Indietro
             </button>
           )}
-          <button
-            className="btn-shiny2 py-2 px-3 m-1"
-            onClick={() => setPagina(pagina + 1)}
-          >
-            Avanti
-          </button>
+          {pagina + 1 < partite?.totalPages && (
+            <button
+              className="btn-shiny2 py-2 px-3 m-1"
+              onClick={() => setPagina(pagina + 1)}
+            >
+              Avanti
+            </button>
+          )}
         </div>
       </div>
       <ModalCreaPartita

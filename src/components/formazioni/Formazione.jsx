@@ -12,136 +12,7 @@ const Formazione = () => {
   const [partita, setPartita] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isVertical, setIsVertical] = useState(false);
-  const [giocatori, setGiocatori] = useState([
-    {
-      id: "1",
-      nome: "Teti",
-      x: 0,
-      y: 0,
-      isOnField: false,
-      colore: "black",
-    },
-    {
-      id: "2",
-      nome: "Mikalinsky",
-      x: 0,
-      y: 0,
-      isOnField: false,
-      colore: "black",
-    },
-    {
-      id: "3",
-      nome: "Faro",
-      x: 0,
-      y: 0,
-      isOnField: false,
-      colore: "black",
-    },
-    {
-      id: "4",
-      nome: "Rico",
-      x: 0,
-      y: 0,
-      isOnField: false,
-      colore: "black",
-    },
-    {
-      id: "5",
-      nome: "de Sapio",
-      x: 0,
-      y: 0,
-      isOnField: false,
-      colore: "black",
-    },
-    {
-      id: "6",
-      nome: "Bianco",
-      x: 0,
-      y: 0,
-      isOnField: false,
-      colore: "black",
-    },
-    {
-      id: "7",
-      nome: "Bianco",
-      x: 0,
-      y: 0,
-      isOnField: false,
-      colore: "black",
-    },
-    {
-      id: "8",
-      nome: "Frontali",
-      x: 0,
-      y: 0,
-      isOnField: false,
-      colore: "black",
-    },
-    {
-      id: "9",
-      nome: "Bunduc",
-      x: 0,
-      y: 0,
-      isOnField: false,
-      colore: "black",
-    },
-    {
-      id: "10",
-      nome: "Torcolini",
-      x: 0,
-      y: 0,
-      isOnField: false,
-      colore: "black",
-    },
-    {
-      id: "11",
-      nome: "Raffioni",
-      x: 0,
-      y: 0,
-      isOnField: false,
-      colore: "black",
-    },
-    {
-      id: "12",
-      nome: "Ruiu",
-      x: 0,
-      y: 0,
-      isOnField: false,
-      colore: "black",
-    },
-    {
-      id: "13",
-      nome: "Picchi",
-      x: 0,
-      y: 0,
-      isOnField: false,
-      colore: "black",
-    },
-    {
-      id: "14",
-      nome: "Basili",
-      x: 0,
-      y: 0,
-      isOnField: false,
-      colore: "black",
-    },
-    {
-      id: "15",
-      nome: "di Pietro",
-      x: 0,
-      y: 0,
-      isOnField: false,
-      colore: "black",
-    },
-    {
-      id: "16",
-      nome: "Roccia",
-      x: 0,
-      y: 0,
-      isOnField: false,
-      colore: "black",
-    },
-  ]);
+  const [giocatori, setGiocatori] = useState(null);
 
   const fetchPartita = () => {
     setIsLoading(true);
@@ -160,7 +31,6 @@ const Formazione = () => {
 
   useEffect(() => {
     fetchPartita();
-    console.log(partita);
     const handleResize = () => {
       if (window.innerWidth < 992) {
         setIsVertical(true);
@@ -174,6 +44,20 @@ const Formazione = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    if (partita) {
+      const giocatoriTrasformati = partita.map((prenotazione, index) => ({
+        id: `${index + 1}`,
+        nome: prenotazione.atleta.cognome,
+        x: 0,
+        y: 0,
+        isOnField: false,
+        colore: "black",
+      }));
+      setGiocatori(giocatoriTrasformati);
+    }
+  }, [partita]);
 
   if (isLoading) {
     return (
@@ -193,26 +77,27 @@ const Formazione = () => {
   const handleDragEnd = (event) => {
     const { active, delta } = event;
     const container = document.querySelector(".container-bg");
-    const containerWidth = container
-      ? container.getBoundingClientRect().width
-      : 0;
-    const containerHeight = container
-      ? container.getBoundingClientRect().height
-      : 0;
+
+    if (!container) return;
+
+    const containerBounds = container.getBoundingClientRect();
+    const containerWidth = containerBounds.width;
+    const containerHeight = containerBounds.height;
     const metaCampo = isVertical ? containerHeight / 2 : containerWidth / 2;
 
     setGiocatori((prevGiocatori) =>
       prevGiocatori.map((giocatore) => {
         if (giocatore.id === active.id) {
-          const newX = giocatore.isOnField ? giocatore.x + delta.x : delta.x;
-          const newY = giocatore.isOnField ? giocatore.y + delta.y : delta.y;
+          let newX = giocatore.isOnField ? giocatore.x + delta.x : delta.x;
+          let newY = giocatore.isOnField ? giocatore.y + delta.y : delta.y;
+          newX = Math.max(0, Math.min(newX, containerWidth));
+          newY = Math.max(0, Math.min(newY, containerHeight));
           let newColore;
           if (isVertical) {
             newColore = newY < metaCampo ? "red" : "blue";
           } else {
             newColore = newX < metaCampo ? "red" : "blue";
           }
-
           return {
             ...giocatore,
             x: newX,
@@ -231,33 +116,35 @@ const Formazione = () => {
       <TopBar />
       <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <div>
-          <h2>Lista Giocatori</h2>
+          <h2>Panchina Giocatori</h2>
           <Row>
-            {giocatori
-              .filter((giocatore) => !giocatore.isOnField)
-              .map((giocatore) => (
-                <Col key={giocatore.id}>
-                  <Giocatore giocatore={giocatore} isOnField={false} />
-                </Col>
-              ))}
+            {giocatori &&
+              giocatori
+                .filter((giocatore) => !giocatore.isOnField)
+                .map((giocatore) => (
+                  <Col key={giocatore.id}>
+                    <Giocatore giocatore={giocatore} isOnField={false} />
+                  </Col>
+                ))}
           </Row>
         </div>
-        <h2>Campo</h2>
+        <h2>In Campo</h2>
         <div className="container-bg">
           <img
             src="../src/assets/vista-verticale-del-campo-di-calcio-mf1pxm0vhxxkmiex.jpg"
             alt="Campo di calcio"
             className="img-campo"
           />
-          {giocatori
-            .filter((giocatore) => giocatore.isOnField)
-            .map((giocatore) => (
-              <Giocatore
-                key={giocatore.id}
-                giocatore={giocatore}
-                isOnField={true}
-              />
-            ))}
+          {giocatori &&
+            giocatori
+              .filter((giocatore) => giocatore.isOnField)
+              .map((giocatore) => (
+                <Giocatore
+                  key={giocatore.id}
+                  giocatore={giocatore}
+                  isOnField={true}
+                />
+              ))}
         </div>
       </DndContext>
     </Container>
