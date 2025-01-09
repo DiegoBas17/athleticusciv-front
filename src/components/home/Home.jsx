@@ -38,7 +38,7 @@ const Home = () => {
     httpClient
       .get(`/notizie?sortBy=dataCreazione&order=desc&page=${pagina}`)
       .then((response) => {
-        setNotizie(response.data.content);
+        setNotizie(response.data);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -160,7 +160,7 @@ const Home = () => {
           )}
         </div>
         <Row className="mt-4 g-2">
-          {notizie?.length > 0 && (
+          {notizie.content?.length > 0 && (
             <>
               {/* Notizia 1 */}
               <Col xs={12} className="mb-4">
@@ -168,7 +168,7 @@ const Home = () => {
                   <Row>
                     <Col xs={12} lg={6}>
                       <img
-                        src={notizie[0].immagine}
+                        src={notizie.content[0].immagine}
                         alt="immagine notizia principale"
                         width="100%"
                       />
@@ -176,16 +176,16 @@ const Home = () => {
                     <Col xs={12} lg={6}>
                       <div className="p-3 h-100 d-flex flex-column">
                         <div className="d-flex justify-content-between">
-                          <h3>{notizie[0].titolo}</h3>
+                          <h3>{notizie.content[0].titolo}</h3>
                         </div>
-                        <h5>{notizie[0].testo}</h5>
+                        <h5>{notizie.content[0].testo}</h5>
                         <div className="d-flex justify-content-between mt-auto">
                           {isAdminOrSuperadmin() && (
                             <div>
                               <DropdownHome
                                 setShowModalUpdateImg={setShowModalUpdateImg}
                                 setNotiziaSelected={setNotiziaSelected}
-                                notizia={notizie[0]}
+                                notizia={notizie.content[0]}
                                 setShowModalText={setShowModalText}
                                 setUpdateText={setUpdateText}
                                 setShowDelete={setShowDelete}
@@ -194,11 +194,11 @@ const Home = () => {
                                 showDelete={showDelete}
                                 setShowDelete={setShowDelete}
                                 deleteNotizia={deleteNotizia}
-                                notizia={notizie[0]}
+                                notizia={notizie.content[0]}
                               />
                             </div>
                           )}
-                          <p>Autore: {notizie[0].autore}</p>
+                          <p>Autore: {notizie.content[0].autore}</p>
                         </div>
                       </div>
                     </Col>
@@ -206,24 +206,24 @@ const Home = () => {
                 </div>
               </Col>
               {/* Notizia 2 */}
-              {notizie.length > 1 && (
+              {notizie.content.length > 1 && (
                 <Col xs={12} md={6} className="mb-4">
                   <div className="boxShadowCiv rounded-4 overflow-hidden h-100 d-flex flex-column">
                     <img
-                      src={notizie[1].immagine}
+                      src={notizie.content[1].immagine}
                       alt="immagine notizia principale"
                       width="100%"
                     />
                     <div className="p-3 d-flex flex-column flex-grow-1">
-                      <h3>{notizie[1].titolo}</h3>
-                      <h5>{notizie[1].testo}</h5>
+                      <h3>{notizie.content[1].titolo}</h3>
+                      <h5>{notizie.content[1].testo}</h5>
                       <div className="d-flex justify-content-between mt-auto">
                         {isAdminOrSuperadmin() && (
                           <>
                             <DropdownHome
                               setShowModalUpdateImg={setShowModalUpdateImg}
                               setNotiziaSelected={setNotiziaSelected}
-                              notizia={notizie[1]}
+                              notizia={notizie.content[1]}
                               setShowModalText={setShowModalText}
                               setUpdateText={setUpdateText}
                               setShowDelete={setShowDelete}
@@ -232,35 +232,35 @@ const Home = () => {
                               showDelete={showDelete}
                               setShowDelete={setShowDelete}
                               deleteNotizia={deleteNotizia}
-                              notizia={notizie[1]}
+                              notizia={notizie.content[1]}
                             />
                           </>
                         )}
-                        <p>Autore: {notizie[1].autore}</p>
+                        <p>Autore: {notizie.content[1].autore}</p>
                       </div>
                     </div>
                   </div>
                 </Col>
               )}
               {/* notizia 3 */}
-              {notizie.length > 2 && (
+              {notizie.content.length > 2 && (
                 <Col xs={12} md={6} className="mb-4">
                   <div className="boxShadowCiv rounded-4 overflow-hidden h-100 d-flex flex-column">
                     <img
-                      src={notizie[2].immagine}
+                      src={notizie.content[2].immagine}
                       alt="immagine notizia principale"
                       width="100%"
                     />
                     <div className="p-3 d-flex flex-column flex-grow-1">
-                      <h3>{notizie[2].titolo}</h3>
-                      <h5>{notizie[2].testo}</h5>
+                      <h3>{notizie.content[2].titolo}</h3>
+                      <h5>{notizie.content[2].testo}</h5>
                       <div className="d-flex justify-content-between mt-auto">
                         {isAdminOrSuperadmin() && (
                           <>
                             <DropdownHome
                               setShowModalUpdateImg={setShowModalUpdateImg}
                               setNotiziaSelected={setNotiziaSelected}
-                              notizia={notizie[2]}
+                              notizia={notizie.content[2]}
                               setShowModalText={setShowModalText}
                               setUpdateText={setUpdateText}
                               setShowDelete={setShowDelete}
@@ -269,18 +269,18 @@ const Home = () => {
                               showDelete={showDelete}
                               setShowDelete={setShowDelete}
                               deleteNotizia={deleteNotizia}
-                              notizia={notizie[2]}
+                              notizia={notizie.content[2]}
                             />
                           </>
                         )}
-                        <p>Autore: {notizie[2].autore}</p>
+                        <p>Autore: {notizie.content[2].autore}</p>
                       </div>
                     </div>
                   </div>
                 </Col>
               )}
               {/* Altre Notizie */}
-              {notizie.slice(3).map((notizia, index) => (
+              {notizie.content.slice(3).map((notizia, index) => (
                 <Col xs={12} md={6} lg={4} key={index} className="mb-4">
                   <div className="boxShadowCiv rounded-4 overflow-hidden h-100 d-flex flex-column">
                     <img src={notizia.immagine} width="100%" />
@@ -326,12 +326,14 @@ const Home = () => {
               Indietro
             </button>
           )}
-          <button
-            className="btn-shiny2 py-2 px-3 m-1"
-            onClick={() => setPagina(pagina + 1)}
-          >
-            Avanti
-          </button>
+          {pagina + 1 < notizie?.totalPages && (
+            <button
+              className="btn-shiny2 py-2 px-3 m-1"
+              onClick={() => setPagina(pagina + 1)}
+            >
+              Avanti
+            </button>
+          )}
         </div>
       </div>
       <ModalGestisciNotizie
