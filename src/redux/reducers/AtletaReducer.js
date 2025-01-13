@@ -1,4 +1,4 @@
-import { SET_ATLETA } from "../actions/atletaAction";
+import { SET_ATLETA } from "../actions/AtletaAction";
 
 const initialState = {
   atleta: null,
