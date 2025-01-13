@@ -6,7 +6,7 @@ import {
   SET_LOGIN_ERROR,
 } from "../redux/reducers/errorReducer";
 import uniqid from "uniqid";
-import { setAtleta } from "../redux/actions/atletaAction";
+import { setAtleta } from "../redux/actions/AtletaAction";
 
 const httpClient = axios.create({
   baseURL: "https://handsome-verna-pollito117-551d08b7.koyeb.app",
