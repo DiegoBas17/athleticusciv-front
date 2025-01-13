@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import atletaReducer from "../reducers/atletaReducer";
+import atletaReducer from "../reducers/AtletaReducer";
 import errorReducer from "../reducers/errorReducer";
 
 const rootReducer = combineReducers({
