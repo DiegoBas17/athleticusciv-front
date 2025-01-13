@@ -9,7 +9,7 @@ import uniqid from "uniqid";
 import { setAtleta } from "../redux/actions/atletaAction";
 
 const httpClient = axios.create({
-  baseURL: "http://localhost:3001",
+  baseURL: "https://handsome-verna-pollito117-551d08b7.koyeb.app",
 });
 
 /* Variabile per evitare il loop */

@@ -12,7 +12,7 @@ const Login = ({ handleToggle }) => {
   const navigate = useNavigate();
 
   const fetchLogin = () => {
-    fetch("http://localhost:3001/auth/login", {
+    fetch("https://handsome-verna-pollito117-551d08b7.koyeb.app/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
