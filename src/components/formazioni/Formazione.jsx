@@ -1,20 +1,149 @@
-import { useState, useEffect } from "react";
+import { useState /* useEffect */ } from "react";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import Giocatore from "./Giocatore";
 import { Col, Container, Row } from "react-bootstrap";
-import TopBar from "../TopBar";
+import TopBar from "../TopBar"; /* 
 import { useParams } from "react-router-dom";
 import httpClient from "../../services/httpClient";
-import { toast } from "react-toastify";
+import { toast } from "react-toastify"; */
 
 const Formazione = () => {
-  const { partitaId } = useParams();
+  /*  const { partitaId } = useParams();
   const [partita, setPartita] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);*/
   const [isVertical, setIsVertical] = useState(false);
-  const [giocatori, setGiocatori] = useState(null);
+  const [giocatori, setGiocatori] = useState([
+    {
+      id: "1",
+      nome: "C.Teti",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "2",
+      nome: "Luciani",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "3",
+      nome: "Roccia",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "4",
+      nome: "Faro",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "5",
+      nome: "Gheorghita",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "6",
+      nome: "S.Bianco",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "7",
+      nome: "Rico",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "8",
+      nome: "D.Bianco",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "9",
+      nome: "Frontali",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "10",
+      nome: "Raffioni",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "11",
+      nome: "Mikalinsky",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "12",
+      nome: "Bunduc",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "13",
+      nome: "Torcolini",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "14",
+      nome: "Ruiu",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "15",
+      nome: "Basili",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "16",
+      nome: "S.Teti",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+  ]);
 
-  const fetchPartita = () => {
+  /*   const fetchPartita = () => {
     setIsLoading(true);
     httpClient
       .get(`/partite/${partitaId}`)
@@ -28,8 +157,8 @@ const Formazione = () => {
         setIsLoading(false);
       });
   };
-
-  useEffect(() => {
+ */
+  /*   useEffect(() => {
     fetchPartita();
     const handleResize = () => {
       if (window.innerWidth < 992) {
@@ -43,8 +172,8 @@ const Formazione = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
-
+  }, []); */
+  /* 
   useEffect(() => {
     if (partita) {
       const giocatoriTrasformati = partita.map((prenotazione, index) => ({
@@ -57,9 +186,9 @@ const Formazione = () => {
       }));
       setGiocatori(giocatoriTrasformati);
     }
-  }, [partita]);
+  }, [partita]); */
 
-  if (isLoading) {
+  /*  if (isLoading) {
     return (
       <div className="d-flex justify-content-center align-items-center vh-100">
         <dotlottie-player
@@ -72,7 +201,7 @@ const Formazione = () => {
         ></dotlottie-player>
       </div>
     );
-  }
+  } */
 
   const handleDragEnd = (event) => {
     const { active, delta } = event;
