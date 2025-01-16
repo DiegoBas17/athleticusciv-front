@@ -8,13 +8,30 @@ import httpClient from "../../services/httpClient";
 import { toast } from "react-toastify";
 
 const Formazione = () => {
-  const { partitaId } = useParams();
+  /*  const { partitaId } = useParams();
   const [partita, setPartita] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isVertical, setIsVertical] = useState(false);
-  const [giocatori, setGiocatori] = useState(null);
+  const [isVertical, setIsVertical] = useState(false); */
+  const [giocatori, setGiocatori] = useState([
+    {
+      id: "1",
+      nome: "Teti",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "2",
+      nome: "Mikalinsky",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+  ]);
 
-  const fetchPartita = () => {
+  /*   const fetchPartita = () => {
     setIsLoading(true);
     httpClient
       .get(`/partite/${partitaId}`)
@@ -28,8 +45,8 @@ const Formazione = () => {
         setIsLoading(false);
       });
   };
-
-  useEffect(() => {
+ */
+  /*   useEffect(() => {
     fetchPartita();
     const handleResize = () => {
       if (window.innerWidth < 992) {
@@ -43,8 +60,8 @@ const Formazione = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
-
+  }, []); */
+  /* 
   useEffect(() => {
     if (partita) {
       const giocatoriTrasformati = partita.map((prenotazione, index) => ({
@@ -57,9 +74,9 @@ const Formazione = () => {
       }));
       setGiocatori(giocatoriTrasformati);
     }
-  }, [partita]);
+  }, [partita]); */
 
-  if (isLoading) {
+  /*  if (isLoading) {
     return (
       <div className="d-flex justify-content-center align-items-center vh-100">
         <dotlottie-player
@@ -72,9 +89,9 @@ const Formazione = () => {
         ></dotlottie-player>
       </div>
     );
-  }
+  } */
 
-  const handleDragEnd = (event) => {
+  /*   const handleDragEnd = (event) => {
     const { active, delta } = event;
     const container = document.querySelector(".container-bg");
 
@@ -109,7 +126,7 @@ const Formazione = () => {
         return giocatore;
       })
     );
-  };
+  }; */
 
   return (
     <Container>
