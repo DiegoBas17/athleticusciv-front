@@ -1,21 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState /* useEffect */ } from "react";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import Giocatore from "./Giocatore";
 import { Col, Container, Row } from "react-bootstrap";
-import TopBar from "../TopBar";
+import TopBar from "../TopBar"; /* 
 import { useParams } from "react-router-dom";
 import httpClient from "../../services/httpClient";
-import { toast } from "react-toastify";
+import { toast } from "react-toastify"; */
 
 const Formazione = () => {
   /*  const { partitaId } = useParams();
   const [partita, setPartita] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isVertical, setIsVertical] = useState(false); */
+  const [isLoading, setIsLoading] = useState(true);*/
+  const [isVertical, setIsVertical] = useState(false);
   const [giocatori, setGiocatori] = useState([
     {
       id: "1",
-      nome: "Teti",
+      nome: "C.Teti",
       x: 0,
       y: 0,
       isOnField: false,
@@ -23,7 +23,119 @@ const Formazione = () => {
     },
     {
       id: "2",
+      nome: "Luciani",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "3",
+      nome: "Roccia",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "4",
+      nome: "Faro",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "5",
+      nome: "Gheorghita",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "6",
+      nome: "S.Bianco",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "7",
+      nome: "Rico",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "8",
+      nome: "D.Bianco",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "9",
+      nome: "Frontali",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "10",
+      nome: "Raffioni",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "11",
       nome: "Mikalinsky",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "12",
+      nome: "Bunduc",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "13",
+      nome: "Torcolini",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "14",
+      nome: "Ruiu",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "15",
+      nome: "Basili",
+      x: 0,
+      y: 0,
+      isOnField: false,
+      colore: "black",
+    },
+    {
+      id: "16",
+      nome: "S.Teti",
       x: 0,
       y: 0,
       isOnField: false,
@@ -91,7 +203,7 @@ const Formazione = () => {
     );
   } */
 
-  /*   const handleDragEnd = (event) => {
+  const handleDragEnd = (event) => {
     const { active, delta } = event;
     const container = document.querySelector(".container-bg");
 
@@ -126,7 +238,7 @@ const Formazione = () => {
         return giocatore;
       })
     );
-  }; */
+  };
 
   return (
     <Container>
