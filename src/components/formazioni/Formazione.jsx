@@ -6,6 +6,7 @@ import TopBar from "../TopBar";
 import { useParams } from "react-router-dom";
 import httpClient from "../../services/httpClient";
 import { toast } from "react-toastify";
+import imgCampo from "../../assets/vista-verticale-del-campo-di-calcio-mf1pxm0vhxxkmiex.jpg";
 
 const Formazione = () => {
   const { partitaId } = useParams();
@@ -130,11 +131,7 @@ const Formazione = () => {
         </div>
         <h2>In Campo</h2>
         <div className="container-bg">
-          <img
-            src="../src/assets/vista-verticale-del-campo-di-calcio-mf1pxm0vhxxkmiex.jpg"
-            alt="Campo di calcio"
-            className="img-campo"
-          />
+          <img src={imgCampo} alt="Campo di calcio" className="img-campo" />
           {giocatori &&
             giocatori
               .filter((giocatore) => giocatore.isOnField)
