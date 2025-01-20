@@ -244,6 +244,14 @@ const Profilo = ({
     );
   }
 
+  const ruoloInCampo = (ruoliInCampo) => {
+    if (ruoliInCampo == "CENTROCAMPISTALATERALE") {
+      return "CENTROCAMPISTA LATERALE";
+    } else {
+      return ruoliInCampo;
+    }
+  };
+
   return (
     <div>
       {showAtleta && (
@@ -360,17 +368,17 @@ const Profilo = ({
                 <p className="mb-1">
                   <b>Ruolo in campo Principale: </b>
                   <br />
-                  {showAtleta?.ruoloInCampoPrimario}
+                  {ruoloInCampo(showAtleta.ruoloInCampoPrimario)}
                 </p>
                 <p className="mb-1">
                   <b>Ruolo in campo Secondario: </b>
                   <br />
-                  {showAtleta?.ruoloInCampoSecondario}
+                  {ruoloInCampo(showAtleta.ruoloInCampoSecondario)}
                 </p>
                 <p className="mb-0">
                   <b>Ruolo in campo Alternativo: </b>
                   <br />
-                  {showAtleta?.ruoloInCampoAlternativo}
+                  {ruoloInCampo(showAtleta.ruoloInCampoAlternativo)}
                 </p>
               </div>
               <div className="mx-auto mt-2">

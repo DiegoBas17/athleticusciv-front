@@ -3,7 +3,7 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
 import logo from "../../assets/logoRosso.jpeg";
 
-const Registrazione = ({ handleToggle }) => {
+const Registrazione = ({ handleToggle, setIsLoading }) => {
   const [atleta, setAtleti] = useState({
     nome: "",
     cognome: "",
@@ -13,6 +13,7 @@ const Registrazione = ({ handleToggle }) => {
   });
 
   const fetchRegistrazione = () => {
+    setIsLoading(true);
     fetch(
       "https://handsome-verna-pollito117-551d08b7.koyeb.app/auth/register",
       {
@@ -24,7 +25,6 @@ const Registrazione = ({ handleToggle }) => {
       }
     )
       .then((response) => {
-        console.log("Response received:", response);
         if (response.ok) {
           return response.json();
         } else {
@@ -32,8 +32,8 @@ const Registrazione = ({ handleToggle }) => {
         }
       })
       .then((result) => {
-        console.log("Fatture fetched:", result);
         setAtleti(result);
+        setIsLoading(false);
         handleToggle();
       })
       .catch((error) => toast.error(error.message));
