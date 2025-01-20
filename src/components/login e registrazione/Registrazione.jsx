@@ -13,16 +13,13 @@ const Registrazione = ({ handleToggle }) => {
   });
 
   const fetchRegistrazione = () => {
-    fetch(
-      "https://handsome-verna-pollito117-551d08b7.koyeb.app/auth/register",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(atleta),
-      }
-    )
+    fetch("http://localhost:3001/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(atleta),
+    })
       .then((response) => {
         console.log("Response received:", response);
         if (response.ok) {
