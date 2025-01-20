@@ -303,7 +303,7 @@ const PartitePage = () => {
                     }
                     style={{ cursor: "pointer" }}
                   >
-                    Lista Partecipanati
+                    Lista Partecipanti
                   </div>
                   <div className="d-flex justify-content-center">
                     {partita.prenotazioniPartite?.map((prenotazione, index) => (
@@ -319,7 +319,7 @@ const PartitePage = () => {
                   </div>
                 </div>
               </Col>
-              <Col lg={2}>
+              <Col lg={2} className="align-self-center">
                 {isAdminOrSuperadmin() && (
                   <>
                     <DropdownPartita

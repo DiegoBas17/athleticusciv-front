@@ -44,6 +44,9 @@ const TopBar = () => {
               />
             </Dropdown.Toggle>
             <Dropdown.Menu>
+              <Dropdown.Item onClick={() => navigate("/leggende-del-CIV")}>
+                Profilo
+              </Dropdown.Item>
               <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
