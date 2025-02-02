@@ -259,11 +259,12 @@ const PrenotazioiniPage = () => {
                               onHide={() => setShowDelete(false)}
                             >
                               <Modal.Header closeButton>
-                                <Modal.Title>Elimina Partita</Modal.Title>
+                                <Modal.Title>Elimina Prenotazione</Modal.Title>
                               </Modal.Header>
                               <Modal.Body>
                                 <h3>
-                                  Sei sicuro di voler eliminare questa Partita?
+                                  Sei sicuro di voler eliminare questa
+                                  Prenotazione?
                                 </h3>
                                 <Button
                                   className="mt-2"

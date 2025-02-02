@@ -12,13 +12,14 @@ const httpClient = axios.create({
   baseURL: "https://handsome-verna-pollito117-551d08b7.koyeb.app",
 });
 
-/* Variabile per evitare il loop */
 let isFetchingProfile = false;
 
 httpClient.interceptors.request.use((config) => {
   const token = localStorage.getItem("accessToken");
   if (token) {
     config.headers["Authorization"] = `Bearer ${token}`;
+  } else {
+    window.location.href = "/login";
   }
   return config;
 });
@@ -55,6 +56,7 @@ httpClient.interceptors.response.use(
           type: SET_LOGIN_ERROR,
           payload: true,
         });
+        window.location.href = "/login";
       }
     }
     return Promise.reject(error);

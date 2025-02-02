@@ -89,6 +89,7 @@ const MembriPage = () => {
             {atleti?.map((membro, index) => (
               <div
                 key={index}
+                style={{ cursor: "pointer" }}
                 className="border-bottom d-flex justify-content-between mt-2 scale"
                 onClick={() => {
                   setSelectAtleta(membro);
