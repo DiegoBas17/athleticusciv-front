@@ -21,7 +21,10 @@ const MembriPage = () => {
     httpClient
       .get("/atleti")
       .then((response) => {
-        setAtleti(response.data.content);
+        const atletiOrdianati = response.data.content.sort((a, b) =>
+          a.nome.localeCompare(b.nome)
+        );
+        setAtleti(atletiOrdianati);
       })
       .catch((error) => {
         toast.error(error.message);
