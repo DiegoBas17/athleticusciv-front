@@ -303,7 +303,7 @@ const PartitePage = () => {
                     }
                     style={{ cursor: "pointer" }}
                   >
-                    Lista Partecipanti {partita.prenotazione?.length}
+                    Lista Partecipanti {console.log(partita.prenotazione)}
                   </div>
                   <Row className="justify-content-center">
                     {partita.prenotazioniPartite?.map((prenotazione, index) => (
