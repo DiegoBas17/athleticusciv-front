@@ -32,7 +32,6 @@ const PartitePage = () => {
       .get(`/partite?sortBy=data&page=${pagina}`)
       .then((response) => {
         setPartite(response.data);
-        console.log(response.data);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -50,7 +49,6 @@ const PartitePage = () => {
 
   useEffect(() => {
     fetchPartite();
-    console.log(pagina);
   }, [pagina]);
 
   const getDateInfo = (data) => {
@@ -303,7 +301,7 @@ const PartitePage = () => {
                     }
                     style={{ cursor: "pointer" }}
                   >
-                    Lista Partecipanti {console.log(partita.prenotazione)}
+                    Lista Partecipanti {partita.prenotazioniPartite?.length}
                   </div>
                   <Row className="justify-content-center">
                     {partita.prenotazioniPartite?.map((prenotazione, index) => (
