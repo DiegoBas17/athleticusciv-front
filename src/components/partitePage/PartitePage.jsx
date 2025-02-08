@@ -303,20 +303,20 @@ const PartitePage = () => {
                     }
                     style={{ cursor: "pointer" }}
                   >
-                    Lista Partecipanti
+                    Lista Partecipanti {partita.prenotazione?.length}
                   </div>
-                  <div className="d-flex justify-content-center">
+                  <Row className="justify-content-center">
                     {partita.prenotazioniPartite?.map((prenotazione, index) => (
-                      <div key={index}>
+                      <Col key={index}>
                         <img
                           src={prenotazione.atleta.avatar}
                           alt="avatar-atleta"
                           style={{ width: "2rem", height: "2rem" }}
                           className="rounded-circle object-fit-cover"
                         />
-                      </div>
+                      </Col>
                     ))}
-                  </div>
+                  </Row>
                 </div>
               </Col>
               <Col lg={2} className="align-self-center">
