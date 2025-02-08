@@ -305,7 +305,7 @@ const PartitePage = () => {
                   </div>
                   <Row className="justify-content-center">
                     {partita.prenotazioniPartite?.map((prenotazione, index) => (
-                      <Col key={index}>
+                      <Col key={index} xs={2}>
                         <img
                           src={prenotazione.atleta.avatar}
                           alt="avatar-atleta"
